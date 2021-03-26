@@ -1,0 +1,302 @@
+//////////////////////////////////////////
+// -- =CONSTANTS, AT-RULES & MIXINS -- ///
+//////////////////////////////////////////
+
+// Color palette
+$silver: #d6d3d3;
+$red: #CC3332;
+$yellow: #FFFF33;  
+$black: #333333;
+
+// Custom fonts
+@font-face {
+    font-family: "Pumpkin";
+    src: url("/static/fonts/Pumpkin.otf")
+}
+
+// Button reset
+@mixin button-reset {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+}
+
+// Link reset
+@mixin link-reset {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+///////////////////////////
+// -- =GLOBAL STYLES -- ///
+///////////////////////////
+
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 62.5%;
+    font-family: Arial, sans-serif;
+    background-color: $silver;
+    color: $black;
+}
+
+#content {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas: 
+      'h'
+      'm'
+      'f';
+}
+
+#content > header {
+    grid-area: h;
+    margin: 1.5em 3em 0;
+    a {
+        @include link-reset;
+        font: 4em "Pumpkin", Arial Black, sans-serif;
+        span {
+            font: .5em Arial Black, sans-serif;
+            color: $red;
+        }
+    }
+}
+
+#content > main {
+    grid-area: m;
+    overflow: auto;
+    margin: 1em 3em;
+}
+
+#content > footer {
+    grid-area: f;
+    margin: 0 2em .5em;
+    font: 2em Arial Black, sans-serif;
+    a {
+        @include link-reset;
+        margin-right: 2em;
+        span {
+            font-size: 1.5em;
+        }
+    }
+    a:last-of-type {
+        margin-right: 0;
+    }
+    a > img {
+        width: 1.5em;
+    }
+}
+
+//////////////////////
+// -- =Headings -- ///
+//////////////////////
+
+h1 {
+    font: italic 2em Arial Black, sans-serif;
+}
+
+h1 > span {
+    font-size: .7em;
+}
+
+h2 {
+    display: block;
+    font-size: 1.8em;
+    margin-top: 1.5em;
+}
+
+form h2 {
+    margin-top: 1em;
+}
+
+.search-results > h2 {
+    margin-left: .4em;
+}
+
+///////////////////
+// -- =Links -- ///
+///////////////////
+
+a.dashboard-link {
+    display: block;
+    @include link-reset;
+    font-size: 2em;
+    margin: 1em 0;
+}
+
+a.cancel-link {
+    @include link-reset;
+    display: inline-block;
+    font-size: 1.3em;
+    margin: .5em;
+    padding: .3em .4em;
+    border: 1px solid $black;
+}
+
+form a.cancel-link {
+    margin: .4em .1em 0;
+    padding: .25em .4em;
+}
+
+////////////////////
+// -- =Buttons-- ///
+////////////////////
+
+
+button {
+    background-color: $black;
+    color: white;
+    cursor: pointer;
+}
+
+form button {
+    display: block;
+    padding: .3em .5em;
+}
+
+.search-entry button {
+    display: inline-block;
+}
+
+#cancel-btn {
+    background-color: transparent;
+    border: 1px solid $black;
+    color: $black;
+    margin: .3em 0 0 .1em;
+    padding: .3em .35em;
+}
+
+#del-btn {
+    background-color: $red;
+}
+
+button > .icon {
+    width: 1em;
+    margin: 0 1.85em;
+}
+
+///////////////////
+// -- =Forms -- ///
+///////////////////
+
+form > * {
+    display: block;
+    margin: .4em;
+}
+
+input, select, textarea {
+    padding: .3em .5em;
+}
+
+form .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(auto, 1fr));
+    grid-auto-flow: column;
+    width: fit-content;
+}
+
+form .required-fields {
+    input {
+        display: block;
+        min-width: 40em;
+    }
+    select {
+        min-width: 20em;
+        margin: .5em .9em 0 0;
+    }
+}
+
+.form-section {
+    font-size: 1.2em;
+    label {
+        display: inline-block;
+    }
+    input {
+        margin: .2em 1em .2em 0;
+    }
+}
+
+.form-section.address input {
+    display: block;
+    min-width: 21.75em;
+}
+
+.form-section.phone, .form-section.email {
+    padding-top: 1.25em;
+}
+
+.form-section.email input {
+    min-width: 20em;
+}
+
+.form-section.url {
+    width: fit-content;
+    label {
+        display: block;
+        text-align: right;
+    }
+    input {
+        min-width: 41.3em;
+    }
+}
+
+textarea {
+    min-width: 46em;
+    height: 4em;
+}
+
+form > .search-entry > input {
+    min-width: 25em;
+}
+
+////////////////////
+// -- =Tables -- ///
+////////////////////
+
+table {
+    font-size: 1.3em;
+    color: black;
+    // border-spacing: 1em;
+    border-collapse: collapse;
+}
+
+table button {
+    margin: 0;
+}
+
+tr:nth-child(even) {
+    background-color: Gainsboro;
+}
+
+td {
+    padding: .5em .5em;
+}
+
+table.sortable {
+    margin-right: 1em;
+}
+
+// https://www.kryogenix.org/code/browser/sorttable/#symbolsbeforesorting
+table.sortable thead {
+    background-color:$black;
+    color:$silver;
+    font-weight: bold;
+    cursor: default;
+}
+
+table.sortable th {
+    padding: .4em;
+    border-left: 1px solid silver;
+}
+
+// https://www.kryogenix.org/code/browser/sorttable/#symbolsbeforesorting
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: "\294D";   // https://www.toptal.com/designers/htmlarrows/arrows/up-barb-left-down-barb-right-harpoon/
+    color: $yellow;
+}

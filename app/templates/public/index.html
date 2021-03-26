@@ -1,0 +1,266 @@
+{% extends "public/layout.html" %}
+
+{% block title %}
+    Busca | Animais desaparecidos
+{% endblock %}
+
+{% block headscript %}
+    <script src="{{ url_for('static', filename='js/index_behavior.js') }}"></script>
+{% endblock %}
+
+{% block style %}
+    <style>
+        body {
+            background-image: url("/static/img/suri_inv.jpg");
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <header>
+            <a class="logo" href="\">
+                <img class="logo" src="{{ url_for('static', filename='img/busca_logo.svg') }}" alt="Logotipo do site: visitar Busca! Animais desaparecidos">
+            </a>
+        </header>
+        <main tabindex="-1">
+            <div id="hero">    
+                <h1>Perdeu o seu animal de estimação?</h1>
+                <h2>Reunimos os recursos para ajudar a encontrá<span>&#8209;</span><em>lo</em>.</h2>    <!-- &#8209; non-breaking hyphen -->
+                <a class="icon-arrow" href="#recursos">
+                    <img class="icon-arrow" src="{{ url_for('static', filename='img/arrow.svg') }}" alt="Ver recursos do site">
+                </a>
+            </div>
+            <div id="shaded-sections">
+                <section class="interface" id="recursos">
+                    <div id="info-como">
+                        <a class="info-link-img" href="#como-procurar" onclick="revealSection(['como', 'onde'])" tabindex="-1">
+                            <img id="blackdog" src="{{ url_for('static', filename='img/dog.svg') }}" alt="Ver como procurar um animal desaparecido">
+                        </a>
+                        <a class="info-link-wrds" href="#como-procurar" onclick="revealSection(['como', 'onde'])">  <!-- https://stackoverflow.com/questions/9152096/make-an-html-element-non-focusable -->
+                            <p>Como procurar<mark class="fat-text"> ?</mark></p>
+                        </a>
+                    </div>                    
+                    <div id="info-onde">
+                        <a class="info-link-img" href="#onde-procurar" onclick="revealSection(['onde', 'como'])" tabindex="-1">
+                            <img id="blackcat" src="{{ url_for('static', filename='img/cat.svg') }}" alt="Ver onde procurar um animal desaparecido">
+                        </a>
+                        <a class="info-link-wrds" href="#onde-procurar" onclick="revealSection(['onde', 'como'])">
+                            <p>Onde procurar<mark class="fat-text"> ?</mark></p>
+                        </a>
+                    </div>                    
+                    <div id="pesquisa">
+                        <a id="pesquisar-link" href="\pesquisa-entidades">
+                            <p id="pesquisar-label">
+                                Pesquise abrigos, canis/gatis municipais, veterinários
+                                e associações de proteção animal em Portugal
+                                <img id="icon-magniglass" src="{{ url_for('static', filename='img/magniglass.svg') }}" alt="Pesquisar">
+                            </p>
+                        </a>
+                    </div>
+                    <div id="contribuir">
+                        <a class="jumpy-link" href='\contacte-nos'>
+                            <h3>
+                                <mark class="highlighted"><i>Ajude-nos a melhorar este projeto</i><mark class="fat-text"> !</mark></mark>
+                            </h3>
+                        </a>
+                    </div>
+                    <div class="info-arrow">
+                        <a id="info-arrow" class="icon-arrow" href="#como-procurar">
+                            <img class="icon-arrow" src="{{ url_for('static', filename='img/arrow.svg') }}" alt="Ver como procurar um animal desaparecido">
+                        </a>        
+                    </div>
+                </section>
+                <section class="info-panel" id="como-procurar">
+                    <a class="icon-x" href="#recursos" onclick="hideSection('como')"   >
+                        <img class="icon-x" src="{{ url_for('static', filename='img/x_close.svg') }}" alt="Fechar">
+                    </a>                    
+                    <h4><span class="red">C</span>omo procurar</h4>        
+                    <div class="wrap-collapsible">  <!-- Collapsibles adapted from: https://www.digitalocean.com/community/tutorials/css-collapsible -->
+                        
+                        <input id="collaps-1" class="toggle" type="checkbox" onkeyup="reactEnterKey(event, '1')">
+                        <label for="collaps-1" class="label-toggle" id="1" onclick="scrollViewCollapsible('1')">
+                            Fazer buscas</label>
+                        <div class="collapsible-content">
+                            <div class="content-inner" id="inner-1">
+                                <p>
+                                    Leia atentamente as recomendações de
+                                    <em class="no-link-emphasis">Encontra<span>&#8209;</span>me.org</em>
+                                    para casos de desaparecimento de:
+                                </p>    
+                                <ul>
+                                    <li><a class="link-external" href="https://www.encontra-me.org/procurar/cao" target="_blank" rel="noopener noreferrer">
+                                        Cão</a></li>
+                                    <li><a class="link-external" href="https://www.encontra-me.org/procurar/gato" target="_blank" rel="noopener noreferrer">
+                                        Gato</a></li>
+                                </ul>                                
+                            </div>
+                        </div>
+        
+                        <input id="collaps-2" class="toggle" type="checkbox" onkeyup="reactEnterKey(event, '2')">
+                        <label for="collaps-2" class="label-toggle" id="2" onclick="scrollViewCollapsible('2')">
+                            Divulgar o desaparecimento</label>
+                        <div class="collapsible-content" id="inner-2">
+                            <div class="content-inner">
+                                <p>
+                                    Coloque anúncios na internet em sítios especializados:
+                                </p>    
+                                <ul>
+                                    <li><a class="link-external" href="https://www.encontra-me.org/" target="_blank" rel="noopener noreferrer">
+                                        Encontra<span>&#8209;</span>me.org</a></li>
+                                    <li><a class="link-external" href="http://findmypet.omv.pt/pt/publicar-perdido" target="_blank" rel="noopener noreferrer">
+                                        Findmypet.omv.pt</a></li>
+                                    <li><a class="link-external" href="https://petify.io/" target="_blank" rel="noopener noreferrer">
+                                        Petify.io</a></li>
+                                </ul>                                
+                                <p>Afixe e distribua folhetos na comunidade.</p>
+                                <p>Publique anúncios em jornais e rádios locais.</p>
+                            </div>
+                        </div>
+        
+                        <input id="collaps-3" class="toggle" type="checkbox" onkeyup="reactEnterKey(event, '3')">
+                        <label for="collaps-3" class="label-toggle" id="3" onclick="scrollViewCollapsible('3')">
+                            Contactar e visitar entidades de apoio a animais</label>
+                        <div class="collapsible-content" id="inner-3">
+                            <div class="content-inner">
+                                <ul>
+                                    <li>Centros de atendimento veterinário: hospitais, clínicas e consultórios</li>
+                                    <li>Centros de recolha oficiais: canis e gatis municipais</li>
+                                    <li>Associações de protecção animal, abrigos e alojamentos sem fins lucrativos</li>
+                                </ul>
+                                <p>
+                                    <a class="link-external" href="\pesquisa-entidades">
+                                        <em>Pesquise <u>aqui</u> as entidades de apoio mais próximas de si</em>.                       
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+        
+                        <input id="collaps-4" class="toggle" type="checkbox" onkeyup="reactEnterKey(event, '4')">
+                        <label for="collaps-4" class="label-toggle" id="4" onclick="scrollViewCollapsible('4')">
+                            Notificar as autoridades</label>
+                        <div class="collapsible-content" id="inner-4">
+                            <div class="content-inner">
+                                <p>
+                                    Se houver suspeita de rapto, 
+                                    apresente queixa na esquadra da PSP ou no posto da GNR mais próximos.
+                                </p>
+                                <p>
+                                    Pode também apresentar uma 
+                                    <a class="link-external" href="https://queixaselectronicas.mai.gov.pt/SQE2013/default.aspx#tag=FURTO_ROUBO_FR" target="_blank" rel="noopener noreferrer">
+                                        queixa eletrónica.</a>
+                                </p>
+                            </div>
+                        </div>        
+                    </div>
+                    <a class="backtop-link" id="backtop-como" href="#recursos">
+                        Voltar ao início
+                    </a>
+                    <noscript>
+                        <a id="last-info-arrow" class="icon-arrow" href="#onde-procurar">
+                            <img class="icon-arrow" src="{{ url_for('static', filename='img/arrow.svg') }}" alt="Ver onde procurar um animal desaparecido">
+                        </a>        
+                    </noscript>
+                </section>
+                <section class="info-panel" id="onde-procurar">
+                    <a class="icon-x" href="#recursos" onclick="hideSection('onde')">
+                        <img class="icon-x" src="{{ url_for('static', filename='img/x_close.svg') }}" alt="Fechar">
+                    </a>                    
+                    <h4><span class="red">O</span>nde procurar</h4>
+                    <div class="wrap-collapsible">  
+
+                        <input id="collaps-5" class="toggle" type="checkbox" onkeyup="reactEnterKey(event, '5')">
+                        <label for="collaps-5" class="label-toggle" id="5" onclick="scrollViewCollapsible('5')">
+                            No terreno</label>
+                        <div class="collapsible-content" id="inner-5">
+                            <div class="content-inner">
+                                <ol>
+                                    <li>Certifique<span>&#8209;</span>se de que o seu animal não se encontra escondido no interior 
+                                        ou exterior de casa.</li>
+                                    <li>Percorra as imediações do local de desaparecimento.</li>
+                                    <li>Alargue o perímetro de busca às zonas envolventes e aos concelhos limítrofes.</li>
+                                </ol>
+                                <p>
+                                    Mais detalhes em 
+                                    <a class="link-external" href="https://www.encontra-me.org/recomendacoes" target="_blank" rel="noopener noreferrer">
+                                        Encontra<span>&#8209;</span>me.org</a>.                                    
+                                </p>
+                            </div>
+                        </div>
+            
+                        <input id="collaps-6" class="toggle" type="checkbox" onkeyup="reactEnterKey(event, '6')">
+                        <label for="collaps-6" class="label-toggle" id="6" onclick="scrollViewCollapsible('6')">
+                            Através da internet</label>
+                        <div class="collapsible-content" id="inner-6">
+                            <div class="content-inner">
+                                <p>
+                                    Pesquise anúncios de animais encontrados, ou para adoção, 
+                                    publicados em sites especializados:
+                                </p>
+                                <ul>
+                                    <li><a class="link-external" href="https://www.encontra-me.org/encontrados" target="_blank" rel="noopener noreferrer">
+                                        Encontra<span>&#8209;</span>me.org</a></li>
+                                    <li><a class="link-external" href="http://findmypet.omv.pt/pt/anuncios/#type=1" target="_blank" rel="noopener noreferrer">
+                                        Findmypet.omv.pt</a></li>
+                                    <li><a class="link-external" href="https://petify.io/pets/find-list" target="_blank" rel="noopener noreferrer">
+                                        Petify.io</a></li>
+                                    <li><a class="link-external" href="https://www.adopta-me.org/index.php" target="_blank" rel="noopener noreferrer">
+                                        Adopta<span>&#8209;</span>me.org</a></li>
+                                </ul>
+                            </div>
+                        </div>
+            
+                        <input id="collaps-7" class="toggle" type="checkbox" onkeyup="reactEnterKey(event, '7')">
+                        <label for="collaps-7" class="label-toggle" id="7" onclick="scrollViewCollapsible('7')">
+                            Entidades de apoio a animais</label>
+                        <div class="collapsible-content" id="inner-7">
+                            <div class="content-inner">
+                                <p>
+                                    O seu animal pode ter sido acolhido numa associação de proteção animal, 
+                                    em abrigos ou alojamentos sem fins lucrativos, 
+                                    ou num centro de recolha oficial (canil/gatil municipal).
+                                </p>
+                                <p>
+                                    Pode ainda ter sido levado a um centro de atendimento veterinário 
+                                    (hospital, clínica ou consultório) por alguém que o tenha encontrado.
+                                </p>
+                                <p>
+                                    Deve, pois, contactar e deslocar<span>&#8209;</span>se às entidades de apoio mais próximas 
+                                    do local do desaparecimento e/ou da sua área de residência.                            
+                                </p>
+                                <p>
+                                    <a class="link-external" href="\pesquisa-entidades">
+                                        <em>Utilize a nossa ferramenta de <u>pesquisa</u> para saber quais são</em>.                           
+                                    </a>
+                                </p>
+                            </div>
+                        </div>
+                        <div id="invisible-item" class="label-toggle"></div>        
+                    </div>
+                    <a class="backtop-link" id="backtop-onde" href="#recursos">
+                        Voltar ao início
+                    </a>
+                </section>
+                <footer>
+                    <span id="dot-separator"></span>
+                    <div id="footer-wrapper">
+                        <div id="copyright">
+                            2021 Todos os direitos reservados
+                        </div>
+                        <nav id="footer-nav">
+                            <a href="\acerca-do-projeto" class="footer-nav-link">
+                                <p>Acerca do <mark class="fat-text">Busca!</mark></p>
+                            </a>
+                            <a href="\contacte-nos" class="footer-nav-link">
+                                <p>Contacto</p>
+                            </a>
+                            <a href="\privacidade" class="footer-nav-link">
+                                <p>Privacidade</p>
+                            </a>
+                        </nav>
+                    </div>
+                </footer>        
+            </div>
+        </main>
+    </div>
+{% endblock %}

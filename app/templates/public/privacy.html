@@ -1,0 +1,58 @@
+{% extends "public/layout.html" %}
+
+{% block title %}
+    Busca | Privacidade
+{% endblock %}
+
+{% block style %}
+    <style>
+        /* Re-adjust logo to a smaller size in desktop */
+        @media screen and (min-width: 1024px) and (orientation: landscape) {
+            .logo {
+                margin-top: .5vh;
+                max-width: 39em;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <header class="header-image">
+            <a class="logo" href="\">
+                <img class="logo" src="{{ url_for('static', filename='img/busca_logo.svg') }}" alt="Logotipo do site: visite o Busca! Animais desaparecidos">
+            </a>
+        </header>
+        <main class="grid-layout">
+            <div id="privacy-content">
+                <h4 class="grey">Declaração de privacidade</h4>
+                <p id="privacy-text">Este sítio não recolhe dados pessoais do Utilizador de forma automática e sem consentimento do mesmo.</p>
+                <p id="privacy-text">Apenas são registados o nome e o endereço eletrónico se facultados voluntariamente pelo Utilizador ao enviar-nos uma mensagem através da nossa página de contactos.</p>
+                <p id="privacy-text">Os dados registados não são partilhados nem fornecidos a terceiros e apenas podem ser utilizados para contactar diretamente o Utilizador, p. ex. para responder a uma mensagem sua.</p>
+                <p id="privacy-text">O Utilizador tem o direito de atualizar ou eliminar os seus dados pessoais em qualquer altura. Todos os pedidos de informação, alteração ou remoção de dados pessoais devem ser enviados para: <i>busca@email.com</i>.</p>
+                <p id="privacy-text">Este sítio possui ligações para sítios terceiros considerados potencialmente úteis para o Utilizador. Não podemos assumir responsabilidade pelo conteúdo apresentado nesses sítios e recomendamos ao Utilizador a leitura das respetivas declarações de privacidade.</p>
+                <p id="privacy-text">No âmbito deste projeto, procuraremos manter toda a informação disponibilizada ao Utilizador o mais completa e atualizada possível, embora não o possamos garantir. O Utilizador pode entrar em contacto connosco se detetar alguma informação imprecisa publicada neste sítio.</p>
+                <p id="privacy-text">Todo e qualquer conteúdo de <span>busca.website</span> só pode ser reproduzido mediante autorização prévia escrita, através do contacto: <i>busca@email.com</i>.</p>
+            </div>
+            <footer class="greyed">
+                <span id="dot-separator"></span>
+                <div id="footer-wrapper">
+                    <div id="copyright">
+                        2021 Todos os direitos reservados
+                    </div>
+                    <nav id="footer-nav">
+                        <a href="\acerca-do-projeto" class="footer-nav-link">
+                            <p>Acerca do <mark class="fat-text">Busca!</mark></p>
+                        </a>
+                        <a href="\contacte-nos" class="footer-nav-link">
+                            <p>Contacto</p>
+                        </a>
+                        <a href="\privacidade" class="footer-nav-link">
+                            <p>Privacidade</p>
+                        </a>
+                    </nav>
+                </div>
+            </footer>        
+        </main>
+    </div>
+{% endblock %}

@@ -1,0 +1,319 @@
+{% extends "public/layout.html" %}
+
+{% block title %}
+    Busca | Pesquisa entidades
+{% endblock %}
+
+{% block headscript %}
+    <script src="{{ url_for('static', filename='js/search_behavior.js') }}"></script>
+{% endblock %}
+
+{% block style %}
+    <style>
+        body {
+            background-color: rgba(129, 119, 122, .8);
+        }
+        /* Re-adjust logo to a smaller size in desktop */
+        @media screen and (min-width: 1024px) and (orientation: landscape) {
+            .logo {
+                margin-top: .5vh;
+                max-width: 39em;
+            }
+        }
+    </style>    
+{% endblock %}
+
+{% block content %}
+    <div class="page-content">
+        <header class="header-image">
+            <a class="logo" href="\">
+                <img class="logo" src="{{ url_for('static', filename='img/busca_logo.svg') }}" alt="Logotipo do site: visite o Busca! Animais desaparecidos">
+            </a>
+        </header>
+        <main tabindex="-1">  <!-- https://stackoverflow.com/questions/9152096/make-an-html-element-non-focusable -->
+            <div class="grid-layout">
+                <div id="search-grid">
+                    <a id="search-heading" href="\pesquisa-entidades">
+                        <h4><span class="red">P</span>esquisar entidades de apoio a animais</h4>
+                    </a>
+                    <form id="nova-pesquisa" class="name-search" action="/pesquisa-entidades" method="post">    
+                        <div id="search-bar">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <input type="hidden" name="search-by" value="name" readonly="readonly">
+                            <input id="search-text" name="name" placeholder="Pesquisar por nome" type="text">
+                            <button class="search-button icon-in-bar" type="submit">
+                                <img class="search-magniglass" src="{{ url_for('static', filename='img/magniglass.svg') }}" alt="Pesquisar por nome">
+                            </button>
+                        </div>
+                    </form>
+                    <div id="filters">
+                        <form class="filter-search" action="/pesquisa-entidades" method="post">
+                            <div id="search-menu">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <input type="hidden" name="search-by" value="filters" readonly="readonly">
+                                <button class="search-button icon-in-text" type="submit">
+                                    <p><span><img class="search-magniglass" src="{{ url_for('static', filename='img/magniglass.svg') }}" alt="Pesquisar por filtros"></span>
+                                        Pesquisar
+                                    </p>
+                                </button>
+                                <p class="name-of-filter">Distrito:</p>
+                                <select id="dist-menu" class="dropdown-filter" name="distrilha">
+                                    {% if select_dist == "Todos" %}
+                                        <option selected>Todos</option>
+                                        {% for local in dist %}
+                                            <option>{{ local["distrilha"] }}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option>Todos</option>
+                                        {% for local in dist %}
+                                            {% if local["distrilha"] == select_dist %}
+                                                <option selected>{{ local["distrilha"] }}</option>
+                                            {% else %}
+                                                <option>{{ local["distrilha"] }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>
+                                <p class="name-of-filter">Concelho:</p>                   
+                                <select id="conc-menu" class="dropdown-filter" name="concelho">
+                                    {% if select_conc == "Todos" %}
+                                        <option selected>Todos</option>
+                                        {% for local in conc %}
+                                            <option>{{ local["municipio"] }}</option>
+                                        {% endfor %}
+                                    {% else %}
+                                        <option>Todos</option>
+                                        {% for local in conc %}
+                                            {% if local["municipio"] == select_conc %}
+                                                <option selected>{{ local["municipio"] }}</option>
+                                            {% else %}
+                                                <option>{{ local["municipio"] }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
+                                </select>    
+                            </div>  
+                            <div id="loose-filters">
+                                <p class="name-of-filter">Centros de recolha oficiais:</p>
+                                {% if "CRO" in checked and count > 0 %}
+                                    <input id="cro" class="checkbox-filter" type="checkbox" name="subtipo" value="CRO" checked>
+                                {% else %}
+                                    <input id="cro" class="checkbox-filter" type="checkbox" name="subtipo" value="CRO">
+                                {% endif %}
+                                <label for="cro" class="filter-toggle">Canis/gatis municipais</label>
+        
+                                <p class="name-of-filter">Alojamentos sem fins lucrativos:</p>
+                                {% if "Associação de Proteção Animal" in checked and count > 0 %}
+                                    <input id="asso" class="checkbox-filter" type="checkbox" name="subtipo" value="Associação de Proteção Animal" checked>
+                                {% else %}
+                                    <input id="asso" class="checkbox-filter" type="checkbox" name="subtipo" value="Associação de Proteção Animal">
+                                {% endif %}
+                                <label for="asso" class="filter-toggle">Associações de proteção animal</label>
+                        
+                                {% if "Particular" in checked and count > 0 %}
+                                    <input id="abr" class="checkbox-filter" type="checkbox" name="subtipo" value="Particular" checked>
+                                {% else %}
+                                    <input id="abr" class="checkbox-filter" type="checkbox" name="subtipo" value="Particular">
+                                {% endif %}
+                                <label for="abr" class="filter-toggle">Abrigos particulares</label>
+                        
+                                <p class="name-of-filter">Centros de atendimento veterinário:</p>
+                                {% if "Hospital" in checked and count > 0 %}
+                                    <input id="hosp" class="checkbox-filter" type="checkbox" name="subtipo" value="Hospital" checked>
+                                {% else %}
+                                    <input id="hosp" class="checkbox-filter" type="checkbox" name="subtipo" value="Hospital">
+                                {% endif %}
+                                <label for="hosp" class="filter-toggle">Hospitais</label>
+                        
+                                {% if "Clínica" in checked and count > 0 %}
+                                    <input id="clin" class="checkbox-filter" type="checkbox" name="subtipo" value="Clínica" checked>
+                                {% else %}
+                                    <input id="clin" class="checkbox-filter" type="checkbox" name="subtipo" value="Clínica">
+                                {% endif %}
+                                <label for="clin" class="filter-toggle">Clínicas</label>
+                        
+                                {% if "Consultório" in checked and count > 0 %}
+                                    <input id="cons" class="checkbox-filter" type="checkbox" name="subtipo" value="Consultório" checked>
+                                {% else %}
+                                    <input id="cons" class="checkbox-filter" type="checkbox" name="subtipo" value="Consultório">
+                                {% endif %}
+                                <label for="cons" class="filter-toggle">Consultórios</label>    
+                            </div>                        
+                            <button id="button-for-mobile" type="submit">
+                                <p><span><img class="search-magniglass" src="{{ url_for('static', filename='img/magniglass.svg') }}" alt="Pesquisar por filtros"></span></p>
+                            </button>
+                        </form>
+                        <div class="void-space"></div>
+                    </div>
+
+                    <!-- Feedback message flashing. https://flask.palletsprojects.com/en/1.0.x/patterns/flashing/ -->
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="{{ category }}" id="alert-search">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %} 
+                    {% endwith %}
+                    
+                    <!-- Only render the results section if a valid search was submitted -->
+                    {% if count is defined %}
+                        <div id="results-container">
+                            <div id="stats">
+                                {% if count == 0 %}
+                                    Nenhum resultado encontrado 
+                                {% elif count == 1 %}
+                                    {{ count }} resultado encontrado
+                                {% else %}
+                                    <span>{{ count }} resultados encontrados</span>
+                                    <button id="all-button" onclick="toggleView()">
+                                        <span id="checkmark" style="display:none;">&#10003;</span>
+                                        <span id="pointyfinger" style="display:inline;">&#9755;</span>
+                                        <em>&nbsp;ver tudo</em>
+                                        <!-- https://www.toptal.com/designers/htmlarrows/symbols/check-mark/ -->
+                                        <!-- https://www.w3schools.com/charsets/ref_utf_symbols.asp -->
+                                    </button>
+                                {% endif %}
+                            </div>
+                            <ul id="result-list">
+                                {% for result in results %}
+                                    <li class="contact">
+                                        <p class="contact-place">{{ result["municipio"] }}</p>
+                                        <p class="contact-name">{{ result["nome"] }}</p>
+                                        {% if result["subtipo"] == "CRO" %}
+                                            <p class="contact-type">Centro de recolha oficial (canil/gatil)</p>
+                                        {% elif result["subtipo"] == "Associação de Proteção Animal" %}
+                                            <p class="contact-type">Associação de proteção animal</p>
+                                        {% elif result["subtipo"] == "Particular" %}
+                                            <p class="contact-type">Abrigo particular</p>
+                                        {% elif result["subtipo"] == "Hospital" %}
+                                            <p class="contact-type">Hospital veterinário</p>
+                                        {% elif result["subtipo"] == "Clínica" %}
+                                            <p class="contact-type">Clínica veterinária</p>
+                                        {% elif result["subtipo"] == "Consultório" %}
+                                            <p class="contact-type">Consultório veterinário</p>
+                                        {% endif %}
+                                        <details>   <!-- https://css-tricks.com/quick-reminder-that-details-summary-is-the-easiest-way-ever-to-make-an-accordion/ -->
+                                            <summary></summary>
+                                            <div class="accordion-flexbox">
+                                                {% if result["morada_1a"] or result["lugar_1"] or result["morada_2a"] or result["lugar_2"] or result["tel_1"] %}
+                                                    <div class="contact-details-flexbox">
+                                                        {% if result["morada_1a"] or result["morada_1b"] or result["cpostal_1"] or result["lugar_1"] %}
+                                                            <div class="contact-detail-item">
+                                                                {% if result["morada_1a"] %}    
+                                                                    <p class="contact-address">{{ result["morada_1a"] }}</p>
+                                                                {% endif %}
+                                                                {% if result["morada_1b"] %}    
+                                                                    <p class="contact-address">{{ result["morada_1b"] }} </p>
+                                                                {% endif %}
+                                                                {% if result["cpostal_1"] %}    
+                                                                    <p class="contact-address">{{ result["cpostal_1"] }}</p>
+                                                                {% endif %}
+                                                                {% if result["lugar_1"] %}    
+                                                                    <p class="contact-address">{{ result["lugar_1"] }}</p>
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endif %}
+                                                        {% if result["morada_2a"] or result["morada_2b"] or result["cpostal_2"] or result["lugar_2"] %}
+                                                            <div class="contact-detail-item">
+                                                                {% if result["morada_2a"] %}    
+                                                                    <p class="contact-address">{{ result["morada_2a"] }} </p>   
+                                                                {% endif %}
+                                                                {% if result["morada_2b"] %}    
+                                                                    <p class="contact-address">{{ result["morada_2b"] }}</p>
+                                                                {% endif %}
+                                                                {% if result["cpostal_2"] %}    
+                                                                    <p class="contact-address">{{ result["cpostal_2"] }}</p>
+                                                                {% endif %}
+                                                                {% if result["lugar_2"] %}    
+                                                                    <p class="contact-address">{{ result["lugar_2"] }}</p>
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endif %}
+                                                        {% if result["tel_1"] or result["tel_2"] or result["tel_3"] %}
+                                                            <div class="contact-detail-item">
+                                                                {% if result["tel_1"] %}    
+                                                                    <p class="contact-phone">{{ result["tel_1"] }}</p>
+                                                                {% endif %}
+                                                                {% if result["tel_2"] %}    
+                                                                    <p class="contact-phone">{{ result["tel_2"] }}</p>
+                                                                {% endif %}
+                                                                {% if result["tel_3"] %}    
+                                                                    <p class="contact-phone">{{ result["tel_3"] }}</p>
+                                                                {% endif %}
+                                                                {% if result["tel_4"] %}    
+                                                                    <p class="contact-phone">{{ result["tel_4"] }}</p>
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if result["email_1"] or result["email_2"] or result["email_3"] %}
+                                                    <div class="emails-flexbox">
+                                                        {% if result["email_1"] %}    
+                                                            <!-- https://www.w3schools.com/tags/att_input_readonly.asp -->
+                                                            <!-- https://stackoverflow.com/questions/7537439/how-to-increment-a-variable-on-a-for-loop-in-jinja-template -->
+                                                            <input class="contact-email" id="e1-address-{{ loop.index }}" value="{{ result['email_1'] }}" readonly="readonly" tabindex="-1">
+                                                            <button class="copy-button" onclick="copyToClipboard('1', '{{ loop.index }}')">&#10149; copiar email</button>
+                                                            <!-- https://www.toptal.com/designers/htmlarrows/arrows/heavy-black-curved-down-and-right-arrow/ -->
+                                                        {% endif %}
+                                                        {% if result["email_2"] %}
+                                                            <input class="contact-email" id="e2-address-{{ loop.index }}" value="{{ result['email_2'] }}" readonly="readonly" tabindex="-1">
+                                                            <button class="copy-button" onclick="copyToClipboard('2', '{{ loop.index }}')">&#10149; copiar email</button>
+                                                        {% endif %}
+                                                        {% if result["email_3"] %}    
+                                                            <input class="contact-email" id="e3-address-{{ loop.index }}" value="{{ result['email_3'] }}" readonly="readonly" tabindex="-1">
+                                                            <button class="copy-button" onclick="copyToClipboard('3', '{{ loop.index }}')">&#10149; copiar email</button>
+                                                        {% endif %}
+                                                    </div>
+                                                {% endif %}
+                                                {% if result["website_1"] or result["website_2"] %}
+                                                    <div class="weblinks-flexbox">
+                                                        {% if result["website_1"] %}    
+                                                            <a class="web-link" href="{{ result['website_1'] }}" target="_blank" rel="noopener noreferrer">
+                                                                <img class="web-link-icon" src="{{ url_for('static', filename='img/www.svg') }}" alt="Visitar website">
+                                                            </a>
+                                                        {% endif %}
+                                                        {% if result["website_2"] %}    
+                                                            <a class="web-link" href="{{ result['website_2'] }}" target="_blank" rel="noopener noreferrer">
+                                                                <img class="web-link-icon" src="{{ url_for('static', filename='img/faceb_icon.svg') }}" alt="Página facebook">
+                                                            </a>
+                                                        {% endif %}
+                                                        </div>
+                                                {% endif %}
+                                            </div>
+                                        </details>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <a id="on-off" class="repeat-search" href="#nova-pesquisa">
+                                &#9755; Nova pesquisa
+                            </a>
+                            <div class="void-space"></div>
+                        </div>
+                    {% endif %}                
+                </div>        
+                <footer>
+                    <span id="dot-separator"></span>
+                    <div id="footer-wrapper">
+                        <div id="copyright">
+                            2021 Todos os direitos reservados
+                        </div>
+                        <nav id="footer-nav">
+                            <a href="\acerca-do-projeto" class="footer-nav-link">
+                                <p>Acerca do <mark class="fat-text">Busca!</mark></p>
+                            </a>
+                            <a href="\contacte-nos" class="footer-nav-link">
+                                <p>Contacto</p>
+                            </a>
+                            <a href="\privacidade" class="footer-nav-link">
+                                <p>Privacidade</p>
+                            </a>
+                        </nav>
+                    </div>
+                </footer>        
+            </div>
+        </main>
+    </div>
+{% endblock %}

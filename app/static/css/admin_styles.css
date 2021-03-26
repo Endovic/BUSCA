@@ -1,0 +1,274 @@
+@font-face {
+  font-family: "Pumpkin";
+  src: url("/static/fonts/Pumpkin.otf");
+}
+
+body {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-size: 62.5%;
+  font-family: Arial, sans-serif;
+  background-color: #d6d3d3;
+  color: #333333;
+}
+
+#content {
+  height: 100vh;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr;
+      grid-template-columns: 1fr;
+  -ms-grid-rows: auto 1fr auto;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas: 'h' 'm' 'f';
+}
+
+#content > header {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: h;
+  margin: 1.5em 3em 0;
+}
+
+#content > header a {
+  text-decoration: none;
+  color: inherit;
+  font: 4em "Pumpkin", Arial Black, sans-serif;
+}
+
+#content > header a span {
+  font: .5em Arial Black, sans-serif;
+  color: #CC3332;
+}
+
+#content > main {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: m;
+  overflow: auto;
+  margin: 1em 3em;
+}
+
+#content > footer {
+  -ms-grid-row: 3;
+  -ms-grid-column: 1;
+  grid-area: f;
+  margin: 0 2em .5em;
+  font: 2em Arial Black, sans-serif;
+}
+
+#content > footer a {
+  text-decoration: none;
+  color: inherit;
+  margin-right: 2em;
+}
+
+#content > footer a span {
+  font-size: 1.5em;
+}
+
+#content > footer a:last-of-type {
+  margin-right: 0;
+}
+
+#content > footer a > img {
+  width: 1.5em;
+}
+
+h1 {
+  font: italic 2em Arial Black, sans-serif;
+}
+
+h1 > span {
+  font-size: .7em;
+}
+
+h2 {
+  display: block;
+  font-size: 1.8em;
+  margin-top: 1.5em;
+}
+
+form h2 {
+  margin-top: 1em;
+}
+
+.search-results > h2 {
+  margin-left: .4em;
+}
+
+a.dashboard-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  font-size: 2em;
+  margin: 1em 0;
+}
+
+a.cancel-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  font-size: 1.3em;
+  margin: .5em;
+  padding: .3em .4em;
+  border: 1px solid #333333;
+}
+
+form a.cancel-link {
+  margin: .4em .1em 0;
+  padding: .25em .4em;
+}
+
+button {
+  background-color: #333333;
+  color: white;
+  cursor: pointer;
+}
+
+form button {
+  display: block;
+  padding: .3em .5em;
+}
+
+.search-entry button {
+  display: inline-block;
+}
+
+#cancel-btn {
+  background-color: transparent;
+  border: 1px solid #333333;
+  color: #333333;
+  margin: .3em 0 0 .1em;
+  padding: .3em .35em;
+}
+
+#del-btn {
+  background-color: #CC3332;
+}
+
+button > .icon {
+  width: 1em;
+  margin: 0 1.85em;
+}
+
+form > * {
+  display: block;
+  margin: .4em;
+}
+
+input, select, textarea {
+  padding: .3em .5em;
+}
+
+form .grid-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(auto, 1fr))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(auto, 1fr));
+  grid-auto-flow: column;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+form .required-fields input {
+  display: block;
+  min-width: 40em;
+}
+
+form .required-fields select {
+  min-width: 20em;
+  margin: .5em .9em 0 0;
+}
+
+.form-section {
+  font-size: 1.2em;
+}
+
+.form-section label {
+  display: inline-block;
+}
+
+.form-section input {
+  margin: .2em 1em .2em 0;
+}
+
+.form-section.address input {
+  display: block;
+  min-width: 21.75em;
+}
+
+.form-section.phone, .form-section.email {
+  padding-top: 1.25em;
+}
+
+.form-section.email input {
+  min-width: 20em;
+}
+
+.form-section.url {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.form-section.url label {
+  display: block;
+  text-align: right;
+}
+
+.form-section.url input {
+  min-width: 41.3em;
+}
+
+textarea {
+  min-width: 46em;
+  height: 4em;
+}
+
+form > .search-entry > input {
+  min-width: 25em;
+}
+
+table {
+  font-size: 1.3em;
+  color: black;
+  border-collapse: collapse;
+}
+
+table button {
+  margin: 0;
+}
+
+tr:nth-child(even) {
+  background-color: Gainsboro;
+}
+
+td {
+  padding: .5em .5em;
+}
+
+table.sortable {
+  margin-right: 1em;
+}
+
+table.sortable thead {
+  background-color: #333333;
+  color: #d6d3d3;
+  font-weight: bold;
+  cursor: default;
+}
+
+table.sortable th {
+  padding: .4em;
+  border-left: 1px solid silver;
+}
+
+table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after {
+  content: "\294D";
+  color: #FFFF33;
+}
+/*# sourceMappingURL=admin_styles.css.map */

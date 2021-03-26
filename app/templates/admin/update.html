@@ -1,0 +1,168 @@
+{% extends "admin/adminlayout.html" %}
+
+{% block title %}
+    Busca | admin - modificar
+{% endblock %}
+
+{% block main %}
+    <!-- Search view -->
+    {% if record is not defined %}
+        <h1>&#129178; Procurar entidades registadas</h1>
+        <form action="/admin/update" method="post">
+            <section class="search-entry">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input type="hidden" name="action" value="search">
+                <button type="submit">
+                    <img class="icon" src="{{ url_for('static', filename='img/magniglass.svg') }}" alt="Procurar">
+                </button>
+                <!-- Current search -->
+                {% if input is defined %}
+                    <input name="name" placeholder="Nome da entidade (deixar vazio para ver todas)" value="{{ input }}" type="text">
+                <!-- New search -->
+                {% else %}
+                    <input autofocus name="name" placeholder="Nome da entidade (deixar vazio para ver todas)" type="text">
+                {% endif %}
+            </section>
+        </form>
+        <a class="cancel-link" href="/admin/dashboard">Retroceder</a>
+    {% endif %}
+
+    <!-- Results view-->
+    {% if count is defined %}
+        <section class="search-results">
+            <h2>{{ count }} entidade(s) encontrada(s)</h2>
+            <table> 
+                {% for result in results %}                    
+                    <tr>
+                        <td>
+                            <form action="/admin/update/{{ result['id'] }}" method="get">
+                                <input type="hidden" name="name" value="{{ input }}">
+                                <button type="submit">Modificar</button>
+                            </form>
+                        </td>
+                        <td>{{ result["id"] }}</td>
+                        <td>{{ result["nome"] }}</td>
+                        <td><i>{{ result["tipo"] }}</i></td>
+                        <td>{{ result["municipio"] }}</td>
+                        <td>
+                            <form action="/admin/update" method="post">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                                <input type="hidden" name="action" value="delete">
+                                <input type="hidden" name="name" value="{{ input }}">
+                                <input type="hidden" name="entry-id" value="{{ result['id'] }}">
+                                <input type="hidden" name="entry-code" value="{{ result['code'] }}">
+                                <input type="hidden" name="entry-name" value="{{ result['nome'] }}">
+                                <button id="del-btn" type="submit">Eliminar</button>
+                            </form>        
+                        </td>
+                    </tr>                
+                {% endfor %}
+            </table>
+        </section>
+    {% endif %}
+    
+    <!-- Update record view -->
+    {% if record is defined %}
+        <h1>&#129178; Modificar entidade Nº <mark>{{ record["id"] }}</mark> <span>(actualizada {{ record["actualizado"] }})</span></h1>
+        <form action="/admin/update/{{ record['id'] }}" method="post">
+            <h2>Informação básica:</h2>
+            <div class="grid-container">
+                <section class="required-fields">
+                    <input name="nome" value="{{ record['nome'] }}" type="text" required>
+                    <select name="concelho" required>
+                        {% for concelho in conc %}
+                            {% if concelho["municipio"] == record["municipio"] %}    
+                                <option selected>{{ concelho["municipio"] }}</option>
+                            {% else %}
+                                <option>{{ concelho["municipio"] }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <select name="tipo" required>
+                        {% for tipo in tipos %}
+                            {% if tipo[0] == record["subtipo"] %}
+                                <option selected value="{{ tipo[0] }}">{{ tipo[1] }}</option>
+                            {% else %}
+                                <option value="{{ tipo[0] }}">{{ tipo[1] }}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                </section>
+        
+                <div class="controls">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <!-- Save changes and go to dashboard-->
+                    <input type="hidden" name="name" value="{{ input }}">
+                    <input type="hidden" name="id" value="{{ record['id'] }}">        
+                    <button type="submit">Guardar</button>
+                    <!-- Cancel changes and return to previous page -->
+                    <input type="hidden" name="action" value="search">
+                    <button id="cancel-btn" formaction="/admin/update" type="submit">Cancelar</button>
+                </div>
+            </div>
+    
+            <h2>Contactos:</h2>
+            <div class="grid-container">
+                <section class="form-section address">
+                    <label for="morada-1">Morada 1:</label>
+                    <input id="morada-1" name="morada-1a" value="{{ record['morada_1a'] }}" placeholder="Rua nº andar..." type="text">
+                    <input name="morada-1b" value="{{ record['morada_1b'] }}" placeholder="Lote loja apartado lugar..." type="text">
+                    <input name="cpostal-1" value="{{ record['cpostal_1'] }}" placeholder="Código postal" type="text">
+                    <input name="lugar-1" value="{{ record['lugar_1'] }}" placeholder="Localidade" type="text">
+                </section>
+        
+                <section class="form-section address">
+                    <label for="morada-2">Morada 2:</label>
+                    <input id="morada-2" name="morada-2a" value="{{ record['morada_2a'] }}" placeholder="Rua nº andar..." type="text">
+                    <input name="morada-2b" value="{{ record['morada_2b'] }}" placeholder="Lote loja apartado lugar..." type="text">
+                    <input name="cpostal-2" value="{{ record['cpostal_2'] }}" placeholder="Código postal" type="text">
+                    <input name="lugar-2" value="{{ record['lugar_2'] }}" placeholder="Localidade" type="text">
+                </section>
+    
+                <section class="form-section phone">
+                    <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel#Pattern_validation-->
+                    <label for="tel-1">Tlf. 1:</label>
+                    <input id="tel-1" name="tel-1" value="{{ record['tel_1'] }}" placeholder="### ### ###" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" size="12" type="tel">
+                    <br>
+                    <label for="tel-2">Tlf. 2:</label>
+                    <input id="tel-2" name="tel-2" value="{{ record['tel_2'] }}" placeholder="### ### ###" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" size="12" type="tel">
+                    <br>
+                    <label for="tel-3">Tlf. 3:</label>
+                    <input id="tel-3" name="tel-3" value="{{ record['tel_3'] }}" placeholder="### ### ###" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" size="12" type="tel">
+                    <br>
+                    <label for="tel-4">Tlf. 4:</label>
+                    <input id="tel-4" name="tel-4" value="{{ record['tel_4'] }}" placeholder="### ### ###" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" size="12" type="tel">
+                </section>
+    
+                <section class="form-section email">
+                    <label>
+                        Email 1:
+                        <input name="email-1" value="{{ record['email_1'] }}" placeholder="@" type="email">
+                    </label>
+                    <label>
+                        Email 2:
+                        <input name="email-2" value="{{ record['email_2'] }}" placeholder="@" type="email">
+                    </label>
+                    <label>
+                        Email 3:
+                        <input name="email-3" value="{{ record['email_3'] }}" placeholder="@" type="email">
+                    </label>
+                </section>
+            </div>
+
+            <section class="form-section url">
+                <label>
+                    Website:
+                    <input name="website-1" value="{{ record['website_1'] }}" placeholder="URL" type="text">
+                </label>
+                <label>
+                    Facebook:
+                    <input name="website-2" value="{{ record['website_2'] }}" placeholder="URL" type="text">
+                </label>
+            </section>
+    
+            <h2>Informação adicional:</h2>
+            <textarea name="extra-info">{{ record['extra_info'] }}</textarea>
+        </form>
+    {% endif %}
+{% endblock %}

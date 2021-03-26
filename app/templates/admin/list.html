@@ -1,0 +1,142 @@
+{% extends "admin/adminlayout.html" %}
+
+{% block title %}
+    Busca | admin - registo
+{% endblock %}
+
+{% block headscript %}
+    <!-- sorting script by https://www.kryogenix.org/code/browser/sorttable/ -->
+    <script src="{{ url_for('static', filename='js/sorttable.js') }}"></script>
+{% endblock %}
+
+{% block main %}
+    <a class="cancel-link" href="/admin/dashboard">Retroceder</a>
+
+    <h1>{{ count }} entidades registadas</h1>
+    <table class="sortable">
+        <thead>
+            <th>Nº</th>
+            <th>Tipo</th>
+            <th>Município</th>
+            <th>Nome</th>
+            <th>Morada(s)</th>
+            <th>Telefone(s)</th>
+            <th>Email(s)</th>
+            <th>Web</th>
+            <th>Fb</th>
+            <th>Actualizada</th>
+        </thead>
+        {% for record in records %}
+            <tr>
+                <td>{{ record["id"] }}</td>
+                <td>
+                    {{ record["tipo"] }}
+                    <br>
+                    {% if record["subtipo"] == "Associação de Proteção Animal" %}
+                        Associação
+                    {% elif record["subtipo"] == "CRO" %}
+                        {{ break }}
+                    {% else %}
+                        {{ record["subtipo"] }}
+                    {% endif %}
+                </td>
+                <td>{{ record["municipio"] }}</td>
+                <td>{{ record["nome"] }}</td>
+                <td>
+                    {% if record["morada_1a"] %} {{ record["morada_1a"] }} {% endif %}
+                    {% if record["morada_1b"] %} {{ record["morada_1b"] }} {% endif %}
+                    {% if record["cpostal_1"] %} {{ record["cpostal_1"] }} {% endif %}
+                    {% if record["lugar_1"] %} {{ record["lugar_1"] }}<br><br>{% endif %}
+                    {% if record["morada_2a"] %} {{ record["morada_2a"] }} {% endif %}
+                    {% if record["morada_2b"] %} {{ record["morada_2b"] }} {% endif %}
+                    {% if record["cpostal_2"] %} {{ record["cpostal_2"] }} {% endif %}
+                    {% if record["lugar_2"] %} {{ record["lugar_2"] }}{% endif %}
+                    {% if not record["morada_1a"] and not record["morada_1b"] and not record["cpostal_1"] and
+                    not record["lugar_1"] and not record["morada_2a"] and not record["morada_2b"] and
+                    not record["cpostal_2"] and not record["lugar_2"] %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if record["tel_1"] %}
+                        {{ record["tel_1"] }}
+                        {% if record["tel_2"] %}
+                            <br>{{ record["tel_2"] }}
+                            {% if record["tel_3"] %}
+                                <br>{{ record["tel_3"] }}
+                                {% if record["tel_4"] %}
+                                    <br>{{ record["tel_4"] }}
+                                {% endif %}
+                            {% elif record["tel_4"] %}
+                                <br>{{ record["tel_4"] }}
+                            {% endif %}
+                        {% elif record["tel_3"] %}
+                            <br>{{ record["tel_3"] }}
+                            {% if record["tel_4"] %}
+                                <br>{{ record["tel_4"] }}
+                            {% endif %}
+                        {% elif record["tel_4"] %}
+                            <br>{{ record["tel_4"] }}
+                        {% endif %}
+                    {% elif record["tel_2"] %}
+                        {{ record["tel_2"] }}
+                        {% if record["tel_3"] %}
+                            <br>{{ record["tel_3"] }}
+                            {% if record["tel_4"] %}
+                                <br>{{ record["tel_4"] }}
+                            {% endif %}
+                        {% elif record["tel_4"] %}
+                            <br>{{ record["tel_4"] }}
+                        {% endif %}
+                    {% elif record["tel_3"] %}
+                        {{ record["tel_3"] }}
+                        {% if record["tel_4"] %}
+                            <br>{{ record["tel_4"] }}
+                        {% endif %}
+                    {% elif record["tel_4"] %}
+                        <br>{{ record["tel_4"] }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if record["email_1"] %}
+                        {{ record["email_1"] }}
+                        {% if record["email_2"] %}
+                            <br>{{ record["email_2"] }}
+                            {% if record["email_3"] %}
+                                <br>{{ record["email_3"] }}
+                            {% endif %}
+                        {% elif record["email_3"] %}
+                            <br>{{ record["email_3"] }}
+                        {% endif %}
+                    {% elif record["email_2"] %}
+                        {{ record["email_2"] }}
+                        {% if record["email_3"] %}
+                            <br>{{ record["email_3"] }}
+                        {% endif %}
+                    {% elif record["email_3"] %}
+                        {{ record["email_3"] }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if record["website_1"] %}
+                        &#10003;
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if record["website_2"] %}
+                        &#10003;
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{ record["actualizado"] }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

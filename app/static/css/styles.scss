@@ -1,0 +1,2145 @@
+//////////////////////////////////////////
+// -- =CONSTANTS, AT-RULES & MIXINS -- ///
+//////////////////////////////////////////
+
+// Media query breakpoints
+
+$phone: 640px;      // screen width: 640 pixels or smaller
+$tmin: 641px;       // tablet (intermediate range)
+$tmax: 1023px;      // "
+$desktop: 1024px;   // screen width: 1024 pixels or larger
+
+// Color palette
+
+$isabelline: #F7F0F0;   // rgb(247, 240, 240)
+$yellow: #FFFF33;       // rgb(255, 255, 51)
+$red: #CC3332;          // rgb(204, 51, 50)
+$black: #333333;        // rgb(51, 51, 51)
+
+// Custom fonts
+
+// https://stackoverflow.com/questions/32582644/how-to-add-custom-font-in-python-flask
+@font-face {
+    font-family: "Pumpkin";
+    src: url("/static/fonts/Pumpkin.otf")
+}
+
+@font-face {
+    font-family: "JelleeBold";
+    src: url("/static/fonts/Jellee-Bold.woff")
+}
+
+// Reset default styles (to include where needed)
+
+// Button reset. https://fvsch.com/styling-buttons
+@mixin button-reset {
+    padding: 0;
+    border: none;
+    font: inherit;
+    color: inherit;
+    background-color: transparent;
+    outline: none;
+}
+
+// Link reset
+@mixin link-reset {
+    text-decoration: none;
+    outline: none;
+    color: inherit;
+}
+
+///////////////////////////
+// -- =GLOBAL STYLES -- ///
+///////////////////////////
+
+// Override browser margin/padding default settings and use alternative box model,
+// i.e. border and padding are included in the element's total width and height
+// (* selector selects all elements)
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+// Reduce overall font size to facilitate conversion from px to em
+// -> sizing text using em. http://clagnut.com/blog/348/
+// -> sizing text using rem. https://snook.ca/archives/html_and_css/font-size-with-rem
+html {
+    font-size: 62.5%;
+}
+
+body {
+    // Background
+    // background-image: (see header of html template)
+    // https://www.webfx.com/blog/web-design/responsive-background-image/
+    background-size: cover;    
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    // Background colour to display while the background image is loading
+    background-color: $black;    
+    // Text color
+    color: $isabelline;
+}
+.page-content {
+    height: 100vh; 
+    // "Overall page" grid setup  https://css-tricks.com/how-to-use-css-grid-for-sticky-headers-and-footers/
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    header {
+        grid-row: 1;
+        // "Header grid setup
+        display: grid;
+        grid-template-columns: 1fr minmax(0, 1024px) 1fr;
+        grid-template-rows: 1fr;
+        .logo {
+            grid-column: 2
+        }
+    }
+    main {  // (incl. footer)
+        grid-row: 2;
+    }
+}
+
+////////////////////////////////////
+// -- =Flashed alert messages -- ///
+////////////////////////////////////
+
+.message, .error {
+    font: bold 1.5em "Century Gothic", Tahoma, sans-serif;
+}
+
+.message {
+    color: $yellow;
+}
+
+.error {
+    color: $red;
+}
+
+#alert-search {
+    padding: 0 20vw 3em 20vw;
+    text-align: center;
+    // Adjust scrolling end-position
+    scroll-margin: 2em;
+
+    @media screen and (max-width: $tmax) and (orientation: landscape),
+    (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { // (tablet/phone landscape)
+        padding: 0 0 3em 0;
+    }
+    @media screen and (min-width: $desktop) {
+        padding: 1em 0 .5em .7em;
+        text-align: left;
+        scroll-margin: 15em;  // force scrolling to top of page
+    }
+}
+
+#alert-contact {
+    padding: 1em .5em;
+    text-align: center;
+    background-color: rgba(51, 51, 51, .9);
+
+    @media screen and (min-width: $desktop) and (orientation: portrait) {
+        margin: -2em 0 .5em;
+    }
+
+    @media screen and (min-width: $desktop) and (orientation: landscape) {
+        margin: 1em 0 -1.5em;
+    }
+}
+
+////////////////////
+// -- =HEADER -- ///
+////////////////////
+
+.logo {
+    margin-top: 1.5vh;
+    max-width: 100vw;   // (default styles always for phone portrait followed by media queries as needed)
+
+    @media screen and (min-width: $tmin) and (orientation: portrait) { max-width: 50em; }
+    @media screen and (max-width: $tmax) and (orientation: landscape) { max-width: 40vw; }
+    @media screen and (min-width: $desktop) and (orientation: landscape) { max-width: 43em; }
+}
+
+// Header version with image [search.html]
+.header-image {
+    background-image: url("/static/img/suri_mobile.jpg");
+    background-position: left bottom;
+    background-size: auto;
+
+    @media screen and (max-width: $phone) and (orientation: landscape) { 
+        background-position: 0 50%;
+        background-size: 100vw;
+    }
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
+        background-position: 0 50%;
+        background-size: auto;
+    }
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: landscape) {
+        background-position: 0 50%;
+        background-size: 100vw;
+    }    
+    @media screen and (min-width: $desktop) {
+        background-image: url("/static/img/suri_desktop.jpg");
+        background-position: 0 80%;
+        background-size: 100vw;
+    }
+}
+
+////////////////////
+// -- =FOOTER -- ///
+////////////////////
+
+footer {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: $black;
+    font: 1em "Century Gothic", Tahoma, sans-serif;
+
+    // https://css-tricks.com/logic-in-media-queries/ (comma equivalent to "OR" in CSS syntax)
+    @media screen and (min-width: $tmin) and (orientation: portrait), (min-width: $desktop) {
+        font-size: 1.2em;
+    }
+
+    // https://www.w3schools.com/howto/howto_css_circles.asp
+    #dot-separator {
+        height: 1em;
+        width: 1em;
+        background-color: $black;
+        border-radius: 50%;
+        margin-bottom: 2em;
+    }
+    #footer-wrapper {
+        padding: 1em;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap-reverse;
+        // https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+        #copyright {
+            flex-grow: 1;
+            text-align: center;
+
+            @media screen and (max-width: $phone) and (orientation: landscape) {
+                text-align: left;
+            }
+
+            @media screen and (min-width: $tmin) {
+                text-align: left;
+                padding-left: 2vw;
+            }
+        }
+        #footer-nav {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            font-size: 1.2em;
+
+            @media screen and (min-width: $desktop) {
+                padding-left: 20vw;
+            }
+
+            .footer-nav-link {
+                padding: 0 2vw;
+            }
+        }
+    }
+}
+
+//////////////////////////
+// -- =MAIN CONTENT -- ///
+//////////////////////////
+
+main {
+    outline: none;
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+
+// Hide scrollbar in [index.html]
+// ! JS-generated class !
+// https://stackoverflow.com/questions/16670931/hide-scroll-bar-but-while-still-being-able-to-scroll
+.in-out-scrollbar {
+    scrollbar-width: none;                  // Firefox
+    -ms-overflow-style: none;               // IE 10+
+}
+.in-out-scrollbar::-webkit-scrollbar {      // Chrome/Safari
+    display: none;
+}
+
+////////////////////////
+// -- =INDEX PAGE -- ///
+////////////////////////
+
+// Welcome screen
+
+#hero {
+    height: 100%;
+    text-align: center;
+    // "Hero" grid setup
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto auto;
+}
+
+h1 {
+    grid-area: 1 / 1 / 2 / 2;   // [row-start] / [col-start] / [row-end] / [col-end]
+    margin: 6vh 7vw 0 7vw;      // [margin-top] / [margin-right] / [margin-bottom] / [margin-left]
+    text-shadow: 0 0 4px black;
+    font: 2.7em "JelleeBold", Arial Black, sans-serif;
+
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { font-size: 3.6em; }
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: landscape) { font-size: 3em; }    
+    @media screen and (min-width: $desktop) { font-size: 4em; }
+}
+
+h2 {
+    grid-area: 3 / 1 / 4 / 2;
+    margin: 0 6vw 2vh 6vw;
+    text-shadow: 0 0 8px black;
+    font: 2em "Century Gothic", Tahoma, sans-serif;
+
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { font-size: 2.8em; }
+    @media screen and (min-width: $desktop) { font-size: 2.5em; }
+}
+
+.icon-arrow {
+    width: 4.5rem;  // size not affected by size of parent element
+    grid-area: 4 / 1 / 5 / 2;
+    margin: auto;
+    display: block;
+}
+
+//////////////////////////////////
+// -- =Interactive sections -- ///
+//////////////////////////////////
+
+#shaded-sections {
+    min-height: 100%;
+    // Shade color
+    background-color:  rgba(129, 119, 122, .85);
+
+    @media screen and (min-width: $desktop) and (orientation: landscape) {  // (desktop/tablet landscape)
+        background: linear-gradient(
+            to right,
+            rgba(129, 119, 122, 0) -5%,
+            rgba(129, 119, 122, .85) 15%,
+            rgba(129, 119, 122, .85) 85%,
+            rgba(129, 119, 122, 0) 105%
+        );  // https://css-tricks.com/css3-gradients/
+    }
+    
+    // "Shaded content" grid setup
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 1024px) 1fr;
+    grid-template-rows: 1fr auto auto auto;
+    .interface {
+        grid-area: 1 / 2 / 2 / 3;
+    }
+    #como-procurar {
+        grid-area: 2 / 2 / 3 / 3;
+    }
+    #onde-procurar {
+        grid-area: 3 / 2 / 4 / 3;
+    }
+    footer {
+        grid-area: 4 / 2 / 5 / 3;
+    }
+}
+
+.interface {
+    // "Interface" grid setup
+    display: grid;
+    grid-template-columns: repeat(6, [col-start] 1fr);
+}
+
+// Position items on the "interface" grid
+
+// https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout/Realizing_common_layouts_using_CSS_Grid_Layout
+.interface > * {
+    grid-column: col-start / span 6;    // (default: phone portrait)
+}
+
+@media screen and (min-width: $tmin) and (orientation: portrait) {  // (desktop/tablet portrait)
+    #info-como {
+        grid-column: col-start 1 / span 3;
+    }
+    #info-onde {
+        grid-column: col-start 4 / span 3;
+    }
+    #pesquisa {
+        grid-column: col-start 1 / span 6;
+    }
+    #contribuir {
+        grid-column: col-start 1 / span 6;
+    }
+}
+@media screen and (max-width: $phone) and (orientation: landscape),
+(min-width: $tmin) and (orientation: landscape) {   // (desktop/tablet/phone landscape)
+    #info-como {
+        grid-column: col-start 1 / span 2;
+    }
+    #info-onde {
+        grid-column: col-start 3 / span 2;
+    }
+    #pesquisa {
+        grid-column: col-start 5 / span 2;
+    }
+    #contribuir {
+        grid-column: col-start 1 / span 6;
+    }
+}
+
+// "Silhouettes"
+
+#info-como, #info-onde {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font: 1.9em "Candara", Tahoma, sans-serif;
+
+    @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 1.7em; }
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { font-size: 2.3em; }
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: landscape) { font-size: 1.7em; }    
+    @media screen and (min-width: $desktop) and (orientation: portrait) { font-size: 2.7em; }
+    @media screen and (min-width: $desktop) and (orientation: landscape) { font-size: 2.4em; }
+}
+
+.info-link-img {
+    margin-top: 8vh;
+}
+
+#blackdog {
+    max-width: 7.5em;
+    margin-bottom: -8px;
+}
+
+#blackcat {
+    max-width: 7.5em;
+    margin-bottom: -8px;
+}
+
+// Logo typeface text insert
+.fat-text {
+    background-color: transparent;
+    font: 1.1em "Pumpkin", Tahoma, sans-serif;
+    color: inherit;
+}
+
+// "Big red box"
+
+#pesquisa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+}
+
+#pesquisar-link {
+    max-width: 13em;
+    padding: .6em .9em;
+    background-color: $red;
+    border-radius: 3em;
+    transition: box-shadow .1s linear;
+    box-shadow: 0 20px 20px -20px black;
+    display: flex;
+    align-items: center;
+    #pesquisar-label {
+        text-align: center;
+        line-height: 1.5em;
+        vertical-align: middle;
+    }
+    font: 1.9em "Candara", Tahoma, sans-serif;
+
+    @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 1.4em; }
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
+        font-size: 2.1em;
+        max-width: 55vw;
+    }
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: landscape) { font-size: 1.5em; }    
+    @media screen and (min-width: $desktop) and (orientation: portrait) {
+        font-size: 2.5em;
+        max-width: 70vw;
+    }
+    @media screen and (min-width: $desktop) and (orientation: landscape) { font-size: 2.2em; }
+}
+
+#icon-magniglass {
+    max-width: 1.2em;
+    // Align icon with text. https://css-tricks.com/tips-aligning-icons-text/
+    position: relative;
+    top: .2em;
+    // Fade in effect on "hover off"  https://css-tricks.com/different-transitions-for-hover-on-hover-off/
+    transition: opacity .1s ease-out;
+    opacity: 1;
+}
+
+// Re-align items #info-como, #info-onde & #pesquisa according to screen size of device
+
+// Re-align items for desktop/tablet/phone landscape
+@media screen and (max-width: $phone) and (orientation: landscape),
+(min-width: $tmin) and (orientation: landscape) {
+    #info-como {
+        align-items: flex-end;
+        padding-right: 3vw;
+        margin-right: 4vw;
+    }
+    #info-onde {
+        align-items: flex-start;
+        margin-left: -4vw;
+    }
+    #pesquisa {
+        justify-content: flex-start;
+        margin-left: -4vw;
+    }
+}
+// Re-align items for desktop/tablet portrait
+@media screen and (min-width: $tmin) and (orientation: portrait) {
+    #info-como {
+        align-items: flex-end;
+        padding-right: 3vw;
+    }
+    #info-onde {
+        align-items: flex-start;
+        padding-left: 3vw;
+    }
+    #pesquisa {
+        justify-content: center;
+    }
+}
+
+// "Dark rectangle"
+#contribuir {
+    width: fit-content;
+    margin: 16vh auto 8vh;  // [margin-top] / left and right margins / [margin-bottom]
+    text-align: center;
+    h3 {
+        font: 1.5em "Century Gothic", Tahoma, sans-serif;
+
+        @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 1.3em; }
+        @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { font-size: 1.7em; }
+        @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: landscape) { font-size: 1.4em; }    
+        @media screen and (min-width: $desktop) and (orientation: portrait) { font-size: 2em; }
+        @media screen and (min-width: $desktop) and (orientation: landscape) { font-size: 1.8em; }    
+    }
+    .highlighted {
+        background-color: rgba(51, 51, 51, .5);
+        color: $isabelline;
+        padding: .5em;
+    }
+}
+
+/////////////////////////
+// -- =Info panels -- ///
+/////////////////////////
+
+#info-arrow {
+    margin: 3vh auto 1.5vh;
+}
+
+#last-info-arrow {
+    margin: 3vh auto 1.5vh;
+}
+
+.info-panel {
+    // ! display:none with JS on page load !
+    
+    @media screen and (min-width: $tmin) and (orientation:portrait) {
+        padding-top: 2vh;
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+
+    @media screen and (min-width: $desktop) {
+        font-size: 1.1em;
+    }    
+}
+
+// Section heading
+h4 {
+    margin: 5vh .2em .65em 5vw;
+    color: $black;
+    .red {
+        color: $red;
+        text-shadow: 0 0 1px black;
+    }
+    // Font sizes for different media screens
+    font: 2.8rem "JelleeBold", Arial Black, sans-serif;
+    
+    @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 2.6rem; }
+    @media screen and (min-width: $tmin) and (orientation:portrait) { font-size: 3rem; }
+    @media screen and (min-width: $desktop) { font-size: 3.3rem; }
+
+}
+
+// Close-panel link
+.icon-x {
+    float: right;
+    width: 3.8em;
+    padding: 1em;
+    opacity: .85;
+
+    @media screen and (min-width: $desktop), (min-width: $tmin) and (orientation: portrait) {
+        width: 4.5em;
+    }
+}
+
+// Back-to-top link
+
+.backtop-link {
+    display: block;
+    width: fit-content;
+    padding: .4em .6em;
+    border: 1px solid rgba(247, 240, 240, .5);
+    border-radius: 10em;
+    font: 1.5em "Century Gothic", Tahoma, sans-serif;
+}
+
+#backtop-como, #backtop-onde {
+    margin: 5vh auto;
+}
+
+//////////////////////////////
+// -- =Collapsible text -- ///
+//////////////////////////////
+
+// Hide checkbox toggle
+.wrap-collapsible input[type='checkbox'] {
+    // https://medium.com/claritydesignsystem/pure-css-accessible-checkboxes-and-radios-buttons-54063e759bb3
+    // Make checkbox transparent and place it underneath the label
+    // (the alternative method "display: none" would make it non accessible)
+    opacity: 0;
+    z-index: -1;    // avoid invisible checkbox preventing "cursor: pointer" when hovering the label
+    margin: 3em 0 0 10em;   
+}
+
+// Expandable items (checkbox labels)
+
+.label-toggle {
+    cursor: pointer;
+    display: block;
+    min-width: fit-content;
+    padding: 2.5vh 2vw 2.5vh 2vw;
+    margin: -2.4em 7vw 0 2.65em;    // negative margin-top to overlap the invisible checkbox
+    border-radius: 10em;
+    transition: all .15s;
+    font: 2.1em "Candara", Tahoma, sans-serif;
+    line-height: 1.4em;    
+    text-indent: -0.9em;    // https://www.thesitewizard.com/css/hanging-indents.shtml
+
+    @media screen and (min-width: $desktop) {
+        text-indent: -0.4em;
+    }
+}
+
+// (pseudo-element) https://developer.mozilla.org/en-US/docs/Web/CSS/::before
+.label-toggle::before {
+    content: "⚫";  // https://www.w3schools.com/charsets/ref_utf_symbols.asp
+    font-size: .7em;
+    display: inline-block;
+    padding-right: 1.2em;
+    vertical-align: 7%;
+    opacity: .8;
+}
+
+@media(hover: hover) {  // prevent sticky hover on touch devices. https://www.geeksforgeeks.org/how-to-prevent-sticky-hover-effects-for-buttons-on-touch-devices/
+    .label-toggle:hover {
+        background-color: rgba(51, 51, 51, .1);
+    }
+}
+
+.toggle:focus + .label-toggle {
+    text-decoration: underline dotted;
+}
+
+// Expandable content
+
+.collapsible-content {
+    display: none;
+    max-height: 0;
+    transition: max-height .15s ease-in-out;
+}
+
+.content-inner {
+    background: rgba(51, 51, 51, .2);
+    color: $isabelline;
+    font: 1.65em "Candara", Tahoma, sans-serif;
+    line-height: 1.5em;
+    margin: 0 3vw 0 3vw;
+    padding: 1.3em 1.3em;
+
+    @media screen and (min-width: $desktop) {
+        padding-left: 2.7vw;
+        padding-right: 2.7vw;
+    }    
+
+    ul, ol {
+        // Style list bullet points
+        // https://developer.mozilla.org/en-US/docs/Web/CSS/list-style
+        // https://developer.mozilla.org/en-US/docs/Web/CSS/::marker
+        list-style-position: inside;
+        ::marker {
+            color: $black;
+        }
+    }
+    P {
+        margin-bottom: 1.2em;
+    }
+    li {
+        margin-bottom: .9em;
+    }
+    li:last-child {
+        margin-bottom: 1.2em;
+    }
+}
+
+.no-link-emphasis {
+    font: .9em "Century Gothic", Tahoma, sans-serif;
+}
+
+// Links in text
+
+.link-external {
+    @include link-reset;
+    color: $yellow;
+    text-shadow: 0 0 1px black;
+    font: .9em "Century Gothic", Tahoma, sans-serif;    
+}
+
+@media(hover: hover) {
+    .link-external:hover {
+        text-shadow: 0 0 4px black;
+    }
+}
+
+.link-external:focus {
+    text-decoration: underline dotted;
+}
+
+// Expanded items/content
+
+.toggle:checked + .label-toggle {
+    border-radius: 0;
+    background-color: rgba(204, 51, 50, .8);
+    margin-right: 3vw;
+    margin-left: 3vw;
+    padding-right: 6vw;
+    padding-left: calc(2vw + (2.65em - 3vw));
+    text-indent: -0.9em;
+
+    @media screen and (min-width: $desktop) {
+        text-indent: -0.4em;
+    } 
+}
+
+.toggle:checked + .label-toggle::before {
+    content: "⚪";
+    opacity: .8;
+}
+
+.toggle:checked + .label-toggle + .collapsible-content {
+    display: block;
+    max-height: 100%;
+}
+
+// Ensure that section "onde procurar" occupies the same space as section "como procurar" 
+#invisible-item {
+    visibility: hidden;
+    margin-top: 0;  // compensate for negative margin-top in class .label-toggle
+}
+
+////////////////////////////////////////////
+// -- =Link reactiveness [index.html] -- ///
+////////////////////////////////////////////
+
+// Reset default styles
+.info-link-img, .info-link-wrds, #pesquisar-link, .jumpy-link, .icon-x, .backtop-link, .footer-nav-link {
+    @include link-reset;
+}
+
+// On hover
+
+@media(hover: hover) {
+    // change sibling element on hover: 
+    // https://stackoverflow.com/questions/12574668/change-color-of-sibling-elements-on-hover-using-css/12574836
+    .info-link-wrds:hover, .info-link-img:hover + .info-link-wrds {
+        text-shadow: 0 0 5px black;
+        .fat-text {
+            color: $yellow;
+            text-shadow: 0 0 10px black;
+        }
+    }
+
+    #pesquisar-link:hover {
+        color: rgba(255, 255, 255, .6);
+        transition: all .1s linear;
+        box-shadow: 0 30px 30px -25px black;
+        #icon-magniglass {
+            // Fade out effect  https://bavotasan.com/2011/a-simple-fade-with-css3/
+            transition: opacity .2s ease-out;
+            opacity: 0;
+        }
+        // Custom cursor (magnifying glass)
+        // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Basic_User_Interface/Using_URL_values_for_the_cursor_property
+        cursor: url("/static/img/cursor_magniglass.png") 12 12, pointer;
+    }
+    
+    .jumpy-link:hover {
+        .highlighted, .fat-text, h3 {
+            color: $yellow;
+            animation: jump .2s;
+        }
+    }
+
+    .icon-x:hover {
+        opacity: 1;
+    }
+
+    .backtop-link:hover {
+        border: 1px solid rgba(247, 240, 240, 1);
+        color: rgba(247, 240, 240, .8);
+    }
+    
+    .footer-nav-link:hover {
+        color: $yellow;
+    }    
+}
+
+// Animations
+
+@keyframes turn {
+    // https://www.useragentman.com/blog/2013/03/03/animating-circular-paths-using-css3-transitions/
+    from {
+        transform: rotate(0);
+    }
+    to { 
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes jump {
+    // https://www.geeksforgeeks.org/how-to-shake-text-on-hover-using-html-and-css/
+    0% {
+        color: $isabelline;
+    }
+    25% {
+        color: $isabelline;
+    }
+    50% {
+        transform: translateY(3px);
+    } 
+    100% {
+        transform: translateY(-2px);
+    }
+}
+
+// On focus
+
+.info-link-wrds:focus, .info-link-img:focus + .info-link-wrds {
+    text-shadow: 0 0 5px black;
+    .fat-text {
+        color: $yellow;
+        text-shadow: 0 0 10px black;
+    }
+}
+
+#pesquisar-link:focus {
+    color: rgba(255, 255, 255, .6);
+    transition: all .1s linear;
+    box-shadow: 0 30px 30px -25px black;
+    #icon-magniglass {
+        animation: turn 1s;
+    }      
+}
+
+.jumpy-link:focus {
+    .highlighted, .fat-text, h3 {
+        color: $yellow;
+        animation: jump .2s;
+    }
+}
+
+.icon-x:focus {
+    opacity: .5;
+}
+
+.backtop-link:focus {
+    border: 1px solid rgba(247, 240, 240, 1);
+    color: rgba(247, 240, 240, .8);
+    text-decoration: underline dotted;
+}
+
+.footer-nav-link:focus {
+    color: $yellow;
+}
+
+// Active links
+
+.info-link-img:active + .info-link-wrds, .info-link-wrds:active, .jumpy-link:active {
+    text-shadow: none;
+    color: $black;
+    .fat-text, i {
+        color: $black;
+    }
+}
+
+#pesquisar-link:active {
+    color: $black;
+    img{
+        // https://css-tricks.com/change-color-of-svg-on-hover/
+        // https://codepen.io/sosuke/pen/Pjoqqp
+        filter: brightness(0) saturate(100%) invert(17%) sepia(0%) saturate(15%) hue-rotate(146deg) brightness(92%) contrast(87%);
+        transition: .1s ease-in;
+    }
+}
+
+.icon-x:active {
+    opacity: .5;
+}   
+
+.backtop-link:active {
+    border: 1px solid $black;
+    color: $black;
+}
+
+.footer-nav-link:active {
+    color: $isabelline;
+}
+
+.link-external:active {
+    color: $black;
+    text-shadow: none;
+}
+
+/////////////////////////
+// -- =SEARCH PAGE -- ///
+/////////////////////////
+
+.grid-layout {
+    min-height: 100%;
+    // "Search layout" grid setup
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 1024px) 1fr;
+    grid-template-rows: 1fr auto;
+    #search-grid {
+        grid-area: 1 / 2 / 2 / 3;
+    }
+    footer {
+        grid-area: 2 / 2 / 3 / 3;
+    }
+}
+
+#search-grid {
+    // "Search interface" grid setup
+    display: grid;
+    grid-template-areas:    // (default for all screens smaller than a desktop)
+        "heading"
+        "searchbar"
+        "filters"
+        "results";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto 1fr;
+
+    @media screen and (min-width: $desktop) {
+        font-size: 1.1em;
+        grid-template-areas:
+            "heading heading"
+            "filters searchbar"
+            "filters results";
+        grid-template-columns: auto 1fr;
+        grid-template-rows: auto auto 1fr;
+    }
+}
+
+// Section heading
+// (implemented as an anchor to allow refreshing the page and resetting search filters)
+#search-heading {
+    @include link-reset;
+    grid-area: heading;
+    margin: 5vh 5vw 4vh 5vw;
+    h4 {
+        margin: 0;
+    }
+}
+
+#search-heading:focus {
+    text-decoration: underline $black dotted;
+}
+
+////////////////////////
+// -- =Search bar -- ///
+////////////////////////
+
+form.name-search {
+    grid-area: searchbar;
+    // Adjust scrolling end-position
+    scroll-margin: 2em; // see answer by colinux. https://stackoverflow.com/questions/49859042/scrollintoview-with-margin
+
+    @media screen and (max-width: $tmax) and (orientation: landscape) { // (phone/tablet landscape)
+        scroll-margin: 1em;    // force scrolling to top of page
+    }    
+    @media screen and (min-width: $desktop),
+    (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { // (desktop/tablet portrait)
+        scroll-margin: 15em;    // force scrolling to top of page
+    }
+}
+
+#search-bar {
+    height: 4.5em;
+    background-color: rgba(51, 51, 51, .3);
+    border-radius: 2em;
+    padding-left: 1.1em;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    max-width: 87vw;
+    margin: 0 auto 1em auto;
+
+    @media screen and (min-width: $phone) and (max-width: $tmin) and (orientation: landscape),
+    (min-width: $tmin) and (max-width: $tmax) { // (tablet/phone landscape)
+        max-width: 51em;
+    }
+    @media screen and (min-width: $desktop) {
+        margin: 0 4rem 0 0;     // rem instead of em to match the margin of #results-container
+        max-width: 100%;
+        border-radius: .4em 1.6em 0 0;
+    }
+}
+
+// Submit button (magnifying glass)
+
+.search-button {
+    @include button-reset;
+    cursor: pointer;
+}
+
+.icon-in-bar {
+    max-width: 4em;
+    padding: .5em 1em .5em 0;
+}
+
+.search-magniglass {
+    max-width: 80%;
+    position: relative;
+    top: .1em;
+}
+
+// Input text
+#search-text {
+    border: none;
+    background: none;
+    outline: none;
+    color: $isabelline;
+    font: 1.5em "Century Gothic", Tahoma, sans-serif;    
+    width: 80%;
+
+    @media screen and (min-width: $desktop) {
+        width: 90%;
+    }
+}
+
+// Placeholder text
+
+// https://css-tricks.com/almanac/selectors/p/placeholder/
+#search-text::-webkit-input-placeholder {   // Chrome/Opera/Safari
+    color: $isabelline;
+    text-shadow: 0 0 1px black;
+    opacity: .6;
+}
+#search-text::-moz-placeholder {            // Firefox 19+
+    color: $isabelline;
+    text-shadow: 0 0 1px black;
+    opacity: .6;
+}
+#search-text:-ms-input-placeholder {        // IE 10+
+    color: $isabelline;
+    text-shadow: 0 0 1px black;
+    opacity: .6;
+}
+#search-text:-moz-placeholder {             // Firefox 18-
+    color: $isabelline;
+    text-shadow: 0 0 1px black;
+    opacity: .6;
+}
+
+//https://stackoverflow.com/questions/9707021/how-do-i-auto-hide-placeholder-text-upon-focus-using-css-or-jquery
+#search-text:focus::placeholder {
+    color: transparent;
+    text-shadow: none;
+}
+
+////////////////////////////
+// -- =Search filters -- ///
+////////////////////////////
+
+#filters {
+    grid-area: filters;
+}
+
+form.filter-search {
+    display: flex;
+    flex-direction: column;
+    max-width: 87vw;
+    margin: 0 auto 4em auto;
+    border: 3px solid rgba(51, 51, 51, .3);
+    border-radius: 2.3em;
+    #button-for-mobile {    // (phone portrait: add an extra search button at the bottom of the search form)
+        @include button-reset;
+        margin-top: .8em;
+        padding: .5em;      
+        background-color: rgba(51, 51, 51, .3);
+        border-radius: 0 0 2em 2em;
+        .search-magniglass {
+            width: 8%;
+        }
+    }
+
+    @media screen and (max-width: $phone) and (orientation: landscape),
+    (min-width: $tmin) and (max-width: $tmax) { // (tablet/phone landscape)
+        flex-direction: row;
+        width: fit-content;
+        #button-for-mobile {
+            display: none;
+        }
+    }
+    @media screen and (min-width: $desktop) {
+        margin: 0 2rem 0 4rem;     // rem instead of em to match the margin in #search-bar
+        border-radius: 1.84em .7em .4em 1.6em;
+        #button-for-mobile {
+            display: none;
+        }
+    }
+}
+
+// Top part of filter menu (darker background)
+
+#search-menu {
+    background-color: rgba(51, 51, 51, .3);
+    border-radius: 2em 2em 0 0;
+    padding-bottom: 1.2em;   
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .5em;
+
+    @media screen and (max-width: $phone) and (orientation: landscape),
+    (min-width: $tmin) and (max-width: $tmax) { // tablet/phone landscape
+        margin-bottom: 0;
+        justify-content: space-around;
+        border-radius: 2em 0 0 2em;
+    }
+    @media screen and (min-width: $desktop) {
+        border-radius: 1.6em .4em 0 0;
+    }
+}
+
+// Submit button (filters)
+
+.icon-in-text {
+    border: 1px solid $yellow;
+    border-radius: 10em;
+    margin: .5em 1em .3em 1em;
+    padding: .4em 0 .3em;
+    font: 1.5em "Century Gothic", Tahoma, sans-serif;
+    color: $yellow;
+    text-shadow: 0 0 1px black;
+    .search-magniglass {
+        max-width: 1.1em;
+        top: .2em;
+    }
+}
+
+// Filter descriptions
+.name-of-filter {
+    color: $black;
+    font: 1.1em "Century Gothic", Tahoma, sans-serif;
+    padding: .5em;
+}
+
+////////////////////////////////////
+// -- =Filter dropdown-select -- ///
+////////////////////////////////////
+
+.dropdown-filter {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: $isabelline;
+    margin: 0 .5em 0 1em;
+    min-width: 15em;
+    option {
+        color: $black;
+        font-size: .9em;
+    }
+    font: 1.5em "Century Gothic", Tahoma, sans-serif;
+
+    @media screen and (min-width: $desktop) {
+        font: 1.3em "Century Gothic", Tahoma, sans-serif;
+    }
+}
+
+@media(hover: hover) {
+    .dropdown-filter:hover {
+        background-color: rgba(247, 240, 240, .1);
+        cursor: pointer; 
+    }
+}
+
+.dropdown-filter:focus {
+    background-color: rgba(247, 240, 240, .1);    
+}
+
+/////////////////////////////////////
+// -- =Filter clickable-toggle -- ///
+/////////////////////////////////////
+
+#loose-filters {
+    display: flex;
+    flex-direction: column;
+}
+
+// Hide checkbox toggle
+.checkbox-filter {
+    opacity: 0;     // make checkbox transparent and place it underneath the label
+    z-index: -1;    // avoid invisible checkbox preventing "cursor: pointer" when hovering the label
+}
+
+// Filter basic style
+.filter-toggle {
+    cursor: pointer;
+    width: fit-content;
+    margin: -1em .9em .3em .9em;    // negative margin-top to overlap the invisible checkbox
+    padding: .4em .9em;
+    border-radius: 1.1em .3em 1.1em .3em;
+    outline: none;
+    font: 1.3em "Century Gothic", Tahoma, sans-serif;
+
+    @media screen and (min-width: $desktop) {
+        font: 1.2em "Century Gothic", Tahoma, sans-serif;
+        padding: .3em .9em;
+    }
+
+    // Filter disabled
+    background-color: rgba(51, 51, 51, .05);
+    text-shadow: 0 0 1px black;
+    border: 1px dotted rgba(51, 51, 51, .3);
+}
+
+@media(hover: hover) {
+    .filter-toggle:hover {
+        text-shadow: none;
+        color: $black;
+        border-style: solid;
+    }
+}
+
+.checkbox-filter:focus + .filter-toggle {
+    text-decoration: underline dotted $black;
+}
+
+// Filter enabled
+.checkbox-filter:checked + .filter-toggle {
+    background-color: rgba(51, 51, 51, .3);
+    opacity: 1;
+    text-shadow: none;
+    border: none;
+    padding: calc(.4em + 1px) calc(.9em + 1px);
+
+    @media screen and (min-width: $desktop) {
+        padding: calc(.3em + 1px) calc(.9em + 1px);
+    }
+}
+
+@media(hover: hover) {
+    .checkbox-filter:checked + .filter-toggle:hover {
+        opacity: .8;
+        color: $isabelline;
+    }
+}
+
+.checkbox-filter:checked:focus + .filter-toggle {
+    text-decoration: underline dotted;
+}
+
+/////////////////////
+// -- =Results -- ///
+/////////////////////
+
+#results-container {
+    grid-area: results;
+    // Adjust scrolling end-position
+    scroll-margin: 2em;
+    // https://kilianvalkhof.com/2017/design/sloped-edges-with-consistent-angle-in-css/
+    // https://bennettfeely.com/clippy/
+    clip-path: polygon(
+        0 0,
+        100% 8vw,
+        100% 100%,
+        0 calc(100% - 8vw)
+    );
+    margin: 0 8vw 4em 8vw;
+    color: $black;
+    // "Results" grid setup
+    display: grid;
+    grid-template-rows: auto auto auto 1fr;
+    #stats {
+        grid-row: 1;
+    }
+    #result-list {
+        grid-row: 2;
+    }
+    .repeat-search {
+        grid-row: 3;
+    }
+    .void-space {
+        grid-row: 4;
+        visibility: hidden;
+    }
+
+    @media screen and (max-width: $tmax) and (orientation: landscape),
+    (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { // (tablet/phone landscape)
+        width: 51em;
+        margin: 0 auto 2em auto;
+    }
+    @media screen and (min-width: $desktop) {
+        scroll-margin: 5em;
+        clip-path: none;
+        max-width: 100%;
+        margin: 0 4rem 2rem 0;  // rem instead of em to cancel the effect of increased font-size
+        font-size: 1.1em;
+    }
+}
+
+// Results header and footer
+
+// "header"
+
+#stats {  
+    font: 1.3em "Century Gothic", Tahoma, sans-serif;
+    color: $isabelline;
+    background-color: $red;
+    width: 100%;
+    padding: 12vw .5em .3em .5em;
+
+    @media screen and (max-width: $tmax) and (orientation: landscape),
+    (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { // (tablet/phone landscape)
+        padding-top: 9vw;
+    }
+    @media screen and (min-width: $desktop) {
+        padding: 1em 0 .5em 1.2em;
+    }
+
+    // Flexbox for controlling the spacing/wrapping of text + button
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+// Button to toggle between expanded/collapsed view of contacts (using JS)
+#all-button {
+    // Hidden by default -> ! displayed with JS !
+    visibility: hidden;
+    @include button-reset;
+    cursor: pointer;
+    font-size: .9em;
+    padding: .2em .5em .2em;
+    
+    @media screen and (min-width: $desktop) {
+        margin-right: 1em;
+    }
+}
+
+// "footer"
+.repeat-search {
+    @include link-reset;
+    display: block;
+    font: 1.3em "Century Gothic", Tahoma, sans-serif;
+    color: $isabelline;
+    text-shadow: 0 0 1px black;
+    background-color: rgba(51, 51, 51, .3);
+    padding: .3em .5em 12vw .5em;
+
+    @media screen and (max-width: $tmax) and (orientation: landscape) { // (phone/tablet landscape)
+        padding-bottom: 9vw;  
+        clip-path: polygon(
+            0 0,
+            100% 0,
+            100% 100%,
+            0 calc(100vw - 92vw)
+        );
+    }
+    // (adjust padding and clip-path for tablet portrait)
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
+        padding-bottom: 9vw;
+        clip-path: polygon(
+            0 0,
+            100% 0,
+            100% 100%,
+            0 calc(100vw - 95vw)
+        );
+    }
+    @media screen and (min-width: $desktop) {
+        padding: .5em 0 1.85em .7em;
+        border-radius: 0 0 1.6rem .4rem;
+        margin-bottom: 2em;
+    }  
+}
+
+////////////////////////////
+// -- =Result entries -- ///
+////////////////////////////
+
+.contact {
+    font: 1.4em "Candara", Tahoma, sans-serif;
+    max-width: calc(100vw - 16vw);  // viewport minus sum of lateral margins of ancestor .results-container
+    padding: 1em .5em;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;  // https://coryrylan.com/blog/css-gap-space-with-flexbox
+
+    @media screen and (min-width: $desktop) {
+        padding-left: 1.1em;
+    }
+}
+
+// Highlight individual entry
+
+@media(hover: hover) {
+    .contact:hover {
+        background-color: rgba(247, 240, 240, .1);
+    }
+}
+
+.contact:focus-within {
+    background-color: rgba(247, 240, 240, .1);
+}
+
+// Entry location
+.contact-place {
+    color: rgba(247, 240, 240, .7);
+}
+
+// Entry name
+.contact-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: rgba(0, 0, 0, .9);
+    margin: -.3em 0 -.2em;
+}
+
+// Entry type
+.contact-type {
+    font-style: italic;
+    font-size: .8em;
+    color: rgba(247, 240, 240, .5);
+    background-color: rgba(51, 51, 51, .5);
+    width: fit-content;
+    padding: 0 .3em;
+}
+
+////////////////////////////////////////
+// -- =Accordion: contact details -- ///
+////////////////////////////////////////
+// https://css-tricks.com/quick-reminder-that-details-summary-is-the-easiest-way-ever-to-make-an-accordion/
+
+summary {
+    cursor: pointer;
+}
+
+@media(hover: hover) {
+    summary:hover, details[open] summary:hover {
+        outline: none;
+        color: $isabelline;
+        opacity: 1;
+    }
+}
+
+summary:focus, details[open] summary:focus {
+    outline: none;
+    color: $isabelline;
+    opacity: 1;
+}
+
+details[open] summary { // https://css-tricks.com/creating-a-details-element-that-opens-but-never-closes/
+    opacity: .5;
+}
+
+.accordion-flexbox {
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+// Accordion content: address and phone details
+
+.contact-details-flexbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: .5em 2em;
+
+    // (desktop and all devices in landscape mode)
+    @media screen and (min-width: $desktop), (orientation: landscape) {
+        gap: .5em 4em;
+    }
+}
+
+.contact-detail-item {
+    width: max-content;
+}
+
+// Entry post address
+.contact-address {
+    font: .8em "Century Gothic", Tahoma, sans-serif;
+    line-height: 1.3em;
+}
+
+// Entry phone number
+.contact-phone {
+    font: .9em "Century Gothic", Tahoma, sans-serif;
+}
+
+///////////////////////////////////////
+// -- =Combo email + copy-button -- ///
+///////////////////////////////////////
+
+.emails-flexbox {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: .2em;
+}
+
+// Entry email address
+.contact-email {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: $black;
+    width: 100%;
+
+    // (desktop and all devices in landscape mode)
+    @media screen and (min-width: $desktop), (orientation: landscape) {
+        width: calc(100% - 10em);
+    }
+}
+
+// https://www.sitepoint.com/community/t/styling-value-attribute-in-input-field-type/35567/4
+.contact-email[value] {
+    font: .9em "Century Gothic", Tahoma, sans-serif;
+}
+
+.copy-button, .copy-button::selection { // https://developer.mozilla.org/en-US/docs/Web/CSS/::selection
+    @include button-reset;
+    cursor: pointer;
+    font: .9em "Candara", Tahoma, sans-serif;
+    color: rgba(51, 51, 51, .9);
+    background-color: rgba(247, 240, 240, .2);
+    margin-top: -.2em;  // to compensate for the gap inside the flexbox
+    padding: 0 .5em .2em .1em;
+    border-radius: .1em .1em .9em .9em;
+
+    // (desktop and all devices in landscape mode)
+    @media screen and (min-width: $desktop), (orientation: landscape) {
+        margin-top: 0;
+        padding: 0 .5em 0 .3em;
+        border-radius: .4em .4em .4em .4em;
+    }
+}
+
+////////////////////////////////
+// -- =Website icon links -- ///
+////////////////////////////////
+
+.weblinks-flexbox {
+    display: flex;
+    flex-direction: row;
+}
+
+.web-link {
+    @include link-reset;
+    margin-right: .8em;
+
+    @media screen and (min-width: $desktop) {
+        margin-right: .5em;
+    }
+}
+
+.web-link-icon {
+    width: 1.5em;
+    margin-top: .3em;
+
+    @media screen and (min-width: $desktop) {
+        width: 1.3em;
+        margin-top: .2em;
+    }
+}
+
+////////////////////////////////////////////////////
+// -- =Link/button reactiveness [search.html] -- ///
+////////////////////////////////////////////////////
+
+// On hover
+
+@media(hover: hover) {
+    .search-magniglass:hover {
+        // https://css-tricks.com/change-color-of-svg-on-hover/
+        // https://codepen.io/sosuke/pen/Pjoqqp
+        filter: brightness(0) saturate(100%) invert(17%) sepia(0%) saturate(15%) hue-rotate(146deg) brightness(92%) contrast(87%);
+    }
+
+    .icon-in-text:hover {
+        background-color: $yellow;    
+        color: $black;
+        text-shadow: none;
+        .search-magniglass {
+            filter: brightness(0) saturate(100%) invert(17%) sepia(0%) saturate(15%) hue-rotate(146deg) brightness(92%) contrast(87%);
+        }
+    }
+
+    #all-button:hover {
+        color: $yellow;
+        text-shadow: 0 0 1px black;
+    }
+
+    .repeat-search:hover {
+        color: $yellow;
+    } 
+    
+    .copy-button:hover {
+        color: rgba(247, 240, 240, .5);
+    }
+
+    .web-link-icon:hover {
+        opacity: .5;
+    }    
+}
+
+// On focus
+
+.icon-in-bar:focus {
+    filter: brightness(0) saturate(100%) invert(17%) sepia(0%) saturate(15%) hue-rotate(146deg) brightness(92%) contrast(87%);
+}
+
+.icon-in-text:focus {
+    background-color: $yellow;    
+    color: $black;
+    text-shadow: none;
+    .search-magniglass {
+        filter: brightness(0) saturate(100%) invert(17%) sepia(0%) saturate(15%) hue-rotate(146deg) brightness(92%) contrast(87%);
+    }
+}
+
+#all-button:focus {
+    text-decoration: underline dotted;
+    
+    @media screen and (min-width: $desktop) {
+        background-color: rgba(51, 51, 51, .1);
+    }
+}
+
+.repeat-search:focus {
+    color: $yellow;
+}
+
+.copy-button:focus {
+    color: rgba(247, 240, 240, .5);
+}
+
+.web-link:focus {
+    opacity: .5;
+}
+
+// Active links
+
+.repeat-search:active {
+    color: $black;
+    text-shadow: none;
+}
+
+.copy-button:active {
+    background-color: $black;
+    color: rgba(247, 240, 240, .5);
+}
+
+.web-link:active {
+    opacity: 1;
+}
+
+////////////////////////
+// -- =ABOUT PAGE -- ///
+////////////////////////
+
+.grid-layout {
+    #about-wrapper {
+        grid-area: 1 / 2 / 2 / 3;
+    }
+    footer.greyed {
+        grid-area: 2 / 2 / 3 / 3;
+        color: rgba(247, 240, 240, .5);
+        #dot-separator.invisible {
+            visibility: hidden;
+        }  
+    }
+}
+
+h4.grey {
+    color: rgba(247, 240, 240, .7);
+    text-shadow: 0 0 1px black;
+}
+
+#about-wrapper > h4 {
+    margin: 4vh 5vw 1vh 5vw;
+    text-align: left;
+
+    @media screen and (min-width: $tmin) and (orientation: portrait) {
+        margin: 4vh 3em 1.3em;
+    }
+    @media screen and (min-width: $desktop) and (orientation: landscape) {
+        margin: 4vh 2.5em .7em;
+    }
+}
+
+// Figure (image + text)
+figure {
+    position: relative; // accommodate absolutely-positioned text over the image
+    font: 1.2em "Candara", Tahoma, sans-serif;
+    text-shadow: 0 0 4px black;
+    line-height: 1.3em;
+    img {
+        max-width: 100%;    // https://css-tricks.com/preventing-a-grid-blowout/
+    }
+    blockquote {
+        position: absolute;
+        top: 3%;
+        right: 0;
+        margin-right: 1.5em;
+        width: 65%;
+        text-align: justify;
+        text-justify: auto; // https://css-tricks.com/almanac/properties/t/text-justify/
+        text-shadow: 0 0 2px black, 0 0 1px white, 0 0 3px black;
+        
+        @media screen and (max-width: $tmax) and (orientation: landscape) {
+            width: 45%;
+            margin-right: 5vw;
+        }
+    }
+    figcaption {
+        position: absolute;
+        bottom: .9%;
+        padding: .8em .5em;
+        width: 100%;
+        background-color: rgba(0, 0, 0, .5);
+        font: .8em Arial, Tahoma, sans-serif;
+        text-align: right;
+    }
+    // Position figure relative to the text
+    float: top;
+    width: 100%;
+
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
+        float: left;
+        width: 38%;
+        margin: .5em 2em 1.5em 6em;
+    }
+    @media screen and (min-width: $desktop) and (orientation: portrait) {
+        float: left;
+        width: 40%;
+        margin: .5em 3em 1.5em 5em;
+    }
+    @media screen and (min-width: $desktop) and (orientation: landscape) {
+        float: left;
+        width: 33%;
+        margin: .5em 3em 1.5em 5em;
+    }
+}
+
+// Quotation marks
+.quotes {
+    font-family: "Pumpkin", Tahoma, sans-serif;
+    vertical-align: middle; // https://stackoverflow.com/questions/39852827/styling-quotation-marks
+}
+
+///////////////////////////////
+// -- =Text [about.html] -- ///
+///////////////////////////////
+
+article {
+    text-align: justify;
+    text-justify: auto;
+
+    margin-top: 2em;
+    padding-left: 2em;
+    padding-right: 2em;
+    p {
+        margin-bottom: 1em;
+        max-width: 60em;
+    }
+    hr {
+        margin: 3em 25vw 1.5em 25vw;
+        border: 1px solid rgba(0, 0, 0, .3);
+    }
+    hr:last-child {
+        margin-top: 2em;
+        margin-bottom: .5em;
+    }
+    font: 1.3em "Candara", Tahoma, sans-serif;
+    line-height: 1.5em;
+
+    @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
+        margin-right: 2.5em;
+    }
+    @media screen and (min-width: $desktop) {
+        font-size: 1.5em;
+        line-height: 1.7em;
+    }
+
+    blockquote {
+        font: bold 1em "Century Gothic", Tahoma, sans-serif;
+        color: rgba(247, 240, 240, .9);
+        text-align: center;
+        line-height: 1.5em;
+        .quotes {
+            font-size: 1.2em;
+        }
+        margin: 2em calc(100vw / 2 * .2);
+
+        @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
+            margin: 4em 12em 2em;
+        }
+        @media screen and (min-width: $desktop) and (orientation: portrait) {
+            margin: 3em 20vw 2em;
+        }
+        @media screen and (min-width: $desktop) and (orientation: landscape) {
+            margin: 1.5em 8vw 1.5em 33vw;
+        }
+    }
+}
+
+@media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
+    article:last-child {
+        padding-left: 5vw;
+        padding-right: 5vw;
+    }
+}
+@media screen and (min-width: $desktop) {
+    article:last-child {
+        padding-left: 5vw;
+        padding-right: 8vw;
+    }
+}
+
+#last-pgph {
+    font-size: 1.1em;
+    text-shadow: 0 0 1px black;
+    margin-left: 6vw;
+    margin-right: 6vw;
+    padding: .9em 1.2em;
+    border-radius: .3em;
+    background-color: rgba(247, 240, 240, .1);
+    mark, em {
+        color: rgba(247, 240, 240, .9);
+    }
+
+    @media screen and (min-width: $desktop), (min-width: $tmin) and (orientation: portrait) {
+        margin-left: 9.25em;
+        margin-right: 9.25em;
+    }    
+}
+
+//////////////////////////
+// -- =CONTACT PAGE -- ///
+//////////////////////////
+
+#contact-grid {
+    min-height: 100%;
+    // "Contact" grid setup
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 1024px) 1fr;
+    grid-template-rows: auto 1fr auto;
+    #contact-heading {
+        grid-area: 1 / 2 / 2 / 3;
+    }
+    #contact-flexbox {
+        grid-area: 2 / 2 / 3 / 3;
+    }
+    footer.whitish {
+        grid-area: 3 / 2 / 4 / 3;
+        color: $isabelline;
+        // Hide the dot separator and reduce the margin between footer and page content above
+        #dot-separator {
+            background-color: $isabelline;
+            margin-bottom: .5em;
+
+            @media screen and (min-width: $desktop) {
+                margin-bottom: 2em;
+            }        
+        }    
+    }
+}
+
+#contact-heading {
+    h4 {
+        margin: 4vh 5vw 1vh 5vw;
+    }  
+}
+
+#contact-flexbox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+
+    @media screen and (min-width: $desktop) {
+        flex-wrap: nowrap;
+        margin-bottom: 2.5vh;
+    }
+}
+
+// "How-to-contact" instructions box
+#shaded-text {
+    // Text style
+    font: 1.3em "Century Gothic", Tahoma, sans-serif;
+    line-height: 1.3em;
+    // Size and background
+    background-color:  rgba(129, 119, 122, .8);
+    width: 100%;
+    margin: 1em .5em .5em;
+    padding: 2em 1.5em 1em 2em;
+    border-radius: .5em;
+
+    @media screen and (max-width: $tmax) and (orientation: landscape) {
+        margin: 1em 5vw .5em;
+        padding: 2em 7vw 1em 2.5em;
+    }
+    @media screen and (min-width: $tmin) and (orientation: portrait) {
+        font-size: 1.5em;
+        margin: 1em 3rem 2em 3rem;
+        padding: 2.5em 3em;
+    }
+    @media screen and (min-width: $desktop) and (orientation: portrait) {
+        margin: 2em 0 2em 3rem;
+        padding-top: 3em;
+        width: 50vw;
+    }
+    @media screen and (min-width: $desktop) and (orientation: landscape) {
+        font-size: 1.5em;
+        padding-top: 1.5em;
+        margin-top: 1em;
+        margin-left: 3rem;
+        width: 43vw;
+    }
+}
+
+// List of instructions
+
+#shaded-text > label {
+    font-size: 1.2em;
+    cursor: text;
+}
+
+#shaded-text > label > ul {
+    font: .9em "Candara", Tahoma, sans-serif;
+    margin: .8em .7em 0 .3em;
+    li {
+        background: linear-gradient(
+            to right,
+            rgba(51, 51, 51, 0),
+            rgba(51, 51, 51, .01),
+            rgba(51, 51, 51, .05),
+            rgba(51, 51, 51, .10),
+            rgba(51, 51, 51, 0) 115%
+        );
+        margin-bottom: 1em;
+        padding: 0 .7em 0 .5em;
+        // List-items text style
+        text-align: justify;
+        text-justify: auto;
+        line-height: 1.5em;
+        color: rgba(255, 255, 255, .85);
+        // Linear "bullet points"
+        border-left: .3em solid rgba(0, 0, 0, .3);
+        border-radius: 2px 0 0 2px;
+    }
+    // Hide default bullet points
+    list-style: none;
+}
+
+// Email address (yellow + icon)
+#shaded-text address {
+    margin: .5em 0;
+    color: rgba(255, 255, 51, .9);
+    // "Mail" icon
+    span {
+        position: relative;
+        top: .15em;
+        font-size: 1.5em;
+        color: rgba(0, 0, 0, .4);
+        font-style: normal;
+        // Icon not selectable
+        // https://css-tricks.com/almanac/properties/u/user-select/
+        -webkit-user-select: none;  // Chrome/Safari all
+        -moz-user-select: none;     // Firefox all
+        -ms-user-select: none;      // IE 10+
+        user-select: none;          // Likely future
+    }
+}
+
+// "Leave message" (red underline)
+#shaded-text #red-underline {
+    padding-bottom: .5em;
+    border-bottom: 2px solid $red;
+}
+
+// "Thank you" (dark text)
+#shaded-text #dark-text {
+    color: rgba(247, 240, 240, .5);
+    font-variant: small-caps;
+    font-style: italic;
+}
+
+////////////////////////////
+// -- =Submit message -- ///
+////////////////////////////
+
+#contact-form {
+    margin: .5em 2.5em 0;
+    width: 100%;
+
+    @media screen and (max-width: $tmax) and (orientation: landscape) {
+        margin: 0 3vw 2em 3vw;
+        padding: 0 3em;
+    }
+    @media screen and (min-width: $tmin) and (orientation: portrait) {
+        margin: 0 3rem 2em 3rem;
+        padding: 0 3em;
+    }
+    @media screen and (min-width: $desktop) and (orientation: portrait) {
+        margin: 7em 3rem 0 0;
+    }
+    @media screen and (min-width: $desktop) and (orientation: landscape) {
+        margin-top: .3em;
+        margin-right: 3rem;
+    }
+}
+
+.textbox {
+    font-family: "Candara", Tahoma, sans-serif;
+    background-color: rgba(247, 240, 240, .9);
+    border: 1px solid $black;
+    border-radius: .5em;
+    padding: .5em;
+    margin-bottom: .3em;
+}
+
+// Make room for flashed messages
+@media screen and (min-width: $desktop) and (orientation: landscape) {
+    #input-subject {
+        margin-top : 2.3em;
+    }
+}
+
+#input-subject, #input-message {
+    display: block;
+    width: 100%;
+}
+
+#input-message {
+    height: 50vh;
+
+    @media screen and (orientation: landscape) { height: 25vw; }
+    @media screen and (min-width: $tmin) and (orientation: portrait) { height: 25vh; }
+    @media screen and (min-width: $desktop) and (orientation: portrait) { height: 45vh; }
+    @media screen and (min-width: $desktop) and (orientation: landscape) { height: 53vh; }
+}
+
+#input-name {
+    width: 40%;
+}
+
+#input-email {
+    width: calc(60% - 5em);    // 60% width minus the approx. width of submit button
+}
+
+// Submit button style and reactiveness
+
+#send-button {
+    @include button-reset;
+    float: right;
+    margin-top: .2em;
+    padding: .3em .6em;
+    font: bold 1.5em "Candara", Tahoma, sans-serif;
+    color: $isabelline;
+    text-shadow: 0 0 1px black;
+    border-radius: .5em;
+    background-color: $red;
+}
+
+@media(hover: hover) {
+    #send-button:hover {
+        cursor: pointer;
+        background-color: $isabelline;
+        color: $red;
+        text-shadow: none;    
+    }
+}
+
+#send-button:focus {
+    background-color: $isabelline;
+    color: $red;
+    text-shadow: none;
+    text-decoration: underline dotted;
+}
+
+#send-button:active {
+    cursor: pointer;
+    background-color: $isabelline;
+    color: $black;
+    text-shadow: none;    
+}
+
+/////////////////////////
+// -- =PRIVACY PAGE -- ///
+/////////////////////////
+
+.grid-layout {
+    #privacy-content {
+        grid-area: 1 / 2 / 2 / 3;
+        padding-top: 2em;
+        margin-bottom: 4em;
+    }
+    footer.greyed {
+        grid-area: 2 / 2 / 3 / 3;
+        color: rgba(247, 240, 240, .5);
+        #dot-separator {
+            background-color: rgba(247, 240, 240, .5);
+        }  
+    }
+}
+
+#privacy-content > h4 {
+    text-align: center;
+    margin: 1em 4vw 1.5em;
+
+    @media screen and (min-width: $tmin) {
+        margin: 1em auto 1.5em;
+    }
+}
+
+#privacy-text {
+    font: 1.5em "Candara", Tahoma, sans-serif;
+    line-height: 1.5em;
+    max-width: 75ch;
+    text-align: justify;
+    text-justify: auto;
+    span {
+        font: bold 1em "Century Gothic", Tahoma, sans-serif;
+    }
+    margin: 2em 8vw 0;
+
+    @media screen and (min-width: $tmin) {
+        margin: 2em auto 0 auto;
+    }
+}

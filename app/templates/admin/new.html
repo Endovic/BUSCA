@@ -1,0 +1,100 @@
+{% extends "admin/adminlayout.html" %}
+
+{% block title %}
+    Busca | admin - novo
+{% endblock %}
+
+{% block main %}
+    <h1>&#129178; Novo registo</h1>    <!-- https://www.htmlsymbols.xyz/unicode/U+1F89A -->
+    <form action="/admin/new" method="post">
+        
+        <h2>Informação básica:</h2>
+        <div class="grid-container">
+            <section class="required-fields">
+                <input autocomplete="off" autofocus name="nome" placeholder="Nome" type="text" required>
+                <select name="concelho" required>
+                    <!-- selection required, placeholder label option value is the empty string https://html.spec.whatwg.org/#the-select-element-->
+                    <option value=''>Concelho</option>
+                    {% for concelho in conc %}
+                        <option>{{ concelho["municipio"] }}</option>
+                    {% endfor %}
+                </select>
+                <select name="tipo" required>
+                    <option value=''>Tipo</option>
+                    {% for tipo in tipos %}
+                        <option value="{{ tipo[0] }}">{{ tipo[1] }}</option>
+                    {% endfor %}
+                </select>
+            </section>
+    
+            <div class="controls">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <button type="submit">Guardar</button>
+                <a class="cancel-link" href="/admin/dashboard">Cancelar</a>
+            </div>
+        </div>
+
+        <h2>Contactos:</h2>
+        <div class="grid-container">
+            <section class="form-section address">
+                <label for="morada-1">Morada 1:</label>
+                <input id="morada-1" name="morada-1a" placeholder="Rua nº andar..." type="text">
+                <input name="morada-1b" placeholder="Lote loja apartado lugar..." type="text">
+                <input name="cpostal-1" placeholder="Código postal" type="text">
+                <input name="lugar-1" placeholder="Localidade" type="text">
+            </section>
+    
+            <section class="form-section address">
+                <label for="morada-2">Morada 2:</label>
+                <input id="morada-2" name="morada-2a" placeholder="Rua nº andar..." type="text">
+                <input name="morada-2b" placeholder="Lote loja apartado lugar..." type="text">
+                <input name="cpostal-2" placeholder="Código postal" type="text">
+                <input name="lugar-2" placeholder="Localidade" type="text">
+            </section>
+
+            <section class="form-section phone">
+                <!-- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/tel#Pattern_validation-->
+                <label for="tel-1">Tlf. 1:</label>
+                <input id="tel-1" name="tel-1" placeholder="### ### ###" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" size="12" type="tel">
+                <br>
+                <label for="tel-2">Tlf. 2:</label>
+                <input id="tel-2" name="tel-2" placeholder="### ### ###" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" size="12" type="tel">
+                <br>
+                <label for="tel-3">Tlf. 3:</label>
+                <input id="tel-3" name="tel-3" placeholder="### ### ###" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" size="12" type="tel">
+                <br>
+                <label for="tel-4">Tlf. 4:</label>
+                <input id="tel-4" name="tel-4" placeholder="### ### ###" pattern="[0-9]{3} [0-9]{3} [0-9]{3}" size="12" type="tel">
+            </section>
+
+            <section class="form-section email">
+                <label>
+                    Email 1:
+                    <input name="email-1" placeholder="@" type="email">
+                </label>
+                <label>
+                    Email 2:
+                    <input name="email-2" placeholder="@" type="email">
+                </label>
+                <label>
+                    Email 3:
+                    <input name="email-3" placeholder="@" type="email">
+                </label>
+            </section>
+        </div>
+
+        <section class="form-section url">
+            <label>
+                Website:
+                <input name="website-1" placeholder="URL" type="text">
+            </label>
+            <label>
+                Facebook:
+                <input name="website-2" placeholder="URL" type="text">
+            </label>
+        </section>
+
+        <h2>Informação adicional:</h2>            
+        <textarea name="extra-info"></textarea>
+    </form>
+{% endblock %}

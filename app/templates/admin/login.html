@@ -1,0 +1,14 @@
+{% extends "admin/adminlayout.html" %}
+
+{% block title %}
+  Busca | admin - login
+{% endblock %}
+
+{% block main %}
+  <form action="/admin/login" method="post">
+    <input autocomplete="off" autofocus name="nickname" placeholder="Nome" type="text" required>
+    <input name="password" placeholder="Palavra-passe" type="password" required>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <button type="submit">Entrar</button>
+  </form>
+{% endblock %}
