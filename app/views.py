@@ -8,6 +8,8 @@ import re
 from .dbconnect import query_db, get_db
 
 # Ensure responses aren't cached (in debugging mode)
+# https://pythonise.com/series/learning-flask/python-before-after-request
+# https://devcenter.heroku.com/articles/increasing-application-performance-with-http-cache-headers
 @app.after_request
 def after_request(response):
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
@@ -15,7 +17,7 @@ def after_request(response):
     response.headers["Pragma"] = "no-cache"
     return response    
 
-# Application views
+# Application views:
 
 @app.route("/")
 def index():
@@ -48,12 +50,11 @@ def contact():
         guestname = (request.form.get("guestname") if request.form.get("guestname") != '' else None) # https://www.pythoncentral.io/one-line-if-statement-in-python-ternary-conditional-operator/
         guestmail = (request.form.get("guestmail") if request.form.get("guestmail") != '' else None)
 
-        # Get UTC date/time of submission using SQLite function: https://www.sqlitetutorial.net/sqlite-date/
-        date = query_db("SELECT datetime('now')")[0]["datetime('now')"]
-
         try:
-            query_db("INSERT INTO messages (sub, msg, name, email, date) VALUES (?, ?, ?, ?, ?)",
-                (subject, message, guestname, guestmail, date))
+            query_db("INSERT INTO messages (sub, msg, visitor, email) VALUES (%s, %s, %s, %s)",
+                (subject, message, guestname, guestmail))
+            # date/time of submission is recorded automatically in the database when INSERT takes place
+            # https://www.postgresqltutorial.com/postgresql-current_timestamp/
             
             get_db().commit()
         except:
@@ -66,10 +67,9 @@ def contact():
 
 @app.route("/pesquisa-entidades", methods=["GET", "POST"])
 def search():
-
     # Get locations from database
-    distrilhas = query_db("SELECT DISTINCT distrilha FROM territory ORDER BY distrilha COLLATE noaccents") # (DISTINCT removes duplicate rows)
-    concelhos = query_db("SELECT municipio FROM territory ORDER BY municipio COLLATE noaccents")
+    distrilhas = query_db("SELECT DISTINCT distrilha FROM territory ORDER BY distrilha") # (DISTINCT removes duplicate rows)
+    concelhos = query_db("SELECT municipio FROM territory ORDER BY municipio")
 
     # Get types of entities from database (convert returned dictionary of row objects into a list of strings)
     entidades = query_db("SELECT DISTINCT subtipo FROM contacts")
@@ -98,21 +98,13 @@ def search():
 
             # Valid text was submitted - query the database and present results
             else:
-                # Escape special characters to avoid FTS5 syntax error
-                name = re.sub(r"[+_'\/-]", ' ', name)   # replace plus sign, underscore, apostrophe, forward slash and hyphen with a space
-                name = re.sub(r"[^\w\s]", '', name)    # remove all non-alphanumeric non-whitespace chars
-
-                # Full-text search (FTS5) using virtual tables
-                # https://sqlite.org/fts5.html
-                # https://learnsql.com/cookbook/how-to-join-multiple-3-plus-tables-in-one-statement/
-                # https://stackoverflow.com/questions/44168871/sqlite-android-join-operation-on-fts4
-                # (this query gets contact + municipality but repeats contacts with multiple municipalities)    
-                    # results = query_db("""SELECT * FROM places
-                    #     JOIN (SELECT * FROM contacts_fts WHERE contacts_fts MATCH ? ORDER BY rank) USING (id)
-                    #     JOIN territory USING (code)""", [name])
-                try:
-                    # (gets only contact and each contact only once even if it has multiple municipalities)
-                    results = query_db("SELECT * FROM contacts_fts WHERE contacts_fts MATCH ? ORDER BY nome", [name])
+                try:                    
+                    # Full-text search. https://www.postgresql.org/docs/current/textsearch-controls.html#TEXTSEARCH-PARSING-DOCUMENTS
+                    # 'ptunaccent' configuration: portuguese dictionary and diacritic-insensitive search
+                    # (this query gets each contact only once even if it's in more than one place)
+                    results = query_db("""SELECT * FROM contacts
+                        WHERE to_tsvector('ptunaccent', nome) @@ websearch_to_tsquery('ptunaccent', %s)
+                        ORDER BY nome""", [name])
                 except:
                     print(sys.exc_info())   # https://www.kite.com/python/docs/sys.exc_info
                     flash("Ocorreu um erro. Altere os termos de pesquisa e tente novamente.", "error")
@@ -150,8 +142,8 @@ def search():
                     results = query_db("""SELECT * FROM places
                         JOIN contacts USING (id)
                         JOIN territory USING (code)
-                        WHERE municipio = ? AND subtipo IN ({}) ORDER BY nome COLLATE noaccents"""
-                        .format(", ".join('?'*len(subtipos))), filters)
+                        WHERE municipio = %s AND subtipo IN ({}) ORDER BY nome"""
+                        .format(", ".join(["%s"]*len(subtipos))), filters)
                         # for use of .FORMAT see https://pyformat.info/
                         # https://stackoverflow.com/questions/1309989/parameter-substitution-for-a-sqlite-in-clause
                         # https://www.reddit.com/r/Python/comments/2ckv0y/sqlite_where_in_with_a_variable_number_of_criteria/
@@ -163,22 +155,22 @@ def search():
                     results = query_db("""SELECT * FROM places
                         JOIN contacts USING (id)
                         JOIN territory USING (code)
-                        WHERE distrilha = ? AND subtipo IN ({}) ORDER BY nome COLLATE noaccents"""
-                        .format(", ".join('?'*len(subtipos))), filters)
+                        WHERE distrilha = %s AND subtipo IN ({}) ORDER BY nome"""
+                        .format(", ".join(["%s"]*len(subtipos))), filters)
 
                 else:
                     results = query_db("""SELECT * FROM places
                         JOIN contacts USING (id)
                         JOIN territory USING (code)
-                        WHERE subtipo IN ({}) ORDER BY nome COLLATE noaccents"""
-                        .format(", ".join('?'*len(subtipos))), subtipos)
+                        WHERE subtipo IN ({}) ORDER BY nome"""
+                        .format(", ".join(["%s"]*len(subtipos))), subtipos)
 
                 return render_template("public/search.html", dist=distrilhas, conc=concelhos,
                     checked=subtipos, select_dist=distrilha, select_conc=concelho,
                     results=results, count=len(results))
 
 
-# Update filters dropdown menus in real time via network request from JavaScript
+# Update filter dropdown menus in real time via network request from JavaScript
 # https://towardsdatascience.com/talking-to-python-from-javascript-flask-and-the-fetch-api-e0ef3573c451
 @app.route("/filter/<scope>/<location>")    # only accept GET requests (default)
 def filter(scope, location):
@@ -194,8 +186,8 @@ def filter(scope, location):
             except:
                 # Otherwise query the database and create a new json file with location data
                 raw_list = query_db("""SELECT municipio, distrilha FROM territory WHERE distrilha IN
-                    (SELECT DISTINCT distrilha FROM territory ORDER BY distrilha COLLATE noaccents)
-                    ORDER BY municipio COLLATE noaccents""")
+                    (SELECT DISTINCT distrilha FROM territory ORDER BY distrilha)
+                    ORDER BY municipio""")
                 
                 # (convert returned dictionary of row objects into a dictionary of lists of strings)
                 # https://www.kite.com/python/answers/how-to-append-an-element-to-a-key-in-a-dictionary-with-python
@@ -217,7 +209,7 @@ def filter(scope, location):
                 with open(f"app/static/json/municipalities.json", "r") as read_file:
                     municipalities = json.load(read_file)
             except:
-                raw_list = query_db("SELECT municipio FROM territory ORDER BY municipio COLLATE noaccents")
+                raw_list = query_db("SELECT municipio FROM territory ORDER BY municipio")
                 municipalities = []
                 for municipio in raw_list:
                     municipalities.append(municipio["municipio"])
@@ -232,7 +224,7 @@ def filter(scope, location):
 
         try:
             # Get corresponding distrilha from database, convert row object to string and serialize to json
-            for row_obj in query_db("SELECT distrilha FROM territory WHERE municipio = ? COLLATE noaccents", [location]):
+            for row_obj in query_db("SELECT distrilha FROM territory WHERE municipio = %s", [location]):
                 result_str = row_obj["distrilha"]
             return jsonify(result_str)
         

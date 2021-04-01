@@ -7,6 +7,7 @@ from functools import wraps
 from werkzeug.security import check_password_hash
 import re
 from collections import defaultdict
+import sys # for error handling (sys.exc_info()) https://www.kite.com/python/docs/sys.exc_info
 
 from .dbconnect import query_db, get_db
 
@@ -46,16 +47,15 @@ def login_required(f):
     return decorated_function
 
 # (helper function) Log admin changes
-def logChanges(ch, et, nm, ad):
+def logChanges(change, num, name, admin):
 
-    # Get UTC date/time of change using SQLite function: https://www.sqlitetutorial.net/sqlite-date/
-    date = query_db("SELECT datetime('now')")[0]["datetime('now')"]
-
-    query_db("""INSERT INTO changes (change, entry, name, admin_id, date)       
-        VALUES (?, ?, ?, ?, ?)""", (ch, et, nm, ad, date))
+    query_db("""INSERT INTO edits (change, contact_id, contact_name, admin_id)       
+        VALUES (%s, %s, %s, %s)""", (change, num, name, admin))
+    # date/time of submission is recorded automatically in the database when INSERT takes place
+    # https://www.postgresqltutorial.com/postgresql-current_timestamp/
     return
 
-# Application views
+# Application views:
 
 @app.route("/admin/")
 def gotodashboard():
@@ -73,7 +73,7 @@ def admin_login():
     elif request.method == "POST":
 
         # Query database for nickname
-        row = query_db("SELECT * FROM admin WHERE nicknm = ?", [request.form.get("nickname")])
+        row = query_db("SELECT * FROM admins WHERE nicknm = %s", [request.form.get("nickname")])
 
         # Ensure username exists and password is correct
         if row and check_password_hash(row[0]["passwd"], request.form.get("password")):
@@ -82,7 +82,6 @@ def admin_login():
             session["user_id"] = row[0]["id"]  # access value by column name https://www.kite.com/python/docs/sqlite3.Row
                         
             return redirect(url_for("admin_dashboard"))
-
         else:
             return redirect(url_for("admin_login"))
 
@@ -98,7 +97,7 @@ def admin_new():
 
     # User reached route via link from dashboard -> present empty form
     if request.method == "GET":
-        concelhos = query_db("SELECT municipio FROM territory ORDER BY municipio COLLATE noaccents")
+        concelhos = query_db("SELECT municipio FROM territory ORDER BY municipio")
         tipos = [
             ("CRO", "CRO"),
             ("Associação de Proteção Animal", "ASFL - Associação"),
@@ -114,8 +113,8 @@ def admin_new():
         name = request.form.get("nome").upper()
         location = request.form.get("concelho")
         subtype = request.form.get("tipo")
-        maintype = query_db("SELECT tipo FROM contacts WHERE subtipo = ?", [subtype])[0]["tipo"]
-        # Save empty facultative fields as NULL in the database:
+        maintype = query_db("SELECT tipo FROM contacts WHERE subtipo = %s", [subtype])[0]["tipo"]
+        # Empty facultative fields saved as NULL in the database:
         tel1 = (request.form.get("tel-1") if request.form.get("tel-1") != '' else None) # https://www.pythoncentral.io/one-line-if-statement-in-python-ternary-conditional-operator/
         tel2 = (request.form.get("tel-2") if request.form.get("tel-2") != '' else None)
         tel3 = (request.form.get("tel-3") if request.form.get("tel-3") != '' else None)
@@ -135,22 +134,23 @@ def admin_new():
         web2 = (request.form.get("website-2") if request.form.get("website-2") != '' else None)
         extra = (request.form.get("extra-info") if request.form.get("extra-info") != '' else None)
 
-        actualizado = query_db("SELECT date('now')")[0]["date('now')"]
-
         try:
             query_db("""INSERT INTO contacts
-                (nome, tipo, subtipo, tel_1, tel_2, tel_3, tel_4, email_1, email_2, email_3, morada_1a, morada_1b, cpostal_1, lugar_1, morada_2a, morada_2b, cpostal_2, lugar_2, website_1, website_2, extra_info, actualizado)       
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-                (name, maintype, subtype, tel1, tel2, tel3, tel4, email1, email2, email3, morada1a, morada1b, cp1, lugar1, morada2a, morada2b, cp2, lugar2, web1, web2, extra, actualizado))
+                (nome, tipo, subtipo, tel_1, tel_2, tel_3, tel_4, email_1, email_2, email_3, morada_1a, morada_1b, cpostal_1, lugar_1, morada_2a, morada_2b, cpostal_2, lugar_2, website_1, website_2, extra_info)       
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
+                (name, maintype, subtype, tel1, tel2, tel3, tel4, email1, email2, email3, morada1a, morada1b, cp1, lugar1, morada2a, morada2b, cp2, lugar2, web1, web2, extra))
+            # date is recorded automatically in the database when INSERT takes place
+            # https://www.postgresqltutorial.com/postgresql-current_date/
 
-            newcode = query_db("SELECT code FROM territory WHERE municipio = ?", [location])[0]["code"]
-            newid = query_db("SELECT id FROM contacts WHERE nome = ?", [name])[0]["id"]
-            query_db("INSERT INTO places (code, id) VALUES (?, ?)", (newcode, newid))
+            newcode = query_db("SELECT code FROM territory WHERE municipio = %s", [location])[0]["code"]
+            newid = query_db("SELECT id FROM contacts WHERE nome = %s", [name])[0]["id"]
+            query_db("INSERT INTO places (id, code) VALUES (%s, %s)", (newid, newcode))
             
             logChanges("new", newid, name, session.get("user_id"))
             get_db().commit()
         except:
-        # UNIQUE constraint failed - a record with the same name already exists in the database
+            print(sys.exc_info())
+            # UNIQUE constraint failed - a record with the same name already exists in the database
             return redirect(url_for('admin_new'))
 
         return redirect(url_for("admin_dashboard"))
@@ -160,16 +160,16 @@ def admin_new():
 def admin_update():
     """Update or delete record from database"""
 
-    # Helper functions to reuse in POST requests
+    # Helper functions to reuse in POST requests:
 
     def search(name):
-        # Escape special characters to avoid FTS5 syntax error
-        name = re.sub(r"[+_'\/-]", ' ', name)
-        name = re.sub(r"[^\w\s]", '', name)
-        # Query database
+        # Full-text search. https://www.postgresql.org/docs/current/textsearch-controls.html#TEXTSEARCH-PARSING-DOCUMENTS
+        # 'ptunaccent' configuration: portuguese dictionary and diacritic-insensitive search
         results = query_db("""SELECT id, code, nome, tipo, municipio FROM places
-            JOIN (SELECT * FROM contacts_fts WHERE contacts_fts MATCH ? ORDER BY rank) USING (id)
-            JOIN territory USING (code)""", [name])
+            JOIN contacts USING (id)
+            JOIN territory USING (code)
+            WHERE to_tsvector('ptunaccent', nome) @@ websearch_to_tsquery('ptunaccent', %s)
+            ORDER BY nome""", [name])
         return results
     
     def search_all():
@@ -177,7 +177,7 @@ def admin_update():
         results = query_db("""SELECT id, code, nome, tipo, municipio FROM places
                 JOIN contacts USING (id)
                 JOIN territory USING (code)
-                ORDER BY nome COLLATE noaccents""")
+                ORDER BY nome """)
         return results
     
     # User performed a name search -> present list of results
@@ -200,21 +200,21 @@ def admin_update():
         # Delete record
         elif request.form["action"] == "delete":
             entry_id = request.form.get("entry-id")
-            entry_code = request.form.get("entry-code")
             
-            query_db("DELETE FROM contacts WHERE id = ?", [entry_id])
-            query_db("DELETE FROM places WHERE id = ? AND code = ?", (entry_id, entry_code))
+            query_db("DELETE FROM contacts WHERE id = %s", [entry_id])
+            # (corresponding entry in table places is automatically deleted via CASCADE)
+            # (corresponding entry in table edits is automatically set to Null)
             
-            logChanges("del", entry_id, request.form.get("entry-name"), session.get("user_id"))
+            logChanges("del", None, request.form.get("entry-name"), session.get("user_id"))
             get_db().commit()
             
             name = request.form.get("name")
             if not name:
                 results = search_all()
                 return render_template("admin/update.html", results=results, count=len(results))
-
-            results = search(name)
-            return render_template("admin/update.html", results=results, count=len(results), input=name)
+            else:
+                results = search(name)
+                return render_template("admin/update.html", results=results, count=len(results), input=name)
         
     # User reached route via link from dashboard -> present a search bar
     elif request.method == "GET":
@@ -230,7 +230,7 @@ def admin_modify(record):
         record_data = query_db("""SELECT * FROM places
             JOIN contacts USING (id)
             JOIN territory USING (code)
-            WHERE id = ?""", [record])
+            WHERE id = %s""", [record])
 
         # Assign the empty string to NULL/None items (so that the placeholder is rendered instead of the <option> value)
         record = defaultdict()  # https://www.accelebrate.com/blog/using-defaultdict-python
@@ -238,7 +238,7 @@ def admin_modify(record):
             item = record_data[0][key]
             record[key] = (item if item else '')
             
-        concelhos = query_db("SELECT municipio FROM territory ORDER BY municipio COLLATE noaccents")
+        concelhos = query_db("SELECT municipio FROM territory ORDER BY municipio")
         tipos = [
             ("CRO", "CRO"),
             ("Associação de Proteção Animal", "ASFL - Associação"),
@@ -256,7 +256,7 @@ def admin_modify(record):
         name = request.form.get("nome").upper()
         location = request.form.get("concelho")
         subtype = request.form.get("tipo")
-        maintype = query_db("SELECT tipo FROM contacts WHERE subtipo = ?", [subtype])[0]["tipo"]
+        maintype = query_db("SELECT tipo FROM contacts WHERE subtipo = %s", [subtype])[0]["tipo"]
         tel1 = (request.form.get("tel-1") if request.form.get("tel-1") != '' else None)
         tel2 = (request.form.get("tel-2") if request.form.get("tel-2") != '' else None)
         tel3 = (request.form.get("tel-3") if request.form.get("tel-3") != '' else None)
@@ -276,27 +276,31 @@ def admin_modify(record):
         web2 = (request.form.get("website-2") if request.form.get("website-2") != '' else None)
         extra = (request.form.get("extra-info") if request.form.get("extra-info") != '' else None)
 
-        actualizado = query_db("SELECT date('now')")[0]["date('now')"]
+        # Get current date to keep track of updates
+        # https://www.postgresql.org/docs/9.1/functions-datetime.html#FUNCTIONS-DATETIME-CURRENT
+        actualizado = query_db("SELECT CURRENT_DATE")[0][0]
 
+        # Get id of record to update
         target_id = request.form.get("id")
 
         try:
             query_db("""UPDATE contacts
-                SET nome = ?, tipo = ?, subtipo = ?, tel_1 = ?, tel_2 = ?, tel_3 = ?, tel_4 = ?, email_1 = ?, email_2 = ?,
-                email_3 = ?, morada_1a = ?, morada_1b = ?, cpostal_1 = ?, lugar_1 = ?, morada_2a = ?, morada_2b = ?,
-                cpostal_2 = ?, lugar_2 = ?, website_1 = ?, website_2 = ?, extra_info = ?, actualizado = ?
-                WHERE id = ?""",   
+                SET nome = %s, tipo = %s, subtipo = %s, tel_1 = %s, tel_2 = %s, tel_3 = %s, tel_4 = %s, email_1 = %s, email_2 = %s,
+                email_3 = %s, morada_1a = %s, morada_1b = %s, cpostal_1 = %s, lugar_1 = %s, morada_2a = %s, morada_2b = %s,
+                cpostal_2 = %s, lugar_2 = %s, website_1 = %s, website_2 = %s, extra_info = %s, actualizado = %s
+                WHERE id = %s""",   
                 (name, maintype, subtype, tel1, tel2, tel3, tel4, email1, email2, email3, morada1a, morada1b, cp1, lugar1, morada2a, morada2b, cp2, lugar2, web1, web2, extra, actualizado, target_id))
         
-            newcode = query_db("SELECT code FROM territory WHERE municipio = ?", [location])[0]["code"]
-            query_db("UPDATE places SET code = ? WHERE id = ?", (newcode, target_id))
+            newcode = query_db("SELECT code FROM territory WHERE municipio = %s", [location])[0]["code"]
+            query_db("UPDATE places SET code = %s WHERE id = %s", (newcode, target_id))
             
             logChanges("mod", target_id, name, session.get("user_id"))
             get_db().commit()
         
         except:
-        # UNIQUE constraint failed - a record with the same name already exists in the database
-        # (redirect passing along data) https://sodocumentation.net/flask/topic/6856/redirect
+            print(sys.exc_info())
+            # UNIQUE constraint failed - a record with the same name already exists in the database
+            # (redirect passing along data) https://sodocumentation.net/flask/topic/6856/redirect
             return redirect(url_for('admin_modify', record=record))
 
         return redirect(url_for("admin_dashboard"))
@@ -309,5 +313,5 @@ def admin_list():
     records = query_db("""SELECT * FROM places
                     JOIN contacts USING (id)
                     JOIN territory USING (code)
-                    ORDER BY nome COLLATE noaccents""")
+                    ORDER BY nome""")
     return render_template("admin/list.html", records=records, count=len(records))
