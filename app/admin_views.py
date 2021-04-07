@@ -1,42 +1,17 @@
 from app import app
 
 from flask import render_template, redirect, request, url_for, session
-from flask_session import Session
-from tempfile import mkdtemp    # see Finance CS50
+from collections import defaultdict # https://stackabuse.com/introduction-to-pythons-collections-module/
+import re   # regex
+import sys  # for error handling (sys.exc_info()) https://www.kite.com/python/docs/sys.exc_info
 from functools import wraps
 from werkzeug.security import check_password_hash
-import re
-from collections import defaultdict
-import sys # for error handling (sys.exc_info()) https://www.kite.com/python/docs/sys.exc_info
 
 from .dbconnect import query_db, get_db
 
-# Ensure responses aren't cached (in debugging mode)
-# https://pythonise.com/series/learning-flask/python-before-after-request
-# https://devcenter.heroku.com/articles/increasing-application-performance-with-http-cache-headers
-@app.after_request
-def after_request(response):
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
-
-# Configure Sessions
-app.config["SESSION_FILE_DIR"] = mkdtemp()
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
-# app.config["SESSION_COOKIE_SECURE"] = True  # limits cookies to HTTPS traffic only
-# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite
-# https://flask.palletsprojects.com/en/1.1.x/security/
-# https://flask-session.readthedocs.io/en/latest/
-Session(app)
-
-
-# Implement login required Decorator
+# Implement Decorator - restricted access
 def login_required(f):
-    """
-    Decorate routes to require login.
+    """Decorate routes to require login.
     http://flask.pocoo.org/docs/1.0/patterns/viewdecorators/
     """
     @wraps(f)
@@ -46,16 +21,17 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-# (helper function) Log admin changes
+# Helper function - database management
 def logChanges(change, num, name, admin):
-
+    """Log admin edits to database records
+    """
     query_db("""INSERT INTO edits (change, contact_id, contact_name, admin_id)       
         VALUES (%s, %s, %s, %s)""", (change, num, name, admin))
     # date/time of submission is recorded automatically in the database when INSERT takes place
     # https://www.postgresqltutorial.com/postgresql-current_timestamp/
     return
 
-# Application views:
+# App admin views:
 
 @app.route("/admin/")
 def gotodashboard():
@@ -64,7 +40,7 @@ def gotodashboard():
 @app.route("/admin/login", methods=["GET", "POST"])
 def admin_login():
 
-    # Forget any user_id
+    # Logout/forget any user_id
     session.clear()
 
     if request.method == "GET":
