@@ -6,30 +6,18 @@ Configure connection and functions to interact with database.
 
 from app import app
 
+from flask import g
 import psycopg2 # https://devcenter.heroku.com/articles/heroku-postgresql#connecting-in-python
 from psycopg2.extras import DictCursor # https://www.psycopg.org/docs/extras.html
-from flask import g
 
 # Configure database
-DATABASE = {
-    "host": "localhost",
-    "port": "5432",
-    "name": "busca",
-    "user": "postgres",
-    "pw": "revigres"
-}
+DATABASE = app.config["DATABASE_URL"]
 
 # Open database connection on demand
 def get_db():
     db = getattr(g, "_database", None)
     if db is None:
-        db = g._database = psycopg2.connect(
-            host=DATABASE["host"],
-            port=DATABASE["port"],
-            dbname=DATABASE["name"],
-            user=DATABASE["user"],
-            password=DATABASE["pw"]
-        )    
+        db = g._database = psycopg2.connect(DATABASE)    
     return db
 
 # Query function that combines getting the cursor, executing and fetching the results
