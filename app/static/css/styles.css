@@ -9,6 +9,21 @@
   src: url("/static/fonts/Jellee-Bold.woff");
 }
 
+@font-face {
+  font-family: "Cagliostro";
+  src: url("/static/fonts/Cagliostro-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Candara";
+  src: url("/static/fonts/Candara.ttf");
+}
+
+@font-face {
+  font-family: "BetinaSans";
+  src: url("/static/fonts/BetinaSans-Regular.ttf");
+}
+
 * {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -27,6 +42,7 @@ body {
   background-attachment: fixed;
   background-color: #333333;
   color: #F7F0F0;
+  overscroll-behavior: none;
 }
 
 .page-content {
@@ -459,7 +475,7 @@ h2 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font: 1.9em Candara, Tahoma, sans-serif;
+  font: 1.9em "Cagliostro", Tahoma, sans-serif;
 }
 
 @media screen and (max-width: 640px) and (orientation: landscape) {
@@ -542,7 +558,7 @@ h2 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font: 1.9em Candara, Tahoma, sans-serif;
+  font: 1.9em "Cagliostro", Tahoma, sans-serif;
 }
 
 #pesquisar-link #pesquisar-label {
@@ -778,7 +794,7 @@ h4 .red {
   border-radius: 10em;
   -webkit-transition: all .15s;
   transition: all .15s;
-  font: 2.1em Candara, Tahoma, sans-serif;
+  font: 2.1em "Candara", Tahoma, sans-serif;
   line-height: 1.4em;
   text-indent: -0.9em;
 }
@@ -819,7 +835,7 @@ h4 .red {
 .content-inner {
   background: rgba(51, 51, 51, 0.2);
   color: #F7F0F0;
-  font: 1.65em Candara, Tahoma, sans-serif;
+  font: 1.65em "Candara", Tahoma, sans-serif;
   line-height: 1.5em;
   margin: 0 3vw 0 3vw;
   padding: 1.3em 1.3em;
@@ -1640,7 +1656,7 @@ form.filter-search #button-for-mobile .search-magniglass {
 }
 
 .contact {
-  font: 1.4em Candara, Tahoma, sans-serif;
+  font: 1.4em "BetinaSans", Tahoma, sans-serif;
   max-width: calc(100vw - 16vw);
   padding: 1em .5em;
   display: -webkit-box;
@@ -1797,7 +1813,7 @@ details[open] summary {
   background-color: transparent;
   outline: none;
   cursor: pointer;
-  font: .9em Candara, Tahoma, sans-serif;
+  font: .9em "Candara", Tahoma, sans-serif;
   color: rgba(51, 51, 51, 0.9);
   background-color: rgba(247, 240, 240, 0.2);
   margin-top: -.2em;
@@ -1813,7 +1829,7 @@ details[open] summary {
   background-color: transparent;
   outline: none;
   cursor: pointer;
-  font: .9em Candara, Tahoma, sans-serif;
+  font: .9em "Candara", Tahoma, sans-serif;
   color: rgba(51, 51, 51, 0.9);
   background-color: rgba(247, 240, 240, 0.2);
   margin-top: -.2em;
@@ -1996,7 +2012,7 @@ h4.grey {
 
 figure {
   position: relative;
-  font: 1.2em Candara, Tahoma, sans-serif;
+  font: 1.2em "Candara", Tahoma, sans-serif;
   text-shadow: 0 0 4px black;
   line-height: 1.3em;
   float: top;
@@ -2070,7 +2086,7 @@ article {
   margin-top: 2em;
   padding-left: 2em;
   padding-right: 2em;
-  font: 1.3em Candara, Tahoma, sans-serif;
+  font: 1.3em "Candara", Tahoma, sans-serif;
   line-height: 1.5em;
 }
 
@@ -2283,7 +2299,7 @@ article blockquote .quotes {
 }
 
 #shaded-text > label > ul {
-  font: .9em Candara, Tahoma, sans-serif;
+  font: .9em "Candara", Tahoma, sans-serif;
   margin: .8em .7em 0 .3em;
   list-style: none;
 }
@@ -2362,7 +2378,7 @@ article blockquote .quotes {
 }
 
 .textbox {
-  font-family: Candara, Tahoma, sans-serif;
+  font-family: "Candara", Tahoma, sans-serif;
   background-color: rgba(247, 240, 240, 0.9);
   border: 1px solid #333333;
   border-radius: .5em;
@@ -2427,7 +2443,7 @@ article blockquote .quotes {
   float: right;
   margin-top: .2em;
   padding: .3em .6em;
-  font: bold 1.5em Candara, Tahoma, sans-serif;
+  font: bold 1.5em "Candara", Tahoma, sans-serif;
   color: #F7F0F0;
   text-shadow: 0 0 1px black;
   border-radius: .5em;
@@ -2493,7 +2509,7 @@ article blockquote .quotes {
 }
 
 #privacy-text {
-  font: 1.5em Candara, Tahoma, sans-serif;
+  font: 1.5em "Candara", Tahoma, sans-serif;
   line-height: 1.5em;
   max-width: 75ch;
   text-align: justify;

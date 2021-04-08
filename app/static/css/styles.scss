@@ -29,6 +29,21 @@ $black: #333333;        // rgb(51, 51, 51)
     src: url("/static/fonts/Jellee-Bold.woff")
 }
 
+@font-face {
+    font-family: "Cagliostro";
+    src: url("/static/fonts/Cagliostro-Regular.ttf")
+}
+
+@font-face {
+    font-family: "Candara";
+    src: url("/static/fonts/Candara.ttf")
+}
+
+@font-face {
+    font-family: "BetinaSans";
+    src: url("/static/fonts/BetinaSans-Regular.ttf")
+}
+
 // Reset default styles (to include where needed)
 
 // Button reset. https://fvsch.com/styling-buttons
@@ -80,9 +95,13 @@ body {
     background-color: $black;    
     // Text color
     color: $isabelline;
+
+    // https://developers.google.com/web/updates/2017/11/overscroll-behavior
+    overscroll-behavior: none;
 }
+
 .page-content {
-    height: 100vh; 
+    height: 100vh;
     // "Overall page" grid setup  https://css-tricks.com/how-to-use-css-grid-for-sticky-headers-and-footers/
     display: grid;
     grid-template-columns: 1fr;
@@ -403,7 +422,7 @@ h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font: 1.9em Candara, Tahoma, sans-serif;
+    font: 1.9em "Cagliostro", Tahoma, sans-serif;
 
     @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 1.7em; }
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { font-size: 2.3em; }
@@ -456,7 +475,7 @@ h2 {
         line-height: 1.5em;
         vertical-align: middle;
     }
-    font: 1.9em Candara, Tahoma, sans-serif;
+    font: 1.9em "Cagliostro", Tahoma, sans-serif;
 
     @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 1.4em; }
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
@@ -630,7 +649,7 @@ h4 {
     margin: -2.4em 7vw 0 2.65em;    // negative margin-top to overlap the invisible checkbox
     border-radius: 10em;
     transition: all .15s;
-    font: 2.1em Candara, Tahoma, sans-serif;
+    font: 2.1em "Candara", Tahoma, sans-serif;
     line-height: 1.4em;    
     text-indent: -0.9em;    // https://www.thesitewizard.com/css/hanging-indents.shtml
 
@@ -670,7 +689,7 @@ h4 {
 .content-inner {
     background: rgba(51, 51, 51, .2);
     color: $isabelline;
-    font: 1.65em Candara, Tahoma, sans-serif;
+    font: 1.65em "Candara", Tahoma, sans-serif;
     line-height: 1.5em;
     margin: 0 3vw 0 3vw;
     padding: 1.3em 1.3em;
@@ -1402,7 +1421,7 @@ form.filter-search {
 ////////////////////////////
 
 .contact {
-    font: 1.4em Candara, Tahoma, sans-serif;
+    font: 1.4em "BetinaSans", Tahoma, sans-serif;
     max-width: calc(100vw - 16vw);  // viewport minus sum of lateral margins of ancestor .results-container
     padding: 1em .5em;
     display: flex;
@@ -1544,7 +1563,7 @@ details[open] summary { // https://css-tricks.com/creating-a-details-element-tha
 .copy-button, .copy-button::selection { // https://developer.mozilla.org/en-US/docs/Web/CSS/::selection
     @include button-reset;
     cursor: pointer;
-    font: .9em Candara, Tahoma, sans-serif;
+    font: .9em "Candara", Tahoma, sans-serif;
     color: rgba(51, 51, 51, .9);
     background-color: rgba(247, 240, 240, .2);
     margin-top: -.2em;  // to compensate for the gap inside the flexbox
@@ -1715,7 +1734,7 @@ h4.grey {
 // Figure (image + text)
 figure {
     position: relative; // accommodate absolutely-positioned text over the image
-    font: 1.2em Candara, Tahoma, sans-serif;
+    font: 1.2em "Candara", Tahoma, sans-serif;
     text-shadow: 0 0 4px black;
     line-height: 1.3em;
     img {
@@ -1795,7 +1814,7 @@ article {
         margin-top: 2em;
         margin-bottom: .5em;
     }
-    font: 1.3em Candara, Tahoma, sans-serif;
+    font: 1.3em "Candara", Tahoma, sans-serif;
     line-height: 1.5em;
 
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
@@ -1950,7 +1969,7 @@ article {
 }
 
 #shaded-text > label > ul {
-    font: .9em Candara, Tahoma, sans-serif;
+    font: .9em "Candara", Tahoma, sans-serif;
     margin: .8em .7em 0 .3em;
     li {
         background: linear-gradient(
@@ -2035,7 +2054,7 @@ article {
 }
 
 .textbox {
-    font-family: Candara, Tahoma, sans-serif;
+    font-family: "Candara", Tahoma, sans-serif;
     background-color: rgba(247, 240, 240, .9);
     border: 1px solid $black;
     border-radius: .5em;
@@ -2079,7 +2098,7 @@ article {
     float: right;
     margin-top: .2em;
     padding: .3em .6em;
-    font: bold 1.5em Candara, Tahoma, sans-serif;
+    font: bold 1.5em "Candara", Tahoma, sans-serif;
     color: $isabelline;
     text-shadow: 0 0 1px black;
     border-radius: .5em;
@@ -2138,7 +2157,7 @@ article {
 }
 
 #privacy-text {
-    font: 1.5em Candara, Tahoma, sans-serif;
+    font: 1.5em "Candara", Tahoma, sans-serif;
     line-height: 1.5em;
     max-width: 75ch;
     text-align: justify;
