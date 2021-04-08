@@ -806,8 +806,9 @@ h4 .red {
 }
 
 .label-toggle::before {
-  content: "⚫";
-  font-size: .7em;
+  content: "+";
+  font-size: 1em;
+  font-weight: bold;
   display: inline-block;
   padding-right: 1.2em;
   vertical-align: 7%;
@@ -873,7 +874,7 @@ h4 .red {
 }
 
 .external-link-symbol {
-  font-size: .7em;
+  font-size: .8em;
   color: gainsboro;
 }
 
@@ -914,7 +915,7 @@ h4 .red {
 }
 
 .toggle:checked + .label-toggle::before {
-  content: "⚪";
+  content: "−";
   opacity: .8;
 }
 

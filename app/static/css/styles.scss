@@ -660,8 +660,9 @@ h4 {
 
 // (pseudo-element) https://developer.mozilla.org/en-US/docs/Web/CSS/::before
 .label-toggle::before {
-    content: "⚫";  // https://www.w3schools.com/charsets/ref_utf_symbols.asp
-    font-size: .7em;
+    content: "+";  // https://www.toptal.com/designers/htmlarrows/math/plus-sign/
+    font-size: 1em;
+    font-weight: bold;
     display: inline-block;
     padding-right: 1.2em;
     vertical-align: 7%;
@@ -724,7 +725,7 @@ h4 {
 }
 
 .external-link-symbol {
-    font-size: .7em;
+    font-size: .8em;
     color: gainsboro;
 }
 
@@ -764,7 +765,7 @@ h4 {
 }
 
 .toggle:checked + .label-toggle::before {
-    content: "⚪";
+    content: "−";   // https://www.toptal.com/designers/htmlarrows/math/minus-sign/
     opacity: .8;
 }
 
