@@ -154,9 +154,10 @@ body {
 ////////////////////
 
 .logo {
-    margin-top: 1.5vh;
-    max-width: 100vw;   // (default styles always for phone portrait followed by media queries as needed)
-
+    max-width: 80vw;   // (default styles always for phone portrait followed by media queries as needed)
+    margin-top: .5vh;   // (exception to the rule above, see media query for phone below)
+    
+    @media screen and (max-width: $phone) and (orientation: portrait) { margin-top: 0; }
     @media screen and (min-width: $tmin) and (orientation: portrait) { max-width: 50em; }
     @media screen and (max-width: $tmax) and (orientation: landscape) { max-width: 40vw; }
     @media screen and (min-width: $desktop) and (orientation: landscape) { max-width: 43em; }
@@ -310,6 +311,9 @@ h2 {
     grid-area: 4 / 1 / 5 / 2;
     margin: auto;
     display: block;
+
+    // Correction for mobile browsers 100vh issue: https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
+    @media screen and (max-width: $phone) and (orientation: portrait) { margin: 0 auto 5vh; }
 }
 
 //////////////////////////////////
@@ -399,7 +403,7 @@ h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font: 1.9em "Candara", Tahoma, sans-serif;
+    font: 1.9em Candara, Tahoma, sans-serif;
 
     @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 1.7em; }
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { font-size: 2.3em; }
@@ -452,7 +456,7 @@ h2 {
         line-height: 1.5em;
         vertical-align: middle;
     }
-    font: 1.9em "Candara", Tahoma, sans-serif;
+    font: 1.9em Candara, Tahoma, sans-serif;
 
     @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 1.4em; }
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
@@ -626,7 +630,7 @@ h4 {
     margin: -2.4em 7vw 0 2.65em;    // negative margin-top to overlap the invisible checkbox
     border-radius: 10em;
     transition: all .15s;
-    font: 2.1em "Candara", Tahoma, sans-serif;
+    font: 2.1em Candara, Tahoma, sans-serif;
     line-height: 1.4em;    
     text-indent: -0.9em;    // https://www.thesitewizard.com/css/hanging-indents.shtml
 
@@ -666,7 +670,7 @@ h4 {
 .content-inner {
     background: rgba(51, 51, 51, .2);
     color: $isabelline;
-    font: 1.65em "Candara", Tahoma, sans-serif;
+    font: 1.65em Candara, Tahoma, sans-serif;
     line-height: 1.5em;
     margin: 0 3vw 0 3vw;
     padding: 1.3em 1.3em;
@@ -697,7 +701,12 @@ h4 {
 }
 
 .no-link-emphasis {
-    font: .9em "Century Gothic", Tahoma, sans-serif;
+    font: bold italic .9em "Century Gothic", Tahoma, sans-serif;
+}
+
+.external-link-symbol {
+    font-size: .7em;
+    color: gainsboro;
 }
 
 // Links in text
@@ -1393,7 +1402,7 @@ form.filter-search {
 ////////////////////////////
 
 .contact {
-    font: 1.4em "Candara", Tahoma, sans-serif;
+    font: 1.4em Candara, Tahoma, sans-serif;
     max-width: calc(100vw - 16vw);  // viewport minus sum of lateral margins of ancestor .results-container
     padding: 1em .5em;
     display: flex;
@@ -1535,7 +1544,7 @@ details[open] summary { // https://css-tricks.com/creating-a-details-element-tha
 .copy-button, .copy-button::selection { // https://developer.mozilla.org/en-US/docs/Web/CSS/::selection
     @include button-reset;
     cursor: pointer;
-    font: .9em "Candara", Tahoma, sans-serif;
+    font: .9em Candara, Tahoma, sans-serif;
     color: rgba(51, 51, 51, .9);
     background-color: rgba(247, 240, 240, .2);
     margin-top: -.2em;  // to compensate for the gap inside the flexbox
@@ -1706,7 +1715,7 @@ h4.grey {
 // Figure (image + text)
 figure {
     position: relative; // accommodate absolutely-positioned text over the image
-    font: 1.2em "Candara", Tahoma, sans-serif;
+    font: 1.2em Candara, Tahoma, sans-serif;
     text-shadow: 0 0 4px black;
     line-height: 1.3em;
     img {
@@ -1786,7 +1795,7 @@ article {
         margin-top: 2em;
         margin-bottom: .5em;
     }
-    font: 1.3em "Candara", Tahoma, sans-serif;
+    font: 1.3em Candara, Tahoma, sans-serif;
     line-height: 1.5em;
 
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
@@ -1906,8 +1915,8 @@ article {
     // Size and background
     background-color:  rgba(129, 119, 122, .8);
     width: 100%;
-    margin: 1em .5em .5em;
-    padding: 2em 1.5em 1em 2em;
+    margin: 1em 1.5em .5em;
+    padding: 2em .5em 1em 1em;
     border-radius: .5em;
 
     @media screen and (max-width: $tmax) and (orientation: landscape) {
@@ -1941,7 +1950,7 @@ article {
 }
 
 #shaded-text > label > ul {
-    font: .9em "Candara", Tahoma, sans-serif;
+    font: .9em Candara, Tahoma, sans-serif;
     margin: .8em .7em 0 .3em;
     li {
         background: linear-gradient(
@@ -2026,7 +2035,7 @@ article {
 }
 
 .textbox {
-    font-family: "Candara", Tahoma, sans-serif;
+    font-family: Candara, Tahoma, sans-serif;
     background-color: rgba(247, 240, 240, .9);
     border: 1px solid $black;
     border-radius: .5em;
@@ -2070,7 +2079,7 @@ article {
     float: right;
     margin-top: .2em;
     padding: .3em .6em;
-    font: bold 1.5em "Candara", Tahoma, sans-serif;
+    font: bold 1.5em Candara, Tahoma, sans-serif;
     color: $isabelline;
     text-shadow: 0 0 1px black;
     border-radius: .5em;
@@ -2129,7 +2138,7 @@ article {
 }
 
 #privacy-text {
-    font: 1.5em "Candara", Tahoma, sans-serif;
+    font: 1.5em Candara, Tahoma, sans-serif;
     line-height: 1.5em;
     max-width: 75ch;
     text-align: justify;
