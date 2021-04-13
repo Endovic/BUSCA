@@ -127,7 +127,7 @@ def admin_new():
         except:
             print(sys.exc_info())
             # UNIQUE constraint failed - a record with the same name already exists in the database
-            return redirect(url_for('admin_new'))
+            return redirect(url_for("admin_new"))
 
         return redirect(url_for("admin_dashboard"))
 
@@ -277,7 +277,7 @@ def admin_modify(record):
             print(sys.exc_info())
             # UNIQUE constraint failed - a record with the same name already exists in the database
             # (redirect passing along data) https://sodocumentation.net/flask/topic/6856/redirect
-            return redirect(url_for('admin_modify', record=record))
+            return redirect(url_for("admin_modify", record=record))
 
         return redirect(url_for("admin_dashboard"))
 

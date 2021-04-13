@@ -9,21 +9,14 @@
         body {
             background-color: rgb(66, 66, 66);
         }
-        /* Re-adjust logo to a smaller size in desktop */
-        @media screen and (min-width: 1024px) and (orientation: landscape) {
-            .logo {
-                margin-top: .5vh;
-                max-width: 39em;
-            }
-        }
     </style>
 {% endblock %}
 
 {% block content %}
     <div class="page-content">
-        <header>
+        <header class="header-image">
             <a class="logo" href="\">
-                <img class="logo" src="{{ url_for('static', filename='img/busca_logo_w.svg') }}" alt="Logotipo do site: visite o Busca! Animais desaparecidos">
+                <img class="logo" src="{{ url_for('static', filename='img/busca_logo.svg') }}" alt="Logotipo do site: visite o Busca! Animais desaparecidos">
             </a>
         </header>
         <main class="grid-layout" tabindex="-1">
@@ -32,18 +25,18 @@
                 <figure>
                     <img src="{{ url_for('static', filename='img/suri_chair.jpg') }}" alt="Foto: cadelinha Suri">
                     <blockquote>
-                        <span class="quotes">"</span>&nbsp;Quando a <em>Suri</em> desapareceu, contactei entidades de apoio a animais de norte a sul do país.
-                        Sem um diretório nacional público, demorei semanas a procurar todos os que poderiam ajudar a encontrá<span>&#8209;</span>la.</em>&nbsp;<span class="quotes">"</span>
+                        <span class="quotes">"</span>&nbsp;Quando a <i>Suri</i> desapareceu, contactei entidades de apoio a animais de norte a sul do país.
+                        Sem um diretório nacional público, demorei semanas a procurar todos os que poderiam ajudar a encontrá<span>&#8209;</span>la.&nbsp;<span class="quotes">"</span>
                     </blockquote>
-                    <figcaption>&mdash;&nbsp;<em>Suri</em> posando para a fotografia, desaparecida desde jan. 2019</figcaption>
+                    <figcaption>&mdash;&nbsp;<i>Suri</i> posando para a fotografia, desaparecida desde jan. 2019</figcaption>
                 </figure>
                 <article>
-                    <p><mark class="fat-text">BUSCA!</mark> <strong><em>Animais desaparecidos</em></strong> é um projeto cívico, sem fins lucrativos, construído por voluntários e por pessoas que passaram pela experiência de perder um animal de estimação.</p>
+                    <p><span class="fat-text">BUSCA!</span> <span class="next-to-fat-text">Animais desaparecidos</span> é um projeto cívico, sem fins lucrativos, construído por voluntários e por pessoas que passaram pela experiência de perder um animal de estimação.</p>
                     <p>O nosso objetivo é reunir numa única plataforma todos os recursos úteis para quem procura um animal desaparecido em Portugal. Pretendemos que este sítio seja o ponto de partida para uma busca bem-sucedida, permitindo que mais animais em risco regressem aos seus lares.</p>
                     <p>Criámos uma ferramenta que permite pesquisar os contactos de entidades de apoio a animais em todo o país, incluindo canis e gatis municipais, abrigos e associações de proteção animal, e ainda veterinários – essencialmente, a linha da frente na sinalização de animais em risco.</p>
                     <p>Um animal desaparecido pode ser encontrado longe de casa e dar entrada num canil, abrigo ou posto veterinário fora da rede de contactos habitual ou da área geográfica mais familiar. Com a nossa ferramenta de pesquisa é possível ter acesso a todos os contactos relevantes a qualquer distância do local de desaparecimento.</p>
                     <blockquote>
-                        <span class="quotes">"</span>&nbsp;O projeto <mark class="fat-text">BUSCA!</mark> permite percorrer Portugal inteiro à distância de um clique e ganhar tempo precioso.&nbsp;<span class="quotes">"</span>
+                        <span class="quotes">"</span>&nbsp;O projeto <span class="fat-text">BUSCA!</span> permite percorrer Portugal inteiro à distância de um clique e ganhar tempo precioso.&nbsp;<span class="quotes">"</span>
                     </blockquote>
                 </article>
                 <article>
@@ -51,8 +44,8 @@
                     <p>Sempre que se justifique, fazemos referência e fornecemos ligação a sítios terceiros para que o utilizador tenha acesso fácil e direto a todos os recursos disponíveis na comunidade.</p>
                     <p>Se está a ler estas palavras e perdeu o seu animal de estimação, – <em>Coragem!</em> Não perca a esperança.</p>
                     <hr>
-                    <p id="last-pgph"><mark class="fat-text">BUSCA!</mark> <strong><em>Animais desaparecidos</em></strong> é feito por cidadãos comuns, no seu tempo livre, e pode sempre melhorar. Estamos abertos a todo o tipo de sugestões e contribuições e convidamos todos os interessados em colaborar a
-                        <a class="link-external" href="\contacte-nos">entrar em contacto!</a></p>
+                    <p id="last-pgph"><span class="fat-text">BUSCA!</span> <span class="next-to-fat-text">Animais desaparecidos</span> é feito por cidadãos comuns, no seu tempo livre, e pode sempre melhorar. Estamos abertos a todo o tipo de sugestões e contribuições e convidamos todos os interessados em colaborar a
+                        <a class="link-external" href="\contacte-nos">entrar em contacto</a>!</p>
                     <hr>
                 </article>
             </div>
@@ -63,8 +56,8 @@
                         2021 Todos os direitos reservados
                     </div>
                     <nav id="footer-nav">
-                        <a href="\acerca-do-projeto" class="footer-nav-link">
-                            <p>Acerca do <mark class="fat-text">Busca!</mark></p>
+                        <a href="\animais-desaparecidos#recursos" class="footer-nav-link">
+                            Página inicial
                         </a>
                         <a href="\contacte-nos" class="footer-nav-link">
                             <p>Contacto</p>
