@@ -13,13 +13,6 @@
         body {
             background-color: rgba(129, 119, 122, .8);
         }
-        /* Re-adjust logo to a smaller size in desktop */
-        @media screen and (min-width: 1024px) and (orientation: landscape) {
-            .logo {
-                margin-top: .5vh;
-                max-width: 39em;
-            }
-        }
     </style>    
 {% endblock %}
 
@@ -30,12 +23,18 @@
                 <img class="logo" src="{{ url_for('static', filename='img/busca_logo.svg') }}" alt="Logotipo do site: visite o Busca! Animais desaparecidos">
             </a>
         </header>
-        <main tabindex="-1">  <!-- https://stackoverflow.com/questions/9152096/make-an-html-element-non-focusable -->
+        <main tabindex="-1"> <!-- https://stackoverflow.com/questions/9152096/make-an-html-element-non-focusable -->
             <div class="grid-layout">
                 <div id="search-grid">
-                    <a id="search-heading" href="\pesquisa-entidades">
-                        <h4><span class="red">P</span>esquisar entidades de apoio a animais</h4>
-                    </a>
+                    <div id="heading-wrapper">
+                        <a id="search-heading" href="\pesquisa-entidades">
+                            <h4><span class="red">P</span>esquisar entidades de apoio a animais</h4>
+                        </a>
+                        <a class="home-link" href="\animais-desaparecidos#recursos">
+                            <img src="{{ url_for('static', filename='img/busca_icon_bw.svg') }}" alt="Voltar à página inicial">
+                            &#8617;
+                        </a>
+                    </div>        
                     <form id="nova-pesquisa" class="name-search" action="/pesquisa-entidades" method="post">    
                         <div id="search-bar">
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
@@ -170,7 +169,7 @@
                                     <button id="all-button" onclick="toggleView()">
                                         <span id="checkmark" style="display:none;">&#10003;</span>
                                         <span id="pointyfinger" style="display:inline;">&#9755;</span>
-                                        <em>&nbsp;ver tudo</em>
+                                        <em>&nbsp;Ver tudo</em>
                                         <!-- https://www.toptal.com/designers/htmlarrows/symbols/check-mark/ -->
                                         <!-- https://www.w3schools.com/charsets/ref_utf_symbols.asp -->
                                     </button>
@@ -194,8 +193,8 @@
                                         {% elif result["subtipo"] == "Consultório" %}
                                             <p class="contact-type">Consultório veterinário</p>
                                         {% endif %}
-                                        <details>   <!-- https://css-tricks.com/quick-reminder-that-details-summary-is-the-easiest-way-ever-to-make-an-accordion/ -->
-                                            <summary></summary>
+                                        <details> <!-- https://css-tricks.com/quick-reminder-that-details-summary-is-the-easiest-way-ever-to-make-an-accordion/ -->
+                                            <summary><span>contactos</span></summary>
                                             <div class="accordion-flexbox">
                                                 {% if result["morada_1a"] or result["lugar_1"] or result["morada_2a"] or result["lugar_2"] or result["tel_1"] %}
                                                     <div class="contact-details-flexbox">
@@ -302,7 +301,7 @@
                         </div>
                         <nav id="footer-nav">
                             <a href="\acerca-do-projeto" class="footer-nav-link">
-                                <p>Acerca do <mark class="fat-text">Busca!</mark></p>
+                                <p>Acerca do <span class="fat-text">Busca!</span></p>
                             </a>
                             <a href="\contacte-nos" class="footer-nav-link">
                                 <p>Contacto</p>

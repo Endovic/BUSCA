@@ -5,23 +5,23 @@
 }
 
 @font-face {
-  font-family: "JelleeBold";
-  src: url("/static/fonts/Jellee-Bold.woff");
+  font-family: "Baloo";
+  src: url("/static/fonts/Baloo-Regular.woff") format("woff"), url("/static/fonts/Baloo-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Cagliostro";
-  src: url("/static/fonts/Cagliostro-Regular.ttf");
+  font-family: "DidactGothic";
+  src: url("/static/fonts/DidactGothic-Regular.woff") format("woff"), url("/static/fonts/DidactGothic-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "Candara";
-  src: url("/static/fonts/Candara.ttf");
+  font-family: "Viga";
+  src: url("/static/fonts/Viga-Regular.woff") format("woff"), url("/static/fonts/Viga-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "BetinaSans";
-  src: url("/static/fonts/BetinaSans-Regular.ttf");
+  font-family: "TexGyreAdventor";
+  src: url("/static/fonts/TexGyreAdventor-Regular.woff") format("woff"), url("/static/fonts/TexGyreAdventor-Regular.ttf") format("truetype");
 }
 
 * {
@@ -77,7 +77,7 @@ body {
 }
 
 .message, .error {
-  font: bold 1.5em "Century Gothic", Tahoma, sans-serif;
+  font: bold 1.5em "DidactGothic", Arial, sans-serif;
 }
 
 .message {
@@ -151,7 +151,7 @@ body {
 
 @media screen and (min-width: 1024px) and (orientation: landscape) {
   .logo {
-    max-width: 43em;
+    max-width: 39em;
   }
 }
 
@@ -205,7 +205,7 @@ footer {
       -ms-flex-align: center;
           align-items: center;
   color: #333333;
-  font: 1em "Century Gothic", Tahoma, sans-serif;
+  font: 1em "TexGyreAdventor", Arial, sans-serif;
 }
 
 @media screen and (min-width: 641px) and (orientation: portrait), (min-width: 1024px) {
@@ -309,7 +309,7 @@ h1 {
   grid-area: 1 / 1 / 2 / 2;
   margin: 6vh 7vw 0 7vw;
   text-shadow: 0 0 4px black;
-  font: 2.7em "JelleeBold", Arial Black, sans-serif;
+  font: 2.7em "Baloo", Arial Black, sans-serif;
 }
 
 @media screen and (min-width: 641px) and (max-width: 1023px) and (orientation: portrait) {
@@ -327,6 +327,7 @@ h1 {
 @media screen and (min-width: 1024px) {
   h1 {
     font-size: 4em;
+    margin-top: 10.5vh;
   }
 }
 
@@ -338,7 +339,7 @@ h2 {
   grid-area: 3 / 1 / 4 / 2;
   margin: 0 6vw 2vh 6vw;
   text-shadow: 0 0 8px black;
-  font: 2em "Century Gothic", Tahoma, sans-serif;
+  font: 2em "DidactGothic", Arial, sans-serif;
 }
 
 @media screen and (min-width: 641px) and (max-width: 1023px) and (orientation: portrait) {
@@ -372,7 +373,7 @@ h2 {
 
 #shaded-sections {
   min-height: 100%;
-  background-color: rgba(129, 119, 122, 0.85);
+  background-color: rgba(154, 146, 148, 0.85);
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr minmax(0, 1024px) 1fr;
@@ -383,8 +384,8 @@ h2 {
 
 @media screen and (min-width: 1024px) and (orientation: landscape) {
   #shaded-sections {
-    background: -webkit-gradient(linear, left top, right top, color-stop(-5%, rgba(129, 119, 122, 0)), color-stop(15%, rgba(129, 119, 122, 0.85)), color-stop(85%, rgba(129, 119, 122, 0.85)), color-stop(105%, rgba(129, 119, 122, 0)));
-    background: linear-gradient(to right, rgba(129, 119, 122, 0) -5%, rgba(129, 119, 122, 0.85) 15%, rgba(129, 119, 122, 0.85) 85%, rgba(129, 119, 122, 0) 105%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(-5%, rgba(154, 146, 148, 0)), color-stop(15%, rgba(154, 146, 148, 0.85)), color-stop(85%, rgba(154, 146, 148, 0.85)), color-stop(105%, rgba(154, 146, 148, 0)));
+    background: linear-gradient(to right, rgba(154, 146, 148, 0) -5%, rgba(154, 146, 148, 0.85) 15%, rgba(154, 146, 148, 0.85) 85%, rgba(154, 146, 148, 0) 105%);
   }
 }
 
@@ -432,6 +433,9 @@ h2 {
 }
 
 @media screen and (min-width: 641px) and (orientation: portrait) {
+  #intro {
+    grid-column: col-start 2 / span 4;
+  }
   #info-como {
     grid-column: col-start 1 / span 3;
   }
@@ -447,6 +451,9 @@ h2 {
 }
 
 @media screen and (max-width: 640px) and (orientation: landscape), (min-width: 641px) and (orientation: landscape) {
+  #intro {
+    grid-column: col-start 1 / span 6;
+  }
   #info-como {
     grid-column: col-start 1 / span 2;
   }
@@ -458,6 +465,21 @@ h2 {
   }
   #contribuir {
     grid-column: col-start 1 / span 6;
+  }
+}
+
+#intro {
+  font: 1.1em "Viga", Arial, sans-serif;
+  color: #333333;
+  text-align: justify;
+  text-justify: auto;
+  margin: 1em 10vw 0;
+}
+
+@media screen and (min-width: 1024px) {
+  #intro {
+    font-size: 1.6em;
+    margin: 1em 4.5em 0;
   }
 }
 
@@ -475,7 +497,8 @@ h2 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font: 1.9em "Cagliostro", Tahoma, sans-serif;
+  font: 1.9em "Baloo", Arial, sans-serif;
+  text-shadow: 0 0 1px black;
 }
 
 @media screen and (max-width: 640px) and (orientation: landscape) {
@@ -509,7 +532,7 @@ h2 {
 }
 
 .info-link-img {
-  margin-top: 8vh;
+  margin-top: 4vh;
 }
 
 #blackdog {
@@ -524,7 +547,7 @@ h2 {
 
 .fat-text {
   background-color: transparent;
-  font: 1.1em "Pumpkin", Tahoma, sans-serif;
+  font: 1em "Pumpkin", Arial, sans-serif;
   color: inherit;
 }
 
@@ -543,9 +566,10 @@ h2 {
 
 #pesquisar-link {
   max-width: 13em;
-  padding: .6em .9em;
+  padding: .6em 1.5em;
+  border-radius: 2.5em;
   background-color: #CC3332;
-  border-radius: 3em;
+  text-shadow: 0 0 1px black;
   -webkit-transition: -webkit-box-shadow .1s linear;
   transition: -webkit-box-shadow .1s linear;
   transition: box-shadow .1s linear;
@@ -558,7 +582,7 @@ h2 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  font: 1.9em "Cagliostro", Tahoma, sans-serif;
+  font: 1.9em "Baloo", Arial, sans-serif;
 }
 
 #pesquisar-link #pesquisar-label {
@@ -589,7 +613,7 @@ h2 {
 @media screen and (min-width: 1024px) and (orientation: portrait) {
   #pesquisar-link {
     font-size: 2.5em;
-    max-width: 70vw;
+    max-width: 50vw;
   }
 }
 
@@ -599,7 +623,7 @@ h2 {
   }
 }
 
-#icon-magniglass {
+.icon-magniglass {
   max-width: 1.2em;
   position: relative;
   top: .2em;
@@ -654,12 +678,13 @@ h2 {
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
-  margin: 16vh auto 8vh;
+  margin: 12vh auto 4vh;
   text-align: center;
 }
 
 #contribuir h3 {
-  font: 1.5em "Century Gothic", Tahoma, sans-serif;
+  color: #333333;
+  font: 1.5em "Baloo", Arial, sans-serif;
 }
 
 @media screen and (max-width: 640px) and (orientation: landscape) {
@@ -723,7 +748,7 @@ h2 {
 h4 {
   margin: 5vh .2em .65em 5vw;
   color: #333333;
-  font: 2.8rem "JelleeBold", Arial Black, sans-serif;
+  font: 2.2rem "Baloo", Arial Black, sans-serif;
 }
 
 h4 .red {
@@ -753,7 +778,7 @@ h4 .red {
   float: right;
   width: 3.8em;
   padding: 1em;
-  opacity: .85;
+  opacity: .8;
 }
 
 @media screen and (min-width: 1024px), (min-width: 641px) and (orientation: portrait) {
@@ -763,14 +788,19 @@ h4 .red {
 }
 
 .backtop-link {
+  text-decoration: none;
+  outline: none;
+  color: inherit;
   display: block;
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
   padding: .4em .6em;
-  border: 1px solid rgba(247, 240, 240, 0.5);
+  border: 1px solid #333333;
   border-radius: 10em;
-  font: 1.5em "Century Gothic", Tahoma, sans-serif;
+  font: 1.5em "DidactGothic", Arial, sans-serif;
+  color: #333333;
+  opacity: .8;
 }
 
 #backtop-como, #backtop-onde {
@@ -794,9 +824,15 @@ h4 .red {
   border-radius: 10em;
   -webkit-transition: all .15s;
   transition: all .15s;
-  font: 2.1em "Candara", Tahoma, sans-serif;
+  font: 2.1em "DidactGothic", Arial, sans-serif;
   line-height: 1.4em;
   text-indent: -0.9em;
+}
+
+@media screen and (max-width: 640px) {
+  .label-toggle {
+    font-size: 1.8em;
+  }
 }
 
 @media screen and (min-width: 1024px) {
@@ -807,8 +843,6 @@ h4 .red {
 
 .label-toggle::before {
   content: "+";
-  font-size: 1em;
-  font-weight: bold;
   display: inline-block;
   padding-right: 1.2em;
   vertical-align: 7%;
@@ -834,9 +868,9 @@ h4 .red {
 }
 
 .content-inner {
-  background: rgba(51, 51, 51, 0.2);
-  color: #F7F0F0;
-  font: 1.65em "Candara", Tahoma, sans-serif;
+  background: rgba(51, 51, 51, 0.1);
+  font: 1.5em "DidactGothic", Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.8);
   line-height: 1.5em;
   margin: 0 3vw 0 3vw;
   padding: 1.3em 1.3em;
@@ -869,33 +903,57 @@ h4 .red {
   margin-bottom: 1.2em;
 }
 
-.no-link-emphasis {
-  font: bold italic .9em "Century Gothic", Tahoma, sans-serif;
-}
-
-.external-link-symbol {
-  font-size: .8em;
-  color: gainsboro;
-}
-
 .link-external {
   text-decoration: none;
   outline: none;
   color: inherit;
   color: #FFFF33;
   text-shadow: 0 0 1px black;
-  font: .9em "Century Gothic", Tahoma, sans-serif;
 }
 
-@media (hover: hover) {
-  .link-external:hover {
-    text-shadow: 0 0 4px black;
-  }
+.external-link-symbol {
+  width: .6em;
+  margin-left: .2em;
+  position: relative;
+  top: .05em;
+  opacity: .8;
 }
 
-.link-external:focus {
-  -webkit-text-decoration: underline dotted;
-          text-decoration: underline dotted;
+.link-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1em;
+}
+
+.white-text {
+  font: .9em "Viga", Arial, sans-serif;
+  color: #F7F0F0;
+  text-shadow: 0 0 1px black;
+}
+
+.internal-link {
+  text-decoration: none;
+  outline: none;
+  color: inherit;
+  font-family: "Baloo", Arial Black, sans-serif;
+  color: #F7F0F0;
+  text-shadow: 0 0 1px black;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
+  padding: .6em .6em;
+  background-color: #CC3332;
+  border-radius: 2.5em;
 }
 
 .toggle:checked + .label-toggle {
@@ -929,7 +987,7 @@ h4 .red {
   margin-top: 0;
 }
 
-.info-link-img, .info-link-wrds, #pesquisar-link, .jumpy-link, .icon-x, .backtop-link, .footer-nav-link {
+.info-link-img, .info-link-wrds, #pesquisar-link, .jumpy-link, .icon-x, .footer-nav-link {
   text-decoration: none;
   outline: none;
   color: inherit;
@@ -945,28 +1003,44 @@ h4 .red {
   }
   #pesquisar-link:hover {
     color: rgba(255, 255, 255, 0.6);
+    text-shadow: none;
     -webkit-transition: all .1s linear;
     transition: all .1s linear;
     -webkit-box-shadow: 0 30px 30px -25px black;
             box-shadow: 0 30px 30px -25px black;
     cursor: url("/static/img/cursor_magniglass.png") 12 12, pointer;
   }
-  #pesquisar-link:hover #icon-magniglass {
+  #pesquisar-link:hover .icon-magniglass {
     -webkit-transition: opacity .2s ease-out;
     transition: opacity .2s ease-out;
     opacity: 0;
   }
-  .jumpy-link:hover .highlighted, .jumpy-link:hover .fat-text, .jumpy-link:hover h3 {
-    color: #FFFF33;
+  .jumpy-link:hover h3 {
     -webkit-animation: jump .2s;
             animation: jump .2s;
+  }
+  .jumpy-link:hover .fat-text {
+    -webkit-transition: color .1s linear;
+    transition: color .1s linear;
+    color: #FFFF33;
+    text-shadow: 0 0 5px black;
   }
   .icon-x:hover {
     opacity: 1;
   }
   .backtop-link:hover {
-    border: 1px solid #f7f0f0;
-    color: rgba(247, 240, 240, 0.8);
+    opacity: 1;
+  }
+  .link-external:hover {
+    text-shadow: 0 0 4px black;
+  }
+  .link-external:hover .external-link-symbol {
+    opacity: 1;
+  }
+  .internal-link:hover {
+    text-shadow: 0 0 2px black;
+    -webkit-box-shadow: 0 0 1px 0 #333333;
+            box-shadow: 0 0 1px 0 #333333;
   }
   .footer-nav-link:hover {
     color: #FFFF33;
@@ -997,10 +1071,10 @@ h4 .red {
 
 @-webkit-keyframes jump {
   0% {
-    color: #F7F0F0;
+    color: #333333;
   }
   25% {
-    color: #F7F0F0;
+    color: #333333;
   }
   50% {
     -webkit-transform: translateY(3px);
@@ -1014,10 +1088,10 @@ h4 .red {
 
 @keyframes jump {
   0% {
-    color: #F7F0F0;
+    color: #333333;
   }
   25% {
-    color: #F7F0F0;
+    color: #333333;
   }
   50% {
     -webkit-transform: translateY(3px);
@@ -1040,32 +1114,55 @@ h4 .red {
 
 #pesquisar-link:focus {
   color: rgba(255, 255, 255, 0.6);
+  text-shadow: none;
   -webkit-transition: all .1s linear;
   transition: all .1s linear;
   -webkit-box-shadow: 0 30px 30px -25px black;
           box-shadow: 0 30px 30px -25px black;
 }
 
-#pesquisar-link:focus #icon-magniglass {
+#pesquisar-link:focus .icon-magniglass {
   -webkit-animation: turn 1s;
           animation: turn 1s;
 }
 
-.jumpy-link:focus .highlighted, .jumpy-link:focus .fat-text, .jumpy-link:focus h3 {
-  color: #FFFF33;
+.jumpy-link:focus h3 {
   -webkit-animation: jump .2s;
           animation: jump .2s;
 }
 
+.jumpy-link:focus .fat-text {
+  -webkit-transition: color .1s linear;
+  transition: color .1s linear;
+  color: #FFFF33;
+}
+
 .icon-x:focus {
-  opacity: .5;
+  opacity: 1;
+  -webkit-filter: brightness(0) saturate(100%) invert(92%) sepia(10%) saturate(73%) hue-rotate(317deg) brightness(103%) contrast(95%);
+          filter: brightness(0) saturate(100%) invert(92%) sepia(10%) saturate(73%) hue-rotate(317deg) brightness(103%) contrast(95%);
 }
 
 .backtop-link:focus {
-  border: 1px solid #f7f0f0;
-  color: rgba(247, 240, 240, 0.8);
+  border: 1px solid #F7F0F0;
+  color: #F7F0F0;
+  opacity: 1;
+}
+
+.link-external:focus {
   -webkit-text-decoration: underline dotted;
           text-decoration: underline dotted;
+}
+
+.link-external:focus .external-link-symbol {
+  opacity: 1;
+}
+
+.internal-link:focus {
+  -webkit-text-decoration: underline dotted;
+          text-decoration: underline dotted;
+  -webkit-box-shadow: 0 0 1px 0 #333333;
+          box-shadow: 0 0 1px 0 #333333;
 }
 
 .footer-nav-link:focus {
@@ -1077,8 +1174,9 @@ h4 .red {
   color: #333333;
 }
 
-.info-link-img:active + .info-link-wrds .fat-text, .info-link-img:active + .info-link-wrds i, .info-link-wrds:active .fat-text, .info-link-wrds:active i, .jumpy-link:active .fat-text, .jumpy-link:active i {
+.info-link-img:active + .info-link-wrds .fat-text, .info-link-wrds:active .fat-text, .jumpy-link:active .fat-text {
   color: #333333;
+  text-shadow: none;
 }
 
 #pesquisar-link:active {
@@ -1093,21 +1191,29 @@ h4 .red {
 }
 
 .icon-x:active {
-  opacity: .5;
+  opacity: 1;
+  -webkit-filter: none;
+          filter: none;
 }
 
 .backtop-link:active {
   border: 1px solid #333333;
+  opacity: 1;
   color: #333333;
-}
-
-.footer-nav-link:active {
-  color: #F7F0F0;
 }
 
 .link-external:active {
   color: #333333;
   text-shadow: none;
+}
+
+.internal-link:active {
+  color: #333333;
+  text-shadow: none;
+}
+
+.footer-nav-link:active {
+  color: #F7F0F0;
 }
 
 .grid-layout {
@@ -1157,23 +1263,71 @@ h4 .red {
   }
 }
 
+#heading-wrapper {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: heading;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 #search-heading {
   text-decoration: none;
   outline: none;
   color: inherit;
-  -ms-grid-row: 1;
-  -ms-grid-column: 1;
-  grid-area: heading;
-  margin: 5vh 5vw 4vh 5vw;
+  margin: 5vh 4vw 4vh 5vw;
 }
 
 #search-heading h4 {
   margin: 0;
 }
 
+@media screen and (orientation: landscape), (min-width: 641px) and (orientation: portrait) {
+  #search-heading {
+    margin-right: 0;
+  }
+}
+
 #search-heading:focus {
   -webkit-text-decoration: underline #333333 dotted;
           text-decoration: underline #333333 dotted;
+}
+
+.home-link {
+  text-decoration: none;
+  outline: none;
+  color: inherit;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin: 5vh 5vw 4vh 5vw;
+  color: #333333;
+  opacity: .8;
+  font: 1em "DidactGothic", Arial, sans-serif;
+}
+
+.home-link img {
+  max-width: 2em;
+}
+
+@media screen and (min-width: 1024px) {
+  .home-link {
+    font-size: 1.3em;
+  }
 }
 
 form.name-search {
@@ -1257,7 +1411,7 @@ form.name-search {
   background: none;
   outline: none;
   color: #F7F0F0;
-  font: 1.5em "Century Gothic", Tahoma, sans-serif;
+  font: 1.5em "DidactGothic", Arial, sans-serif;
   width: 80%;
 }
 
@@ -1342,9 +1496,7 @@ form.filter-search #button-for-mobile .search-magniglass {
     -webkit-box-direction: normal;
         -ms-flex-direction: row;
             flex-direction: row;
-    width: -webkit-fit-content;
-    width: -moz-fit-content;
-    width: fit-content;
+    width: 51em;
   }
   form.filter-search #button-for-mobile {
     display: none;
@@ -1395,7 +1547,7 @@ form.filter-search #button-for-mobile .search-magniglass {
   border-radius: 10em;
   margin: .5em 1em .3em 1em;
   padding: .4em 0 .3em;
-  font: 1.5em "Century Gothic", Tahoma, sans-serif;
+  font: 1.5em "DidactGothic", Arial, sans-serif;
   color: #FFFF33;
   text-shadow: 0 0 1px black;
 }
@@ -1407,7 +1559,7 @@ form.filter-search #button-for-mobile .search-magniglass {
 
 .name-of-filter {
   color: #333333;
-  font: 1.1em "Century Gothic", Tahoma, sans-serif;
+  font: 1.1em "DidactGothic", Arial, sans-serif;
   padding: .5em;
 }
 
@@ -1418,7 +1570,7 @@ form.filter-search #button-for-mobile .search-magniglass {
   color: #F7F0F0;
   margin: 0 .5em 0 1em;
   min-width: 15em;
-  font: 1.5em "Century Gothic", Tahoma, sans-serif;
+  font: 1.5em "DidactGothic", Arial, sans-serif;
 }
 
 .dropdown-filter option {
@@ -1428,7 +1580,7 @@ form.filter-search #button-for-mobile .search-magniglass {
 
 @media screen and (min-width: 1024px) {
   .dropdown-filter {
-    font: 1.3em "Century Gothic", Tahoma, sans-serif;
+    font: 1.3em "DidactGothic", Arial, sans-serif;
   }
 }
 
@@ -1467,23 +1619,23 @@ form.filter-search #button-for-mobile .search-magniglass {
   padding: .4em .9em;
   border-radius: 1.1em .3em 1.1em .3em;
   outline: none;
-  font: 1.3em "Century Gothic", Tahoma, sans-serif;
+  font: 1.3em "DidactGothic", Arial, sans-serif;
   background-color: rgba(51, 51, 51, 0.05);
-  text-shadow: 0 0 1px black;
+  color: rgba(247, 240, 240, 0.5);
   border: 1px dotted rgba(51, 51, 51, 0.3);
 }
 
 @media screen and (min-width: 1024px) {
   .filter-toggle {
-    font: 1.2em "Century Gothic", Tahoma, sans-serif;
+    font: 1.2em "DidactGothic", Arial, sans-serif;
     padding: .3em .9em;
   }
 }
 
 @media (hover: hover) {
   .filter-toggle:hover {
-    text-shadow: none;
-    color: #333333;
+    text-shadow: 0 0 1px black;
+    color: rgba(247, 240, 240, 0.9);
     border-style: solid;
   }
 }
@@ -1495,6 +1647,7 @@ form.filter-search #button-for-mobile .search-magniglass {
 
 .checkbox-filter:checked + .filter-toggle {
   background-color: rgba(51, 51, 51, 0.3);
+  color: #F7F0F0;
   opacity: 1;
   text-shadow: none;
   border: none;
@@ -1574,7 +1727,7 @@ form.filter-search #button-for-mobile .search-magniglass {
 }
 
 #stats {
-  font: 1.3em "Century Gothic", Tahoma, sans-serif;
+  font: 1.3em "DidactGothic", Arial, sans-serif;
   color: #F7F0F0;
   background-color: #CC3332;
   width: 100%;
@@ -1610,7 +1763,7 @@ form.filter-search #button-for-mobile .search-magniglass {
   background-color: transparent;
   outline: none;
   cursor: pointer;
-  font-size: .9em;
+  font: .9em "DidactGothic", Arial, sans-serif;
   padding: .2em .5em .2em;
 }
 
@@ -1625,7 +1778,7 @@ form.filter-search #button-for-mobile .search-magniglass {
   outline: none;
   color: inherit;
   display: block;
-  font: 1.3em "Century Gothic", Tahoma, sans-serif;
+  font: 1.3em "DidactGothic", Arial, sans-serif;
   color: #F7F0F0;
   text-shadow: 0 0 1px black;
   background-color: rgba(51, 51, 51, 0.3);
@@ -1657,7 +1810,7 @@ form.filter-search #button-for-mobile .search-magniglass {
 }
 
 .contact {
-  font: 1.4em "BetinaSans", Tahoma, sans-serif;
+  font: 1.4em "Viga", Arial, sans-serif;
   max-width: calc(100vw - 16vw);
   padding: 1em .5em;
   display: -webkit-box;
@@ -1687,19 +1840,18 @@ form.filter-search #button-for-mobile .search-magniglass {
 }
 
 .contact-place {
+  font: .9em "DidactGothic", Arial, sans-serif;
   color: rgba(247, 240, 240, 0.7);
 }
 
 .contact-name {
-  font-size: 1.2em;
-  font-weight: bold;
+  font-size: 1.1em;
   color: rgba(0, 0, 0, 0.9);
   margin: -.3em 0 -.2em;
 }
 
 .contact-type {
-  font-style: italic;
-  font-size: .8em;
+  font: italic .7em "TexGyreAdventor", Arial, sans-serif;
   color: rgba(247, 240, 240, 0.5);
   background-color: rgba(51, 51, 51, 0.5);
   width: -webkit-fit-content;
@@ -1710,6 +1862,11 @@ form.filter-search #button-for-mobile .search-magniglass {
 
 summary {
   cursor: pointer;
+}
+
+summary span {
+  font-size: .9em;
+  opacity: .6;
 }
 
 @media (hover: hover) {
@@ -1767,12 +1924,12 @@ details[open] summary {
 }
 
 .contact-address {
-  font: .8em "Century Gothic", Tahoma, sans-serif;
+  font: .8em "DidactGothic", Arial, sans-serif;
   line-height: 1.3em;
 }
 
 .contact-phone {
-  font: .9em "Century Gothic", Tahoma, sans-serif;
+  font: .9em "DidactGothic", Arial, sans-serif;
 }
 
 .emails-flexbox {
@@ -1803,7 +1960,7 @@ details[open] summary {
 }
 
 .contact-email[value] {
-  font: .9em "Century Gothic", Tahoma, sans-serif;
+  font: .9em "DidactGothic", Arial, sans-serif;
 }
 
 .copy-button, .copy-button::-moz-selection {
@@ -1814,7 +1971,7 @@ details[open] summary {
   background-color: transparent;
   outline: none;
   cursor: pointer;
-  font: .9em "Candara", Tahoma, sans-serif;
+  font: .9em "DidactGothic", Arial, sans-serif;
   color: rgba(51, 51, 51, 0.9);
   background-color: rgba(247, 240, 240, 0.2);
   margin-top: -.2em;
@@ -1830,7 +1987,7 @@ details[open] summary {
   background-color: transparent;
   outline: none;
   cursor: pointer;
-  font: .9em "Candara", Tahoma, sans-serif;
+  font: .9em "DidactGothic", Arial, sans-serif;
   color: rgba(51, 51, 51, 0.9);
   background-color: rgba(247, 240, 240, 0.2);
   margin-top: -.2em;
@@ -1887,6 +2044,9 @@ details[open] summary {
 }
 
 @media (hover: hover) {
+  .home-link:hover {
+    opacity: 1;
+  }
   .search-magniglass:hover {
     -webkit-filter: brightness(0) saturate(100%) invert(17%) sepia(0%) saturate(15%) hue-rotate(146deg) brightness(92%) contrast(87%);
             filter: brightness(0) saturate(100%) invert(17%) sepia(0%) saturate(15%) hue-rotate(146deg) brightness(92%) contrast(87%);
@@ -1913,6 +2073,11 @@ details[open] summary {
   .web-link-icon:hover {
     opacity: .5;
   }
+}
+
+.home-link:focus {
+  color: #FFFF33;
+  opacity: 1;
 }
 
 .icon-in-bar:focus {
@@ -2013,7 +2178,7 @@ h4.grey {
 
 figure {
   position: relative;
-  font: 1.2em "Candara", Tahoma, sans-serif;
+  font: 1.1em "DidactGothic", Arial, sans-serif;
   text-shadow: 0 0 4px black;
   line-height: 1.3em;
   float: top;
@@ -2048,7 +2213,7 @@ figure figcaption {
   padding: .8em .5em;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  font: .8em Arial, Tahoma, sans-serif;
+  font: .9em "DidactGothic", Arial, sans-serif;
   text-align: right;
 }
 
@@ -2077,23 +2242,27 @@ figure figcaption {
 }
 
 .quotes {
-  font-family: "Pumpkin", Tahoma, sans-serif;
+  font-family: "Pumpkin", Arial, sans-serif;
   vertical-align: middle;
 }
 
 article {
   text-align: justify;
   text-justify: auto;
+  font: 1.3em "DidactGothic", Arial, sans-serif;
+  line-height: 1.5em;
   margin-top: 2em;
   padding-left: 2em;
   padding-right: 2em;
-  font: 1.3em "Candara", Tahoma, sans-serif;
-  line-height: 1.5em;
 }
 
 article p {
   margin-bottom: 1em;
   max-width: 60em;
+}
+
+article p .next-to-fat-text {
+  font-family: "Baloo", Arial, sans-serif;
 }
 
 article hr {
@@ -2109,6 +2278,7 @@ article hr:last-child {
 @media screen and (min-width: 641px) and (max-width: 1023px) and (orientation: portrait) {
   article {
     margin-right: 2.5em;
+    margin-top: 3.5em;
   }
 }
 
@@ -2120,8 +2290,7 @@ article hr:last-child {
 }
 
 article blockquote {
-  font: bold 1em "Century Gothic", Tahoma, sans-serif;
-  color: rgba(247, 240, 240, 0.9);
+  font: 1em "Baloo", Arial, sans-serif;
   text-align: center;
   line-height: 1.5em;
   margin: 2em calc(100vw / 2 * .2);
@@ -2145,7 +2314,7 @@ article blockquote .quotes {
 
 @media screen and (min-width: 1024px) and (orientation: landscape) {
   article blockquote {
-    margin: 1.5em 8vw 1.5em 33vw;
+    margin: 1.5em 9vw 1.5em 33vw;
   }
 }
 
@@ -2171,10 +2340,6 @@ article blockquote .quotes {
   padding: .9em 1.2em;
   border-radius: .3em;
   background-color: rgba(247, 240, 240, 0.1);
-}
-
-#last-pgph mark, #last-pgph em {
-  color: rgba(247, 240, 240, 0.9);
 }
 
 @media screen and (min-width: 1024px), (min-width: 641px) and (orientation: portrait) {
@@ -2210,22 +2375,22 @@ article blockquote .quotes {
   grid-area: 2 / 2 / 3 / 3;
 }
 
-#contact-grid footer.whitish {
+#contact-grid footer.greyed {
   -ms-grid-row: 3;
   -ms-grid-row-span: 1;
   -ms-grid-column: 2;
   -ms-grid-column-span: 1;
   grid-area: 3 / 2 / 4 / 3;
-  color: #F7F0F0;
+  color: rgba(247, 240, 240, 0.5);
 }
 
-#contact-grid footer.whitish #dot-separator {
-  background-color: #F7F0F0;
+#contact-grid footer.greyed #dot-separator {
+  background-color: rgba(247, 240, 240, 0.5);
   margin-bottom: .5em;
 }
 
 @media screen and (min-width: 1024px) {
-  #contact-grid footer.whitish #dot-separator {
+  #contact-grid footer.greyed #dot-separator {
     margin-bottom: 2em;
   }
 }
@@ -2252,26 +2417,26 @@ article blockquote .quotes {
 }
 
 #shaded-text {
-  font: 1.3em "Century Gothic", Tahoma, sans-serif;
+  font: 1.3em "DidactGothic", Arial, sans-serif;
   line-height: 1.3em;
-  background-color: rgba(129, 119, 122, 0.8);
+  background-color: rgba(154, 146, 148, 0.85);
   width: 100%;
-  margin: 1em 1.5em .5em;
-  padding: 2em .5em 1em 1em;
+  margin: 1em 8vw .5em;
+  padding: 2em 0 1em 1.5em;
   border-radius: .5em;
 }
 
 @media screen and (max-width: 1023px) and (orientation: landscape) {
   #shaded-text {
-    margin: 1em 5vw .5em;
-    padding: 2em 7vw 1em 2.5em;
+    margin: 1em 7vw .5em;
+    padding: 2em 1.5em 1em 2.5em;
   }
 }
 
 @media screen and (min-width: 641px) and (orientation: portrait) {
   #shaded-text {
     font-size: 1.5em;
-    margin: 1em 3rem 2em 3rem;
+    margin: 1em 7vw 2em;
     padding: 2.5em 3em;
   }
 }
@@ -2288,32 +2453,29 @@ article blockquote .quotes {
   #shaded-text {
     font-size: 1.5em;
     padding-top: 1.5em;
-    margin-top: 1em;
-    margin-left: 3rem;
+    margin: 1em 1.5em .5em 3rem;
     width: 43vw;
   }
 }
 
-#shaded-text > label {
-  font-size: 1.2em;
+#shaded-text > p {
+  font-size: 1.1em;
   cursor: text;
 }
 
-#shaded-text > label > ul {
-  font: .9em "Candara", Tahoma, sans-serif;
-  margin: .8em .7em 0 .3em;
+#shaded-text > ul {
+  font: 1em "DidactGothic", Arial, sans-serif;
+  margin: .8em 1em 0 .3em;
   list-style: none;
 }
 
-#shaded-text > label > ul li {
-  background: -webkit-gradient(linear, left top, right top, from(rgba(51, 51, 51, 0)), color-stop(rgba(51, 51, 51, 0.01)), color-stop(rgba(51, 51, 51, 0.05)), color-stop(rgba(51, 51, 51, 0.1)), color-stop(115%, rgba(51, 51, 51, 0)));
-  background: linear-gradient(to right, rgba(51, 51, 51, 0), rgba(51, 51, 51, 0.01), rgba(51, 51, 51, 0.05), rgba(51, 51, 51, 0.1), rgba(51, 51, 51, 0) 115%);
+#shaded-text > ul li {
   margin-bottom: 1em;
-  padding: 0 .7em 0 .5em;
+  padding: 0 1em 0 .5em;
   text-align: justify;
   text-justify: auto;
   line-height: 1.5em;
-  color: rgba(255, 255, 255, 0.85);
+  color: #333333;
   border-left: 0.3em solid rgba(0, 0, 0, 0.3);
   border-radius: 2px 0 0 2px;
 }
@@ -2323,45 +2485,32 @@ article blockquote .quotes {
   color: rgba(255, 255, 51, 0.9);
 }
 
-#shaded-text address span {
-  position: relative;
-  top: .15em;
-  font-size: 1.5em;
-  color: rgba(0, 0, 0, 0.4);
-  font-style: normal;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
 #shaded-text #red-underline {
+  font-size: 1.1em;
   padding-bottom: .5em;
   border-bottom: 2px solid #CC3332;
 }
 
 #shaded-text #dark-text {
   color: rgba(247, 240, 240, 0.5);
-  font-variant: small-caps;
-  font-style: italic;
+  font-family: "TexGyreAdventor", Arial, sans-serif;
 }
 
 #contact-form {
-  margin: .5em 2.5em 0;
+  font-family: "DidactGothic", Arial, sans-serif;
+  margin: .5em 8vw 0;
   width: 100%;
 }
 
 @media screen and (max-width: 1023px) and (orientation: landscape) {
   #contact-form {
-    margin: 0 3vw 2em 3vw;
-    padding: 0 3em;
+    margin: 0 7vw 2em;
   }
 }
 
 @media screen and (min-width: 641px) and (orientation: portrait) {
   #contact-form {
-    margin: 0 3rem 2em 3rem;
-    padding: 0 3em;
+    margin: 0 7vw 2em;
   }
 }
 
@@ -2373,13 +2522,12 @@ article blockquote .quotes {
 
 @media screen and (min-width: 1024px) and (orientation: landscape) {
   #contact-form {
-    margin-top: .3em;
-    margin-right: 3rem;
+    margin: .3em 3rem 0 2.5em;
   }
 }
 
 .textbox {
-  font-family: "Candara", Tahoma, sans-serif;
+  font-family: "DidactGothic", Arial, sans-serif;
   background-color: rgba(247, 240, 240, 0.9);
   border: 1px solid #333333;
   border-radius: .5em;
@@ -2399,6 +2547,7 @@ article blockquote .quotes {
 }
 
 #input-message {
+  font-size: 1.4em;
   height: 50vh;
 }
 
@@ -2444,7 +2593,7 @@ article blockquote .quotes {
   float: right;
   margin-top: .2em;
   padding: .3em .6em;
-  font: bold 1.5em "Candara", Tahoma, sans-serif;
+  font: 1.5em "DidactGothic", Arial, sans-serif;
   color: #F7F0F0;
   text-shadow: 0 0 1px black;
   border-radius: .5em;
@@ -2510,16 +2659,12 @@ article blockquote .quotes {
 }
 
 #privacy-text {
-  font: 1.5em "Candara", Tahoma, sans-serif;
+  font: 1.5em "DidactGothic", Arial, sans-serif;
   line-height: 1.5em;
   max-width: 75ch;
   text-align: justify;
   text-justify: auto;
   margin: 2em 8vw 0;
-}
-
-#privacy-text span {
-  font: bold 1em "Century Gothic", Tahoma, sans-serif;
 }
 
 @media screen and (min-width: 641px) {

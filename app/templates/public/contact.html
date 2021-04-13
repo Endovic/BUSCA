@@ -11,31 +11,14 @@
 {% block style %}
     <style>
         body {
-            background-image: url("/static/img/suri_inv.jpg");
-        }
-        body::after {   /* https://css-tricks.com/snippets/css/transparent-background-images/ */
-            content: '';
-            background-color:  rgba(129, 119, 122, .1);
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            position: absolute;
-            z-index: -1; 
-        }
-        /* Re-adjust logo to a smaller size in desktop */
-        @media screen and (min-width: 1024px) and (orientation: landscape) {
-            .logo {
-                margin-top: .5vh;
-                max-width: 39em;
-            }
+            background-color: rgb(66, 66, 66);
         }
     </style>
 {% endblock %}
 
 {% block content %}
     <div class="page-content">
-        <header>
+        <header class="header-image">
             <a class="logo" href="\">
                 <img class="logo" src="{{ url_for('static', filename='img/busca_logo.svg') }}" alt="Logotipo do site: visite o Busca! Animais desaparecidos">
             </a>
@@ -43,22 +26,19 @@
         <main tabindex="-1">
             <div id="contact-grid">
                 <div id="contact-heading">
-                    <h4><span class="red">C</span>ontacte-nos</h4>
+                    <h4 class="grey"><span class="red">C</span>ontacte-nos</h4>
                 </div>
                 <div id="contact-flexbox">
                     <div id="shaded-text">
-                        <label for="message">
-                            Por favor, entre em contacto:
-                            <ul>
-                                <li>Se encontrar algum problema técnico ou se tiver sugestões sobre como melhorar o nosso sítio.</li>
-                                <li>Se conhecer uma entidade de apoio a animais que não conste na nossa base de dados ou cuja informação esteja incompleta ou errada.</li>
-                                <li>Se quiser colaborar ou contribuir pessoalmente para o nosso projeto!</li>
-                            </ul>
-                        </label>
+                        <p>Por favor, entre em contacto:</p>
+                        <ul>
+                            <li>Se encontrar algum problema técnico ou se tiver sugestões sobre como melhorar o nosso sítio.</li>
+                            <li>Se conhecer uma entidade de apoio a animais que não conste na nossa base de dados ou cuja informação esteja incompleta ou errada.</li>
+                            <li>Se quiser colaborar ou contribuir pessoalmente para este projeto.</li>
+                        </ul>
                         <br>
                         <p>
-                            Pode escrever-nos diretamente para: <address><span>&#9993;</span> busca@email.com</address>
-                            <!-- https://www.toptal.com/designers/htmlarrows/symbols/envelope/ -->
+                            Pode escrever-nos diretamente para: <address>busca@email.com</address>
                             <br><span id="red-underline">Ou então, deixe uma mensagem.</span><br>
                             <br><span id="dark-text">Obrigado</span>
                         </p>
@@ -82,21 +62,21 @@
                         <input class="textbox" id="input-email" name="guestmail" placeholder="e-mail" type="text">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                         <button id="send-button">Enviar</button>
-                        * obrigatório
+                        <p>* obrigatório</p>
                     </form>
                 </div>
-                <footer class="whitish">
+                <footer class="greyed">
                     <span id="dot-separator"></span>
                     <div id="footer-wrapper">
                         <div id="copyright">
                             2021 Todos os direitos reservados
                         </div>
                         <nav id="footer-nav">
-                            <a href="\acerca-do-projeto" class="footer-nav-link">
-                                <p>Acerca do <mark class="fat-text">Busca!</mark></p>
+                            <a href="\animais-desaparecidos#recursos" class="footer-nav-link">
+                                Página inicial
                             </a>
-                            <a href="\contacte-nos" class="footer-nav-link">
-                                <p>Contacto</p>
+                            <a href="\acerca-do-projeto" class="footer-nav-link">
+                                <p>Acerca do <span class="fat-text">Busca!</span></p>
                             </a>
                             <a href="\privacidade" class="footer-nav-link">
                                 <p>Privacidade</p>

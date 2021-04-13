@@ -17,31 +17,40 @@ $red: #CC3332;          // rgb(204, 51, 50)
 $black: #333333;        // rgb(51, 51, 51)
 
 // Custom fonts
+// https://css-tricks.com/snippets/css/using-font-face/
 
-// https://stackoverflow.com/questions/32582644/how-to-add-custom-font-in-python-flask
 @font-face {
+    // https://fontlibrary.org/en/font/pumpkin
     font-family: "Pumpkin";
     src: url("/static/fonts/Pumpkin.otf")
 }
 
 @font-face {
-    font-family: "JelleeBold";
-    src: url("/static/fonts/Jellee-Bold.woff")
+    // https://www.fontsquirrel.com/fonts/baloo
+    font-family: "Baloo";
+    src: url("/static/fonts/Baloo-Regular.woff") format("woff"),
+         url("/static/fonts/Baloo-Regular.ttf") format("truetype")
 }
 
 @font-face {
-    font-family: "Cagliostro";
-    src: url("/static/fonts/Cagliostro-Regular.ttf")
+    // https://www.fontsquirrel.com/fonts/didact-gothic
+    font-family: "DidactGothic";
+    src: url("/static/fonts/DidactGothic-Regular.woff") format("woff"),
+         url("/static/fonts/DidactGothic-Regular.ttf") format("truetype")
 }
 
 @font-face {
-    font-family: "Candara";
-    src: url("/static/fonts/Candara.ttf")
+    // https://www.fontsquirrel.com/fonts/viga
+    font-family: "Viga";
+    src: url("/static/fonts/Viga-Regular.woff") format("woff"),
+         url("/static/fonts/Viga-Regular.ttf") format("truetype")
 }
 
 @font-face {
-    font-family: "BetinaSans";
-    src: url("/static/fonts/BetinaSans-Regular.ttf")
+    // https://www.fontsquirrel.com/fonts/TeX-Gyre-Adventor
+    font-family: "TexGyreAdventor";
+    src: url("/static/fonts/TexGyreAdventor-Regular.woff") format("woff"),
+         url("/static/fonts/TexGyreAdventor-Regular.ttf") format("truetype")
 }
 
 // Reset default styles (to include where needed)
@@ -126,7 +135,7 @@ body {
 ////////////////////////////////////
 
 .message, .error {
-    font: bold 1.5em "Century Gothic", Tahoma, sans-serif;
+    font: bold 1.5em "DidactGothic", Arial, sans-serif;
 }
 
 .message {
@@ -179,7 +188,7 @@ body {
     @media screen and (max-width: $phone) and (orientation: portrait) { margin-top: 0; }
     @media screen and (min-width: $tmin) and (orientation: portrait) { max-width: 50em; }
     @media screen and (max-width: $tmax) and (orientation: landscape) { max-width: 40vw; }
-    @media screen and (min-width: $desktop) and (orientation: landscape) { max-width: 43em; }
+    @media screen and (min-width: $desktop) and (orientation: landscape) { max-width: 39em; }
 }
 
 // Header version with image [search.html]
@@ -217,7 +226,7 @@ footer {
     flex-direction: column;
     align-items: center;
     color: $black;
-    font: 1em "Century Gothic", Tahoma, sans-serif;
+    font: 1em "TexGyreAdventor", Arial, sans-serif;
 
     // https://css-tricks.com/logic-in-media-queries/ (comma equivalent to "OR" in CSS syntax)
     @media screen and (min-width: $tmin) and (orientation: portrait), (min-width: $desktop) {
@@ -308,18 +317,21 @@ h1 {
     grid-area: 1 / 1 / 2 / 2;   // [row-start] / [col-start] / [row-end] / [col-end]
     margin: 6vh 7vw 0 7vw;      // [margin-top] / [margin-right] / [margin-bottom] / [margin-left]
     text-shadow: 0 0 4px black;
-    font: 2.7em "JelleeBold", Arial Black, sans-serif;
+    font: 2.7em "Baloo", Arial Black, sans-serif;
 
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { font-size: 3.6em; }
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: landscape) { font-size: 3em; }    
-    @media screen and (min-width: $desktop) { font-size: 4em; }
+    @media screen and (min-width: $desktop) {
+        font-size: 4em;
+        margin-top: 10.5vh;
+    }
 }
 
 h2 {
     grid-area: 3 / 1 / 4 / 2;
     margin: 0 6vw 2vh 6vw;
     text-shadow: 0 0 8px black;
-    font: 2em "Century Gothic", Tahoma, sans-serif;
+    font: 2em "DidactGothic", Arial, sans-serif;
 
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { font-size: 2.8em; }
     @media screen and (min-width: $desktop) { font-size: 2.5em; }
@@ -342,15 +354,15 @@ h2 {
 #shaded-sections {
     min-height: 100%;
     // Shade color
-    background-color:  rgba(129, 119, 122, .85);
+    background-color:  rgba(154, 146, 148, .85);
 
     @media screen and (min-width: $desktop) and (orientation: landscape) {  // (desktop/tablet landscape)
         background: linear-gradient(
             to right,
-            rgba(129, 119, 122, 0) -5%,
-            rgba(129, 119, 122, .85) 15%,
-            rgba(129, 119, 122, .85) 85%,
-            rgba(129, 119, 122, 0) 105%
+            rgba(154, 146, 148, 0) -5%,
+            rgba(154, 146, 148, .85) 15%,
+            rgba(154, 146, 148, .85) 85%,
+            rgba(154, 146, 148, 0) 105%
         );  // https://css-tricks.com/css3-gradients/
     }
     
@@ -386,6 +398,9 @@ h2 {
 }
 
 @media screen and (min-width: $tmin) and (orientation: portrait) {  // (desktop/tablet portrait)
+    #intro {
+        grid-column: col-start 2 / span 4;
+    }
     #info-como {
         grid-column: col-start 1 / span 3;
     }
@@ -401,6 +416,9 @@ h2 {
 }
 @media screen and (max-width: $phone) and (orientation: landscape),
 (min-width: $tmin) and (orientation: landscape) {   // (desktop/tablet/phone landscape)
+    #intro {
+        grid-column: col-start 1 / span 6;
+    }
     #info-como {
         grid-column: col-start 1 / span 2;
     }
@@ -415,6 +433,21 @@ h2 {
     }
 }
 
+// Intro text
+
+#intro {
+    font: 1.1em "Viga", Arial, sans-serif;
+    color: $black;
+    text-align: justify;
+    text-justify: auto; // https://css-tricks.com/almanac/properties/t/text-justify/
+    margin: 1em 10vw 0;
+
+    @media screen and (min-width: $desktop) {
+        font-size: 1.6em;
+        margin: 1em 4.5em 0;
+    }
+}
+
 // "Silhouettes"
 
 #info-como, #info-onde {
@@ -422,7 +455,8 @@ h2 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font: 1.9em "Cagliostro", Tahoma, sans-serif;
+    font: 1.9em "Baloo", Arial, sans-serif;
+    text-shadow: 0 0 1px black;
 
     @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 1.7em; }
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { font-size: 2.3em; }
@@ -432,7 +466,7 @@ h2 {
 }
 
 .info-link-img {
-    margin-top: 8vh;
+    margin-top: 4vh;
 }
 
 #blackdog {
@@ -445,10 +479,10 @@ h2 {
     margin-bottom: -8px;
 }
 
-// Logo typeface text insert
+// Text insert in logo font (Pumpkin)
 .fat-text {
     background-color: transparent;
-    font: 1.1em "Pumpkin", Tahoma, sans-serif;
+    font: 1em "Pumpkin", Arial, sans-serif;
     color: inherit;
 }
 
@@ -463,9 +497,10 @@ h2 {
 
 #pesquisar-link {
     max-width: 13em;
-    padding: .6em .9em;
+    padding: .6em 1.5em;
+    border-radius: 2.5em;
     background-color: $red;
-    border-radius: 3em;
+    text-shadow: 0 0 1px black;
     transition: box-shadow .1s linear;
     box-shadow: 0 20px 20px -20px black;
     display: flex;
@@ -475,7 +510,7 @@ h2 {
         line-height: 1.5em;
         vertical-align: middle;
     }
-    font: 1.9em "Cagliostro", Tahoma, sans-serif;
+    font: 1.9em "Baloo", Arial, sans-serif;
 
     @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 1.4em; }
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
@@ -485,17 +520,17 @@ h2 {
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: landscape) { font-size: 1.5em; }    
     @media screen and (min-width: $desktop) and (orientation: portrait) {
         font-size: 2.5em;
-        max-width: 70vw;
+        max-width: 50vw;
     }
     @media screen and (min-width: $desktop) and (orientation: landscape) { font-size: 2.2em; }
 }
 
-#icon-magniglass {
+.icon-magniglass {
     max-width: 1.2em;
-    // Align icon with text. https://css-tricks.com/tips-aligning-icons-text/
+    // Align icon with text https://css-tricks.com/tips-aligning-icons-text/
     position: relative;
     top: .2em;
-    // Fade in effect on "hover off"  https://css-tricks.com/different-transitions-for-hover-on-hover-off/
+    // Fade in effect on "hover off" https://css-tricks.com/different-transitions-for-hover-on-hover-off/
     transition: opacity .1s ease-out;
     opacity: 1;
 }
@@ -534,13 +569,14 @@ h2 {
     }
 }
 
-// "Dark rectangle"
+// "Contribute to project" jumpy link
 #contribuir {
     width: fit-content;
-    margin: 16vh auto 8vh;  // [margin-top] / left and right margins / [margin-bottom]
+    margin: 12vh auto 4vh;  // [margin-top] / left and right margins / [margin-bottom]
     text-align: center;
     h3 {
-        font: 1.5em "Century Gothic", Tahoma, sans-serif;
+        color: $black;
+        font: 1.5em "Baloo", Arial, sans-serif;
 
         @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 1.3em; }
         @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) { font-size: 1.7em; }
@@ -590,7 +626,7 @@ h4 {
         text-shadow: 0 0 1px black;
     }
     // Font sizes for different media screens
-    font: 2.8rem "JelleeBold", Arial Black, sans-serif;
+    font: 2.2rem "Baloo", Arial Black, sans-serif;
     
     @media screen and (max-width: $phone) and (orientation: landscape) { font-size: 2.6rem; }
     @media screen and (min-width: $tmin) and (orientation:portrait) { font-size: 3rem; }
@@ -603,7 +639,7 @@ h4 {
     float: right;
     width: 3.8em;
     padding: 1em;
-    opacity: .85;
+    opacity: .8;
 
     @media screen and (min-width: $desktop), (min-width: $tmin) and (orientation: portrait) {
         width: 4.5em;
@@ -613,12 +649,15 @@ h4 {
 // Back-to-top link
 
 .backtop-link {
+    @include link-reset;
     display: block;
     width: fit-content;
     padding: .4em .6em;
-    border: 1px solid rgba(247, 240, 240, .5);
+    border: 1px solid $black;
     border-radius: 10em;
-    font: 1.5em "Century Gothic", Tahoma, sans-serif;
+    font: 1.5em "DidactGothic", Arial, sans-serif;
+    color: $black;
+    opacity: .8;
 }
 
 #backtop-como, #backtop-onde {
@@ -649,10 +688,13 @@ h4 {
     margin: -2.4em 7vw 0 2.65em;    // negative margin-top to overlap the invisible checkbox
     border-radius: 10em;
     transition: all .15s;
-    font: 2.1em "Candara", Tahoma, sans-serif;
+    font: 2.1em "DidactGothic", Arial, sans-serif;
     line-height: 1.4em;    
     text-indent: -0.9em;    // https://www.thesitewizard.com/css/hanging-indents.shtml
 
+    @media screen and (max-width: $phone) {
+        font-size: 1.8em;
+    }
     @media screen and (min-width: $desktop) {
         text-indent: -0.4em;
     }
@@ -661,8 +703,6 @@ h4 {
 // (pseudo-element) https://developer.mozilla.org/en-US/docs/Web/CSS/::before
 .label-toggle::before {
     content: "+";  // https://www.toptal.com/designers/htmlarrows/math/plus-sign/
-    font-size: 1em;
-    font-weight: bold;
     display: inline-block;
     padding-right: 1.2em;
     vertical-align: 7%;
@@ -688,9 +728,9 @@ h4 {
 }
 
 .content-inner {
-    background: rgba(51, 51, 51, .2);
-    color: $isabelline;
-    font: 1.65em "Candara", Tahoma, sans-serif;
+    background: rgba(51, 51, 51, .1);
+    font: 1.5em "DidactGothic", Arial, sans-serif;
+    color: rgba(0, 0, 0, .8);
     line-height: 1.5em;
     margin: 0 3vw 0 3vw;
     padding: 1.3em 1.3em;
@@ -720,32 +760,45 @@ h4 {
     }
 }
 
-.no-link-emphasis {
-    font: bold italic .9em "Century Gothic", Tahoma, sans-serif;
-}
-
-.external-link-symbol {
-    font-size: .8em;
-    color: gainsboro;
-}
-
 // Links in text
 
 .link-external {
     @include link-reset;
     color: $yellow;
     text-shadow: 0 0 1px black;
-    font: .9em "Century Gothic", Tahoma, sans-serif;    
 }
 
-@media(hover: hover) {
-    .link-external:hover {
-        text-shadow: 0 0 4px black;
-    }
+.external-link-symbol {
+    width: .6em;
+    margin-left: .2em;
+    position: relative;
+    top: .05em;
+    opacity: .8;
 }
 
-.link-external:focus {
-    text-decoration: underline dotted;
+.link-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1em;
+}
+
+.white-text {
+    font: .9em "Viga", Arial, sans-serif;
+    color: $isabelline;
+    text-shadow: 0 0 1px black;
+}
+
+.internal-link {
+    @include link-reset;
+    font-family: "Baloo", Arial Black, sans-serif;
+    color: $isabelline;
+    text-shadow: 0 0 1px black;
+    max-width: fit-content;
+    padding: .6em .6em;
+    background-color: $red;
+    border-radius: 2.5em;
 }
 
 // Expanded items/content
@@ -785,7 +838,7 @@ h4 {
 ////////////////////////////////////////////
 
 // Reset default styles
-.info-link-img, .info-link-wrds, #pesquisar-link, .jumpy-link, .icon-x, .backtop-link, .footer-nav-link {
+.info-link-img, .info-link-wrds, #pesquisar-link, .jumpy-link, .icon-x, .footer-nav-link {
     @include link-reset;
 }
 
@@ -804,9 +857,10 @@ h4 {
 
     #pesquisar-link:hover {
         color: rgba(255, 255, 255, .6);
+        text-shadow: none;
         transition: all .1s linear;
         box-shadow: 0 30px 30px -25px black;
-        #icon-magniglass {
+        .icon-magniglass {
             // Fade out effect  https://bavotasan.com/2011/a-simple-fade-with-css3/
             transition: opacity .2s ease-out;
             opacity: 0;
@@ -817,9 +871,13 @@ h4 {
     }
     
     .jumpy-link:hover {
-        .highlighted, .fat-text, h3 {
-            color: $yellow;
+        h3 {
             animation: jump .2s;
+        }
+        .fat-text {
+            transition: color .1s linear;
+            color: $yellow;
+            text-shadow: 0 0 5px black;
         }
     }
 
@@ -828,8 +886,19 @@ h4 {
     }
 
     .backtop-link:hover {
-        border: 1px solid rgba(247, 240, 240, 1);
-        color: rgba(247, 240, 240, .8);
+        opacity: 1;
+    }
+
+    .link-external:hover {
+        text-shadow: 0 0 4px black;
+        .external-link-symbol {
+            opacity: 1;
+        }
+    }
+
+    .internal-link:hover {
+        text-shadow: 0 0 2px black;
+        box-shadow: 0 0 1px 0 $black;
     }
     
     .footer-nav-link:hover {
@@ -852,10 +921,10 @@ h4 {
 @keyframes jump {
     // https://www.geeksforgeeks.org/how-to-shake-text-on-hover-using-html-and-css/
     0% {
-        color: $isabelline;
+        color: $black;
     }
     25% {
-        color: $isabelline;
+        color: $black;
     }
     50% {
         transform: translateY(3px);
@@ -877,28 +946,47 @@ h4 {
 
 #pesquisar-link:focus {
     color: rgba(255, 255, 255, .6);
+    text-shadow: none;
     transition: all .1s linear;
     box-shadow: 0 30px 30px -25px black;
-    #icon-magniglass {
+    .icon-magniglass {
         animation: turn 1s;
     }      
 }
 
 .jumpy-link:focus {
-    .highlighted, .fat-text, h3 {
-        color: $yellow;
+    h3 {
         animation: jump .2s;
+    }
+    .fat-text {
+        transition: color .1s linear;
+        color: $yellow;
     }
 }
 
 .icon-x:focus {
-    opacity: .5;
+    opacity: 1;
+    // https://css-tricks.com/change-color-of-svg-on-hover/
+    // https://codepen.io/sosuke/pen/Pjoqqp
+    filter: brightness(0) saturate(100%) invert(92%) sepia(10%) saturate(73%) hue-rotate(317deg) brightness(103%) contrast(95%);
 }
 
 .backtop-link:focus {
-    border: 1px solid rgba(247, 240, 240, 1);
-    color: rgba(247, 240, 240, .8);
+    border: 1px solid $isabelline;
+    color: $isabelline;
+    opacity: 1;
+}
+
+.link-external:focus {
     text-decoration: underline dotted;
+    .external-link-symbol {
+        opacity: 1;
+    }
+}
+
+.internal-link:focus {
+    text-decoration: underline dotted;
+    box-shadow: 0 0 1px 0 $black;
 }
 
 .footer-nav-link:focus {
@@ -910,37 +998,43 @@ h4 {
 .info-link-img:active + .info-link-wrds, .info-link-wrds:active, .jumpy-link:active {
     text-shadow: none;
     color: $black;
-    .fat-text, i {
+    .fat-text {
         color: $black;
+        text-shadow: none;
     }
 }
 
 #pesquisar-link:active {
     color: $black;
     img{
-        // https://css-tricks.com/change-color-of-svg-on-hover/
-        // https://codepen.io/sosuke/pen/Pjoqqp
         filter: brightness(0) saturate(100%) invert(17%) sepia(0%) saturate(15%) hue-rotate(146deg) brightness(92%) contrast(87%);
         transition: .1s ease-in;
     }
 }
 
 .icon-x:active {
-    opacity: .5;
+    opacity: 1;
+    filter: none;
 }   
 
 .backtop-link:active {
     border: 1px solid $black;
+    opacity: 1;
     color: $black;
-}
-
-.footer-nav-link:active {
-    color: $isabelline;
 }
 
 .link-external:active {
     color: $black;
     text-shadow: none;
+}
+
+.internal-link:active {
+    color: $black;
+    text-shadow: none;
+}
+
+.footer-nav-link:active {
+    color: $isabelline;
 }
 
 /////////////////////////
@@ -984,18 +1078,45 @@ h4 {
 }
 
 // Section heading
-// (implemented as an anchor to allow refreshing the page and resetting search filters)
-#search-heading {
-    @include link-reset;
+
+#heading-wrapper {
     grid-area: heading;
-    margin: 5vh 5vw 4vh 5vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+#search-heading {
+    // (implemented as an anchor to allow refreshing the page and resetting search filters)
+    @include link-reset;
     h4 {
         margin: 0;
+    }
+    margin: 5vh 4vw 4vh 5vw;
+
+    @media screen and (orientation: landscape), (min-width: $tmin) and (orientation: portrait) {
+        margin-right: 0;
     }
 }
 
 #search-heading:focus {
     text-decoration: underline $black dotted;
+}
+
+.home-link {
+    @include link-reset;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5vh 5vw 4vh 5vw;
+    color: $black;
+    opacity: .8;
+    img {
+        max-width: 2em;
+    }
+    font: 1em "DidactGothic", Arial, sans-serif;
+
+    @media screen and (min-width: $desktop) { font-size: 1.3em; }
 }
 
 ////////////////////////
@@ -1063,7 +1184,7 @@ form.name-search {
     background: none;
     outline: none;
     color: $isabelline;
-    font: 1.5em "Century Gothic", Tahoma, sans-serif;    
+    font: 1.5em "DidactGothic", Arial, sans-serif;    
     width: 80%;
 
     @media screen and (min-width: $desktop) {
@@ -1130,7 +1251,7 @@ form.filter-search {
     @media screen and (max-width: $phone) and (orientation: landscape),
     (min-width: $tmin) and (max-width: $tmax) { // (tablet/phone landscape)
         flex-direction: row;
-        width: fit-content;
+        width: 51em;
         #button-for-mobile {
             display: none;
         }
@@ -1172,7 +1293,7 @@ form.filter-search {
     border-radius: 10em;
     margin: .5em 1em .3em 1em;
     padding: .4em 0 .3em;
-    font: 1.5em "Century Gothic", Tahoma, sans-serif;
+    font: 1.5em "DidactGothic", Arial, sans-serif;
     color: $yellow;
     text-shadow: 0 0 1px black;
     .search-magniglass {
@@ -1184,7 +1305,7 @@ form.filter-search {
 // Filter descriptions
 .name-of-filter {
     color: $black;
-    font: 1.1em "Century Gothic", Tahoma, sans-serif;
+    font: 1.1em "DidactGothic", Arial, sans-serif;
     padding: .5em;
 }
 
@@ -1203,10 +1324,10 @@ form.filter-search {
         color: $black;
         font-size: .9em;
     }
-    font: 1.5em "Century Gothic", Tahoma, sans-serif;
+    font: 1.5em "DidactGothic", Arial, sans-serif;
 
     @media screen and (min-width: $desktop) {
-        font: 1.3em "Century Gothic", Tahoma, sans-serif;
+        font: 1.3em "DidactGothic", Arial, sans-serif;
     }
 }
 
@@ -1244,23 +1365,23 @@ form.filter-search {
     padding: .4em .9em;
     border-radius: 1.1em .3em 1.1em .3em;
     outline: none;
-    font: 1.3em "Century Gothic", Tahoma, sans-serif;
+    font: 1.3em "DidactGothic", Arial, sans-serif;
 
     @media screen and (min-width: $desktop) {
-        font: 1.2em "Century Gothic", Tahoma, sans-serif;
+        font: 1.2em "DidactGothic", Arial, sans-serif;
         padding: .3em .9em;
     }
 
     // Filter disabled
     background-color: rgba(51, 51, 51, .05);
-    text-shadow: 0 0 1px black;
+    color: rgba(247, 240, 240, .5);
     border: 1px dotted rgba(51, 51, 51, .3);
 }
 
 @media(hover: hover) {
     .filter-toggle:hover {
-        text-shadow: none;
-        color: $black;
+        text-shadow: 0 0 1px black;
+        color: rgba(247, 240, 240, .9);
         border-style: solid;
     }
 }
@@ -1272,6 +1393,7 @@ form.filter-search {
 // Filter enabled
 .checkbox-filter:checked + .filter-toggle {
     background-color: rgba(51, 51, 51, .3);
+    color: $isabelline;
     opacity: 1;
     text-shadow: none;
     border: none;
@@ -1347,7 +1469,7 @@ form.filter-search {
 // "header"
 
 #stats {  
-    font: 1.3em "Century Gothic", Tahoma, sans-serif;
+    font: 1.3em "DidactGothic", Arial, sans-serif;
     color: $isabelline;
     background-color: $red;
     width: 100%;
@@ -1373,7 +1495,7 @@ form.filter-search {
     visibility: hidden;
     @include button-reset;
     cursor: pointer;
-    font-size: .9em;
+    font: .9em "DidactGothic", Arial, sans-serif;;
     padding: .2em .5em .2em;
     
     @media screen and (min-width: $desktop) {
@@ -1385,7 +1507,7 @@ form.filter-search {
 .repeat-search {
     @include link-reset;
     display: block;
-    font: 1.3em "Century Gothic", Tahoma, sans-serif;
+    font: 1.3em "DidactGothic", Arial, sans-serif;
     color: $isabelline;
     text-shadow: 0 0 1px black;
     background-color: rgba(51, 51, 51, .3);
@@ -1422,7 +1544,7 @@ form.filter-search {
 ////////////////////////////
 
 .contact {
-    font: 1.4em "BetinaSans", Tahoma, sans-serif;
+    font: 1.4em "Viga", Arial, sans-serif;
     max-width: calc(100vw - 16vw);  // viewport minus sum of lateral margins of ancestor .results-container
     padding: 1em .5em;
     display: flex;
@@ -1448,21 +1570,20 @@ form.filter-search {
 
 // Entry location
 .contact-place {
+    font: .9em "DidactGothic", Arial, sans-serif;
     color: rgba(247, 240, 240, .7);
 }
 
 // Entry name
 .contact-name {
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 1.1em;
     color: rgba(0, 0, 0, .9);
     margin: -.3em 0 -.2em;
 }
 
 // Entry type
 .contact-type {
-    font-style: italic;
-    font-size: .8em;
+    font: italic .7em "TexGyreAdventor", Arial, sans-serif;
     color: rgba(247, 240, 240, .5);
     background-color: rgba(51, 51, 51, .5);
     width: fit-content;
@@ -1476,6 +1597,10 @@ form.filter-search {
 
 summary {
     cursor: pointer;
+    span {
+        font-size: .9em;
+        opacity: .6;
+    }
 }
 
 @media(hover: hover) {
@@ -1522,13 +1647,13 @@ details[open] summary { // https://css-tricks.com/creating-a-details-element-tha
 
 // Entry post address
 .contact-address {
-    font: .8em "Century Gothic", Tahoma, sans-serif;
+    font: .8em "DidactGothic", Arial, sans-serif;
     line-height: 1.3em;
 }
 
 // Entry phone number
 .contact-phone {
-    font: .9em "Century Gothic", Tahoma, sans-serif;
+    font: .9em "DidactGothic", Arial, sans-serif;
 }
 
 ///////////////////////////////////////
@@ -1558,13 +1683,13 @@ details[open] summary { // https://css-tricks.com/creating-a-details-element-tha
 
 // https://www.sitepoint.com/community/t/styling-value-attribute-in-input-field-type/35567/4
 .contact-email[value] {
-    font: .9em "Century Gothic", Tahoma, sans-serif;
+    font: .9em "DidactGothic", Arial, sans-serif;
 }
 
 .copy-button, .copy-button::selection { // https://developer.mozilla.org/en-US/docs/Web/CSS/::selection
     @include button-reset;
     cursor: pointer;
-    font: .9em "Candara", Tahoma, sans-serif;
+    font: .9em "DidactGothic", Arial, sans-serif;
     color: rgba(51, 51, 51, .9);
     background-color: rgba(247, 240, 240, .2);
     margin-top: -.2em;  // to compensate for the gap inside the flexbox
@@ -1614,9 +1739,11 @@ details[open] summary { // https://css-tricks.com/creating-a-details-element-tha
 // On hover
 
 @media(hover: hover) {
+    .home-link:hover {
+        opacity: 1;
+    }
+    
     .search-magniglass:hover {
-        // https://css-tricks.com/change-color-of-svg-on-hover/
-        // https://codepen.io/sosuke/pen/Pjoqqp
         filter: brightness(0) saturate(100%) invert(17%) sepia(0%) saturate(15%) hue-rotate(146deg) brightness(92%) contrast(87%);
     }
 
@@ -1648,6 +1775,11 @@ details[open] summary { // https://css-tricks.com/creating-a-details-element-tha
 }
 
 // On focus
+
+.home-link:focus {
+    color: $yellow;
+    opacity: 1;
+}
 
 .icon-in-bar:focus {
     filter: brightness(0) saturate(100%) invert(17%) sepia(0%) saturate(15%) hue-rotate(146deg) brightness(92%) contrast(87%);
@@ -1735,7 +1867,7 @@ h4.grey {
 // Figure (image + text)
 figure {
     position: relative; // accommodate absolutely-positioned text over the image
-    font: 1.2em "Candara", Tahoma, sans-serif;
+    font: 1.1em "DidactGothic", Arial, sans-serif;
     text-shadow: 0 0 4px black;
     line-height: 1.3em;
     img {
@@ -1748,7 +1880,7 @@ figure {
         margin-right: 1.5em;
         width: 65%;
         text-align: justify;
-        text-justify: auto; // https://css-tricks.com/almanac/properties/t/text-justify/
+        text-justify: auto;
         text-shadow: 0 0 2px black, 0 0 1px white, 0 0 3px black;
         
         @media screen and (max-width: $tmax) and (orientation: landscape) {
@@ -1762,7 +1894,7 @@ figure {
         padding: .8em .5em;
         width: 100%;
         background-color: rgba(0, 0, 0, .5);
-        font: .8em Arial, Tahoma, sans-serif;
+        font: .9em "DidactGothic", Arial, sans-serif;
         text-align: right;
     }
     // Position figure relative to the text
@@ -1788,7 +1920,7 @@ figure {
 
 // Quotation marks
 .quotes {
-    font-family: "Pumpkin", Tahoma, sans-serif;
+    font-family: "Pumpkin", Arial, sans-serif;
     vertical-align: middle; // https://stackoverflow.com/questions/39852827/styling-quotation-marks
 }
 
@@ -1799,13 +1931,17 @@ figure {
 article {
     text-align: justify;
     text-justify: auto;
-
+    font: 1.3em "DidactGothic", Arial, sans-serif;
+    line-height: 1.5em;
     margin-top: 2em;
     padding-left: 2em;
     padding-right: 2em;
     p {
         margin-bottom: 1em;
         max-width: 60em;
+        .next-to-fat-text {
+            font-family: "Baloo", Arial, sans-serif;
+        }    
     }
     hr {
         margin: 3em 25vw 1.5em 25vw;
@@ -1815,11 +1951,10 @@ article {
         margin-top: 2em;
         margin-bottom: .5em;
     }
-    font: 1.3em "Candara", Tahoma, sans-serif;
-    line-height: 1.5em;
 
     @media screen and (min-width: $tmin) and (max-width: $tmax) and (orientation: portrait) {
         margin-right: 2.5em;
+        margin-top: 3.5em;
     }
     @media screen and (min-width: $desktop) {
         font-size: 1.5em;
@@ -1827,8 +1962,7 @@ article {
     }
 
     blockquote {
-        font: bold 1em "Century Gothic", Tahoma, sans-serif;
-        color: rgba(247, 240, 240, .9);
+        font: 1em "Baloo", Arial, sans-serif;
         text-align: center;
         line-height: 1.5em;
         .quotes {
@@ -1843,7 +1977,7 @@ article {
             margin: 3em 20vw 2em;
         }
         @media screen and (min-width: $desktop) and (orientation: landscape) {
-            margin: 1.5em 8vw 1.5em 33vw;
+            margin: 1.5em 9vw 1.5em 33vw;
         }
     }
 }
@@ -1869,9 +2003,6 @@ article {
     padding: .9em 1.2em;
     border-radius: .3em;
     background-color: rgba(247, 240, 240, .1);
-    mark, em {
-        color: rgba(247, 240, 240, .9);
-    }
 
     @media screen and (min-width: $desktop), (min-width: $tmin) and (orientation: portrait) {
         margin-left: 9.25em;
@@ -1895,12 +2026,12 @@ article {
     #contact-flexbox {
         grid-area: 2 / 2 / 3 / 3;
     }
-    footer.whitish {
+    footer.greyed {
         grid-area: 3 / 2 / 4 / 3;
-        color: $isabelline;
+        color: rgba(247, 240, 240, .5);
         // Hide the dot separator and reduce the margin between footer and page content above
         #dot-separator {
-            background-color: $isabelline;
+            background-color: rgba(247, 240, 240, .5);
             margin-bottom: .5em;
 
             @media screen and (min-width: $desktop) {
@@ -1930,22 +2061,22 @@ article {
 // "How-to-contact" instructions box
 #shaded-text {
     // Text style
-    font: 1.3em "Century Gothic", Tahoma, sans-serif;
+    font: 1.3em "DidactGothic", Arial, sans-serif;
     line-height: 1.3em;
     // Size and background
-    background-color:  rgba(129, 119, 122, .8);
+    background-color:  rgba(154, 146, 148, .85);
     width: 100%;
-    margin: 1em 1.5em .5em;
-    padding: 2em .5em 1em 1em;
+    margin: 1em 8vw .5em;
+    padding: 2em 0 1em 1.5em;
     border-radius: .5em;
 
     @media screen and (max-width: $tmax) and (orientation: landscape) {
-        margin: 1em 5vw .5em;
-        padding: 2em 7vw 1em 2.5em;
+        margin: 1em 7vw .5em;
+        padding: 2em 1.5em 1em 2.5em;
     }
     @media screen and (min-width: $tmin) and (orientation: portrait) {
         font-size: 1.5em;
-        margin: 1em 3rem 2em 3rem;
+        margin: 1em 7vw 2em;
         padding: 2.5em 3em;
     }
     @media screen and (min-width: $desktop) and (orientation: portrait) {
@@ -1956,38 +2087,29 @@ article {
     @media screen and (min-width: $desktop) and (orientation: landscape) {
         font-size: 1.5em;
         padding-top: 1.5em;
-        margin-top: 1em;
-        margin-left: 3rem;
+        margin: 1em 1.5em .5em 3rem;
         width: 43vw;
     }
 }
 
 // List of instructions
 
-#shaded-text > label {
-    font-size: 1.2em;
+#shaded-text > p {
+    font-size: 1.1em;
     cursor: text;
 }
 
-#shaded-text > label > ul {
-    font: .9em "Candara", Tahoma, sans-serif;
-    margin: .8em .7em 0 .3em;
+#shaded-text > ul {
+    font: 1em "DidactGothic", Arial, sans-serif;
+    margin: .8em 1em 0 .3em;
     li {
-        background: linear-gradient(
-            to right,
-            rgba(51, 51, 51, 0),
-            rgba(51, 51, 51, .01),
-            rgba(51, 51, 51, .05),
-            rgba(51, 51, 51, .10),
-            rgba(51, 51, 51, 0) 115%
-        );
         margin-bottom: 1em;
-        padding: 0 .7em 0 .5em;
+        padding: 0 1em 0 .5em;
         // List-items text style
         text-align: justify;
         text-justify: auto;
         line-height: 1.5em;
-        color: rgba(255, 255, 255, .85);
+        color: $black;
         // Linear "bullet points"
         border-left: .3em solid rgba(0, 0, 0, .3);
         border-radius: 2px 0 0 2px;
@@ -1996,28 +2118,15 @@ article {
     list-style: none;
 }
 
-// Email address (yellow + icon)
+// Email address
 #shaded-text address {
     margin: .5em 0;
     color: rgba(255, 255, 51, .9);
-    // "Mail" icon
-    span {
-        position: relative;
-        top: .15em;
-        font-size: 1.5em;
-        color: rgba(0, 0, 0, .4);
-        font-style: normal;
-        // Icon not selectable
-        // https://css-tricks.com/almanac/properties/u/user-select/
-        -webkit-user-select: none;  // Chrome/Safari all
-        -moz-user-select: none;     // Firefox all
-        -ms-user-select: none;      // IE 10+
-        user-select: none;          // Likely future
-    }
 }
 
 // "Leave message" (red underline)
 #shaded-text #red-underline {
+    font-size: 1.1em;
     padding-bottom: .5em;
     border-bottom: 2px solid $red;
 }
@@ -2025,8 +2134,7 @@ article {
 // "Thank you" (dark text)
 #shaded-text #dark-text {
     color: rgba(247, 240, 240, .5);
-    font-variant: small-caps;
-    font-style: italic;
+    font-family: "TexGyreAdventor", Arial, sans-serif;
 }
 
 ////////////////////////////
@@ -2034,28 +2142,26 @@ article {
 ////////////////////////////
 
 #contact-form {
-    margin: .5em 2.5em 0;
+    font-family: "DidactGothic", Arial, sans-serif;
+    margin: .5em 8vw 0;
     width: 100%;
 
     @media screen and (max-width: $tmax) and (orientation: landscape) {
-        margin: 0 3vw 2em 3vw;
-        padding: 0 3em;
+        margin: 0 7vw 2em;
     }
     @media screen and (min-width: $tmin) and (orientation: portrait) {
-        margin: 0 3rem 2em 3rem;
-        padding: 0 3em;
+        margin: 0 7vw 2em;
     }
     @media screen and (min-width: $desktop) and (orientation: portrait) {
         margin: 7em 3rem 0 0;
     }
     @media screen and (min-width: $desktop) and (orientation: landscape) {
-        margin-top: .3em;
-        margin-right: 3rem;
+        margin: .3em 3rem 0 2.5em;
     }
 }
 
 .textbox {
-    font-family: "Candara", Tahoma, sans-serif;
+    font-family: "DidactGothic", Arial, sans-serif;
     background-color: rgba(247, 240, 240, .9);
     border: 1px solid $black;
     border-radius: .5em;
@@ -2076,6 +2182,7 @@ article {
 }
 
 #input-message {
+    font-size: 1.4em;
     height: 50vh;
 
     @media screen and (orientation: landscape) { height: 25vw; }
@@ -2099,7 +2206,7 @@ article {
     float: right;
     margin-top: .2em;
     padding: .3em .6em;
-    font: bold 1.5em "Candara", Tahoma, sans-serif;
+    font: 1.5em "DidactGothic", Arial, sans-serif;
     color: $isabelline;
     text-shadow: 0 0 1px black;
     border-radius: .5em;
@@ -2129,9 +2236,9 @@ article {
     text-shadow: none;    
 }
 
-/////////////////////////
+//////////////////////////
 // -- =PRIVACY PAGE -- ///
-/////////////////////////
+//////////////////////////
 
 .grid-layout {
     #privacy-content {
@@ -2158,14 +2265,11 @@ article {
 }
 
 #privacy-text {
-    font: 1.5em "Candara", Tahoma, sans-serif;
+    font: 1.5em "DidactGothic", Arial, sans-serif;
     line-height: 1.5em;
     max-width: 75ch;
     text-align: justify;
     text-justify: auto;
-    span {
-        font: bold 1em "Century Gothic", Tahoma, sans-serif;
-    }
     margin: 2em 8vw 0;
 
     @media screen and (min-width: $tmin) {
