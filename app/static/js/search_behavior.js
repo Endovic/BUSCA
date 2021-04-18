@@ -23,6 +23,28 @@ window.onload = function() {
 
 // -- HTML TRIGGERED FUNCTIONS -- //
 
+function toggleFilters()
+// Enable/disable all filters simultaneously
+{
+    // https://css-tricks.com/snippets/javascript/loop-queryselectorall-matches/
+    let filters = document.querySelectorAll(".checkbox-filter");
+    for (let i = 0; i < filters.length; i++)
+    {
+        // Enable all filters if any filter is disabled, otherwise disable all filters
+        if (filters[i].checked == false)
+        {
+            for (let i = 0; i < filters.length; i++)
+            {
+                filters[i].checked = true;
+            }
+            document.getElementById("submit-button").focus();
+            return;
+        }
+        filters[i].checked = false;
+    }
+    document.getElementById("cro").focus();
+}
+
 function copyToClipboard(n, id)
 // Copy contact's email address to clipboard with the click of a button
 // https://www.w3schools.com/howto/howto_js_copy_clipboard.asp
@@ -42,7 +64,7 @@ function toggleView()
         document.querySelector("#checkmark").style.display = "inline";
         document.querySelector("#pointyfinger").style.display = "none";
 
-        // https://css-tricks.com/snippets/javascript/loop-queryselectorall-matches/
+        // Reveal each and every contact
         let contacts = document.querySelectorAll("details");
         for (let i = 0; i < contacts.length; i++)
         {
@@ -54,6 +76,7 @@ function toggleView()
         document.querySelector("#checkmark").style.display = "none";
         document.querySelector("#pointyfinger").style.display = "inline";
 
+        // Conceal each and every contact
         let contacts = document.querySelectorAll("details");
         for (let i = 0; i < contacts.length; i++)
         {

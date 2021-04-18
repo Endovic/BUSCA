@@ -113,7 +113,7 @@ def search():
             
             # Ensure at least one type of entity-filter was selected
             if not subtipos:
-                flash("Seleccione pelo menos um tipo de entidade para pesquisar.", "error")
+                flash("Selecione pelo menos um tipo de entidade para pesquisar.", "error")
                 return render_template("public/search.html", dist=distrilhas, conc=concelhos,
                     checked=subtipos, select_dist=distrilha, select_conc=concelho)
             

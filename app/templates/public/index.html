@@ -34,31 +34,15 @@
             <div id="shaded-sections">
                 <section class="interface" id="recursos">
                     <div id="intro">
-                        <p>
+                        <p id="intro-msg">
                             Este é o ponto de partida para a sua operação de busca. 
-                            Utilize a nossa ferramenta de pesquisa para obter os contactos de abrigos, canis/gatis 
-                            municipais, veterinários e associações de proteção animal em todo o país. 
+                            <span>Utilize a nossa ferramenta de pesquisa para obter os contactos de abrigos, canis 
+                            e gatis municipais, associações de proteção animal e veterinários em todo o país.</span> 
                             Consulte as orientações para saber o que fazer e aceda a um conjunto de recursos 
-                            úteis para procurar o seu animal desaparecido. <em>Boa sorte!</em>
+                            úteis para procurar o seu animal desaparecido.
                         </p>
                     </div>
-                    <div id="info-como">
-                        <a class="info-link-img" href="#como-procurar" onclick="revealSection(['como', 'onde'])" tabindex="-1">
-                            <img id="blackdog" src="{{ url_for('static', filename='img/dog.svg') }}" alt="Ver como procurar um animal desaparecido">
-                        </a>
-                        <a class="info-link-wrds" href="#como-procurar" onclick="revealSection(['como', 'onde'])">  <!-- https://stackoverflow.com/questions/9152096/make-an-html-element-non-focusable -->
-                            <p>Como procurar<span class="fat-text"> ?</span></p>
-                        </a>
-                    </div>                    
-                    <div id="info-onde">
-                        <a class="info-link-img" href="#onde-procurar" onclick="revealSection(['onde', 'como'])" tabindex="-1">
-                            <img id="blackcat" src="{{ url_for('static', filename='img/cat.svg') }}" alt="Ver onde procurar um animal desaparecido">
-                        </a>
-                        <a class="info-link-wrds" href="#onde-procurar" onclick="revealSection(['onde', 'como'])">
-                            <p>Onde procurar<span class="fat-text"> ?</span></p>
-                        </a>
-                    </div>                    
-                    <div id="pesquisa">
+                    <div id="pesquisar">
                         <a id="pesquisar-link" href="\pesquisa-entidades">
                             <p id="pesquisar-label">
                                 Pesquisar entidades de apoio a animais em Portugal
@@ -66,12 +50,35 @@
                             </p>
                         </a>
                     </div>
-                    <div id="contribuir">
-                        <a class="jumpy-link" href='\contacte-nos'>
-                            <h3>
-                                Ajude-nos a melhorar este projeto<span class="fat-text"> !</span>
-                            </h3>
-                        </a>
+                    <div id="info">
+                        <div id="info-grid">
+                            <div id="info-como">
+                                <a class="infolink-img" href="#como-procurar" onclick="revealSection(['como', 'onde'])" tabindex="-1">
+                                    <img id="blackdog" src="{{ url_for('static', filename='img/dog.svg') }}" alt="Ver como procurar um animal desaparecido">
+                                </a>
+                                <a class="infolink-txt" href="#como-procurar" onclick="revealSection(['como', 'onde'])">  <!-- https://stackoverflow.com/questions/9152096/make-an-html-element-non-focusable -->
+                                    <p><span id="como">Como</span><br>procurar<span class="fat-text"> ?</span></p>
+                                </a>
+                            </div>                    
+                            <div id="info-onde">
+                                <a class="infolink-img" href="#onde-procurar" onclick="revealSection(['onde', 'como'])" tabindex="-1">
+                                    <img id="blackcat" src="{{ url_for('static', filename='img/cat.svg') }}" alt="Ver onde procurar um animal desaparecido">
+                                </a>
+                                <a class="infolink-txt" href="#onde-procurar" onclick="revealSection(['onde', 'como'])">
+                                    <p><span id="onde">Onde</span><br>procurar<span class="fat-text"> ?</span></p>
+                                </a>
+                            </div>
+                            <a id="projeto-acerca" class="non-jumpy-link" href='\acerca-do-projeto'>
+                                <h3>
+                                    Saiba mais acerca do <span class="fat-text">Busca<span class="red"> !</span></span>
+                                </h3>
+                            </a>
+                            <a id="projeto-contribuir" class="jumpy-link" href='\contacte-nos'>
+                                <h3>
+                                    Ajude-nos a melhorar este projeto<span class="fat-text yellow"> !</span>
+                                </h3>
+                            </a>    
+                        </div>    
                     </div>
                     <div class="info-arrow">
                         <a id="info-arrow" class="icon-arrow" href="#como-procurar">
@@ -92,8 +99,8 @@
                         <div class="collapsible-content">
                             <div class="content-inner" id="inner-1">
                                 <p>
-                                    É importante adaptar o tipo de busca às especificidades comportamentais 
-                                    de cada espécie. Para aumentar as probabilidades de sucesso, leia atentamente 
+                                    É importante adaptar o tipo de busca ao comportamento de cada espécie. 
+                                    Para aumentar as probabilidades de sucesso, leia atentamente 
                                     as recomendações de <b>Encontra<span>&#8209;</span>me.org</b>
                                     para casos de desaparecimento de:
                                 </p>    
@@ -278,15 +285,11 @@
                     </a>
                 </section>
                 <footer>
-                    <span id="dot-separator"></span>
                     <div id="footer-wrapper">
                         <div id="copyright">
                             2021 Todos os direitos reservados
                         </div>
                         <nav id="footer-nav">
-                            <a href="\acerca-do-projeto" class="footer-nav-link">
-                                <p>Acerca do <span class="fat-text">Busca!</span></p>
-                            </a>
                             <a href="\contacte-nos" class="footer-nav-link">
                                 <p>Contacto</p>
                             </a>

@@ -40,7 +40,6 @@
                         <p>
                             Pode escrever-nos diretamente para: <address>busca@email.com</address>
                             <br><span id="red-underline">Ou então, deixe uma mensagem.</span><br>
-                            <br><span id="dark-text">Obrigado</span>
                         </p>
                     </div>
                    
@@ -61,12 +60,11 @@
                         <input class="textbox" id="input-name" name="guestname" placeholder="nome" type="text">
                         <input class="textbox" id="input-email" name="guestmail" placeholder="e-mail" type="text">
                         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                        <button id="send-button">Enviar</button>
+                        <button id="send-button" type="submit">Enviar</button>
                         <p>* obrigatório</p>
                     </form>
                 </div>
                 <footer class="greyed">
-                    <span id="dot-separator"></span>
                     <div id="footer-wrapper">
                         <div id="copyright">
                             2021 Todos os direitos reservados
