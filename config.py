@@ -4,6 +4,7 @@ https://flask.palletsprojects.com/en/1.1.x/config/
 
 import os
 from tempfile import mkdtemp
+import datetime
 
 class Config(object):
     DEBUG = False
@@ -17,6 +18,7 @@ class Config(object):
     SESSION_COOKIE_HTTPONLY = True
 
 class Production(Config):
+    SEND_FILE_MAX_AGE_DEFAULT = datetime.timedelta(seconds=28800)   # 8h
     pass
 
 class Development(Config):

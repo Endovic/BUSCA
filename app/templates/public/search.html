@@ -11,7 +11,7 @@
 {% block style %}
     <style>
         body {
-            background-color: rgba(129, 119, 122, .8);
+            background-color: rgb(154, 146, 148);
         }
     </style>    
 {% endblock %}
@@ -50,7 +50,7 @@
                             <div id="search-menu">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                                 <input type="hidden" name="search-by" value="filters" readonly="readonly">
-                                <button class="search-button icon-in-text" type="submit">
+                                <button class="search-button icon-in-text" id="submit-button" type="submit">
                                     <p><span><img class="search-magniglass" src="{{ url_for('static', filename='img/magniglass.svg') }}" alt="Pesquisar por filtros"></span>
                                         Pesquisar
                                     </p>
@@ -136,10 +136,13 @@
                                 {% else %}
                                     <input id="cons" class="checkbox-filter" type="checkbox" name="subtipo" value="Consultório">
                                 {% endif %}
-                                <label for="cons" class="filter-toggle">Consultórios</label>    
+                                <label for="cons" class="filter-toggle">Consultórios</label>
+                                <button id="switch-button" type="button" onclick="toggleFilters()">
+                                    <img id="switch-all-filters" src="{{ url_for('static', filename='img/switch_filters.svg') }}" alt="Pesquisar por filtros">
+                                </button>
                             </div>                        
                             <button id="button-for-mobile" type="submit">
-                                <p><span><img class="search-magniglass" src="{{ url_for('static', filename='img/magniglass.svg') }}" alt="Pesquisar por filtros"></span></p>
+                                <img class="search-magniglass" src="{{ url_for('static', filename='img/magniglass.svg') }}" alt="Pesquisar por filtros">
                             </button>
                         </form>
                         <div class="void-space"></div>
@@ -166,7 +169,7 @@
                                     {{ count }} resultado encontrado
                                 {% else %}
                                     <span>{{ count }} resultados encontrados</span>
-                                    <button id="all-button" onclick="toggleView()">
+                                    <button id="all-button" type="button" onclick="toggleView()">
                                         <span id="checkmark" style="display:none;">&#10003;</span>
                                         <span id="pointyfinger" style="display:inline;">&#9755;</span>
                                         <em>&nbsp;Ver tudo</em>
@@ -254,16 +257,16 @@
                                                             <!-- https://www.w3schools.com/tags/att_input_readonly.asp -->
                                                             <!-- https://stackoverflow.com/questions/7537439/how-to-increment-a-variable-on-a-for-loop-in-jinja-template -->
                                                             <input class="contact-email" id="e1-address-{{ loop.index }}" value="{{ result['email_1'] }}" readonly="readonly" tabindex="-1">
-                                                            <button class="copy-button" onclick="copyToClipboard('1', '{{ loop.index }}')">&#10149; copiar email</button>
+                                                            <button class="copy-button" type="button" onclick="copyToClipboard('1', '{{ loop.index }}')">&#10149; copiar email</button>
                                                             <!-- https://www.toptal.com/designers/htmlarrows/arrows/heavy-black-curved-down-and-right-arrow/ -->
                                                         {% endif %}
                                                         {% if result["email_2"] %}
                                                             <input class="contact-email" id="e2-address-{{ loop.index }}" value="{{ result['email_2'] }}" readonly="readonly" tabindex="-1">
-                                                            <button class="copy-button" onclick="copyToClipboard('2', '{{ loop.index }}')">&#10149; copiar email</button>
+                                                            <button class="copy-button" type="button" onclick="copyToClipboard('2', '{{ loop.index }}')">&#10149; copiar email</button>
                                                         {% endif %}
                                                         {% if result["email_3"] %}    
                                                             <input class="contact-email" id="e3-address-{{ loop.index }}" value="{{ result['email_3'] }}" readonly="readonly" tabindex="-1">
-                                                            <button class="copy-button" onclick="copyToClipboard('3', '{{ loop.index }}')">&#10149; copiar email</button>
+                                                            <button class="copy-button" type="button" onclick="copyToClipboard('3', '{{ loop.index }}')">&#10149; copiar email</button>
                                                         {% endif %}
                                                     </div>
                                                 {% endif %}
@@ -294,7 +297,6 @@
                     {% endif %}                
                 </div>        
                 <footer>
-                    <span id="dot-separator"></span>
                     <div id="footer-wrapper">
                         <div id="copyright">
                             2021 Todos os direitos reservados
