@@ -9,8 +9,9 @@ The _BUSCA!_ project targets the community and territory of Portugal, and conseq
 ## Structure and functionality
 The website features:
 * an **index** page that displays a hero image and gives access to the **main interface** with the following options:
-  * two expandable sections with information on _how_ and _where_ to search, including links to relevant third-party websites (e.g. lost-and-found listings),
   * a link to a search tool (_see below_),
+  * two expandable sections with useful information on what to do if a pet goes missing, including links to relevant third-party websites (e.g. lost-and-found listings),
+  * a link for visitors to read more about the project,
   * a link for visitors to get in touch and/or contribute to the project (_see below_);
 * a **search** page with a tool for finding institutions that are likely to detect or may be housing a stray pet, such as: animal control services, animal welfare organizations, animal shelters, and vets. This tool is connected to a database (_see below_) and allows to:
   * search by name (full-text search),
@@ -31,27 +32,25 @@ Each page features a **header** with a logo that links to the _index_ page, and 
 
 The _search_ page can be accessed from the main interface and from both expandable sections on the _index_ page.
 ## Database
-Data is stored and managed through a relational database using the SQLite engine. It contains hundreds of contacts of relevant institutions based in Portugal, and keeps growing.
+Data is stored and managed through a PostgreSQL relational database. It contains hundreds of contacts of relevant institutions based in Portugal, and keeps growing.
 
-The database contains 22 tables as follows:
+The database contains 6 tables as follows:
 * table `contacts` stores each institution's name, type, contact details and date of update;
 * table `territory` lists all the municipalities, counties and regions of Portugal;
 * table `places` relates each institution with its location in the territory;
 * table `messages` logs the subject and content of messages submitted by visitors to the website, optionally the visitor's name and email address (not required), and date/time of submission;
 * table `admin` stores the login credentials for accessing the admin area (_see below_);
-* table `changes` logs every admin change to the database (add new record, update record, delete record), and date/time of execution;
-* table `sqlite_sequence` (created internally for management of primary keys);
-* 15 tables supporting the `FTS5` virtual table module that provides full-text search functionality;
-
-Plus 6 triggers to keep the virtual tables' indices up to date.
+* table `edits` logs every admin change to the database (add new record, update record, delete record), and date/time of execution;
 ## Usage - Search tool
 > **Note**: "name search" and "filter search" are independent from each other and use different submit buttons. It was a design choice to keep the search mechanism simple and robust and independent from any scripts, according to the principles of progressive enhancement, to ensure that as many users as possible can access the core functionalities of the website. Currently, search results are not dynamically updated when a word is typed on the search bar or a filter is selected. The aim is to implement this feature in the future using unobtrusive JavaScript.
 #### Name search 
 A name search performs a case-independent, diacritic-agnostic, full-text search on the database and presents all records whose name matches or contains the search term submitted by the user. If the search has multiple terms, matching results must contain all of them (in any order).
 
-Name searches using Boolean expressions are possible with the operators `NOT`, `AND`, `OR` (case sensitive). However, each Boolean operator must be surrounded by search terms otherwise an error message is flashed.
-
-Special characters are escaped, so any other advanced query syntax (e.g. exact-match phrases, prefixes/suffixes) has no effect.
+Name searches using logical operators are possible via the syntax:
+* _unquoted text_: text not inside quote marks is converted to terms separated by `&` (AND) operators;
+* _"quoted text"_: text inside quote marks is converted to terms separated by `<->` operators, for exact phrase match;
+* _or_: the term or/OR (case insensitive) is converted to the `|` (OR) operator.
+* _-_: the hyphen is converted to the the `!` (NOT) operator unless it is isolated, in which case it is parsed as a plain dash.
 
 An error message is flashed if a submitted search is empty or does not contain any alphanumeric characters.
 #### Filter search
@@ -59,11 +58,13 @@ Geographical filters (county, municipality) are selection dropdown menus with th
 
 When the user selects a county from the dropdown menu, the content of the dependent dropdown menu is updated automatically to list only the municipalities that belong to the selected county. The reverse is also true: selecting first any municipality will result in the automatic selection of its respective county.
 
-Category filters (animal shelter, veterinary practice, etc.) appear as clickable buttons, but in reality are labels for invisible checkboxes that are unchecked by default.
+Category filters (animal shelter, veterinary practice, etc.) are clickable button-like labels for invisible checkboxes that are unchecked by default.
 
 At least one category filter must be checked when submitting a filter search otherwise an error message is flashed.
 
-A filter search submitted with all category filters checked and the option `"All"` selected for both geographical filters will get all records in the database.
+The user can click on an icon to select/deselect all category filters simultaneously.
+
+A filter search submitted with all category filters checked and the option `'All'` selected for both geographical filters will get all records in the database.
 
 The user's choice of filters is remembered and rendered between consecutive searches for as long as the user remains on the search page.
 #### Search results
@@ -94,7 +95,7 @@ The code was written with Visual Studio Code and the website has been tested in 
 
 Table sorting is powered by a [third-party](https://www.kryogenix.org/code/browser/sorttable/) JavaScript library: `sorttable.js`.
 
-All `svg`/`png` icons and logos were custom-designed in Adobe Illustrator CS6.
+All `svg` and `png` icons and logos were custom-designed in Adobe Illustrator CS6.
 
 Favicons generated by [realfavicongenerator.net](https://realfavicongenerator.net/).
 
@@ -141,8 +142,7 @@ All `jpg` pictures by [Joana Meneses - Photography](https://www.facebook.com/Joa
 |     \ dbconnect.py
 |     \ views.py
 |
-\ README.md
-\ requirements.txt
+\ config.py
 \ run.py
 ```
 #### Files written for this project:
@@ -156,19 +156,19 @@ The app can then be run with the command:
 ```
 flask run
 ```
-* `app\__init__.py`: package constructor that creates the application object and pulls all the application components together. It also implements CSRF protection for the whole app.
+* `\config.py`: contains the application's settings for different environments (e.g. development, production). 
+* `app\__init__.py`: package constructor that creates the application object and pulls all the app components together. It also loads the app configurations and enables CSRF protection for the whole application.
 * `app\views.py`: implements routes and responses to all public requests to the application. It handles name searches, filter searches and saves user messages to the database. It also handles network requests from JavaScript for updating dropdown menus in real time.
 * `app\admin_views.py`: handles responses to all admin requests, namely retrieving, adding, updating or deleting records from the database, and keeps a log of them. It also handles admin login authentication.
 * `app\dbconnect.py`: configures the connection to the database and implements helper functions for carrying out database queries.
 * `static\js\index_behavior.js`: reacts to user interaction by showing/hiding expandable sections and their content. Also manages margins, navigation controls and scrolling on the index page.
-* `static\js\search_behavior.js`: listens to changes to selection in dropdown menus and updates the options in the dependent menu by fetching `json` data from the server. Also deals with copying email addresses to clipboard, toggling view modes for results, and scrolling on the search page.
+* `static\js\search_behavior.js`: listens to changes to selection in dropdown menus and updates the options in the dependent menu by fetching `json` data from the server. Also deals with enabling/disabling filters, toggling view modes for results, copying email addresses to clipboard, and scrolling on the search page.
 * `static\js\contact_behavior.js`: manages scrolling on the contact page.
 * `static\json\locations.json`, `municipalities.json`: contain dictionaries and lists of locations used by JavaScript to update dropdown menus. These files are created once by the server and kept for reuse to avoid repeatedly querying the database.
 * `static\css\styles.scss`, `admin_styles.scss`: contain most of the styles for public and admin pages - each Sass file is compiled to a CSS style sheet that gets linked to the HTML template. Media queries and other techniques are used to ensure a responsive design.
 * `templates\public\layout.html`, `admin\admin_layout.html`: base templates for public and admin pages respectively.
 * `templates\public\index.html`, `search.html`, `contact.html`, `about.html`, `privacy.html`: child templates for public pages.
 * `templates\admin\login.html`, `dashboard.html`, `new.html`, `update.html`, `list.html`: child templates for admin pages.
-* `requirements.txt`: lists all the libraries installed on the project's virtual environment during development (facilitates running the code on another system).
 ### Next steps
 1. Publish to the World Wide Web. Domain name: `busca.website`
 2. Implement the automatic sending of emails to admins when visitors submit messages via contact form

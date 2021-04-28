@@ -19,7 +19,6 @@ class Config(object):
 
 class Production(Config):
     SEND_FILE_MAX_AGE_DEFAULT = datetime.timedelta(seconds=28800)   # 8h
-    pass
 
 class Development(Config):
     DEBUG = True
