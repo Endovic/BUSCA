@@ -26,7 +26,7 @@ else:
     """PRODUCTION MODE"""
     app.config.from_object("config.Production")
 
-    # Prevent cached responses for dynamically generated content but cache static files for 12h (default)
+    # Prevent cached responses for dynamically generated content but cache static files (see duration in config)
     # https://subscription.packtpub.com/book/web_development/9781782169628/1/ch01lvl1sec12/handling-static-files-simple
     @app.after_request
     def after_request(response):
