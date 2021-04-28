@@ -88,6 +88,9 @@ def search():
 
             # Valid text was submitted - query the database and present results
             else:
+                # Replace isolated hyphens by dashes so they are not parsed as the logical not operator
+                name = re.sub(r" - ", " – ", name)
+
                 try:                    
                     # Full-text search. https://www.postgresql.org/docs/current/textsearch-controls.html#TEXTSEARCH-PARSING-DOCUMENTS
                     # 'ptunaccent' configuration: portuguese dictionary and diacritic-insensitive search

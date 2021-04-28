@@ -139,6 +139,9 @@ def admin_update():
     # Helper functions to reuse in POST requests:
 
     def search(name):
+        # Replace isolated hyphens by dashes so they are not parsed as the logical not operator
+        name = re.sub(r" - ", " – ", name)
+
         # Full-text search. https://www.postgresql.org/docs/current/textsearch-controls.html#TEXTSEARCH-PARSING-DOCUMENTS
         # 'ptunaccent' configuration: portuguese dictionary and diacritic-insensitive search
         results = query_db("""SELECT id, code, nome, tipo, municipio FROM places
