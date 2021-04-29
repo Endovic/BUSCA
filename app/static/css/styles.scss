@@ -729,7 +729,7 @@ h4 {
     float: right;
     width: 3.8em;
     padding: 1em;
-    opacity: .8;
+    opacity: .9;
 
     @media screen and (min-width: $desktop), (min-width: $tmin) and (orientation: portrait) {
         width: 4.5em;
@@ -747,7 +747,7 @@ h4 {
     border-radius: 10em;
     font: 1.5em "DidactGothic", Arial, sans-serif;
     color: $black;
-    opacity: .8;
+    opacity: .9;
 }
 
 #backtop-como, #backtop-onde {
@@ -982,11 +982,16 @@ h4 {
 
     .icon-x:hover {
         opacity: 1;
-    }
+        // https://css-tricks.com/change-color-of-svg-on-hover/
+        // https://codepen.io/sosuke/pen/Pjoqqp
+        filter: brightness(0) saturate(100%) invert(92%) sepia(10%) saturate(73%) hue-rotate(317deg) brightness(103%) contrast(95%);
+        }
 
     .backtop-link:hover {
+        border: 1px solid $isabelline;
+        color: $isabelline;
         opacity: 1;
-    }
+        }
 
     .link-external:hover {
         text-shadow: 0 0 4px black;
@@ -1073,8 +1078,6 @@ h4 {
 
 .icon-x:focus {
     opacity: 1;
-    // https://css-tricks.com/change-color-of-svg-on-hover/
-    // https://codepen.io/sosuke/pen/Pjoqqp
     filter: brightness(0) saturate(100%) invert(92%) sepia(10%) saturate(73%) hue-rotate(317deg) brightness(103%) contrast(95%);
 }
 
