@@ -87,6 +87,8 @@ def admin_new():
     # User submitted a new record -> save in database
     elif request.method == "POST":
         name = request.form.get("nome").upper()
+        # Replace isolated hyphens by dashes for name format consistency in new records
+        name = re.sub(r" - ", " – ", name)
         location = request.form.get("concelho")
         subtype = request.form.get("tipo")
         maintype = query_db("SELECT tipo FROM contacts WHERE subtipo = %s", [subtype])[0]["tipo"]
@@ -233,6 +235,8 @@ def admin_modify(record):
     # User submitted changes to a record -> save in database
     elif request.method == "POST":
         name = request.form.get("nome").upper()
+        # Replace isolated hyphens by dashes for name format consistency in new records
+        name = re.sub(r" - ", " – ", name)
         location = request.form.get("concelho")
         subtype = request.form.get("tipo")
         maintype = query_db("SELECT tipo FROM contacts WHERE subtipo = %s", [subtype])[0]["tipo"]
