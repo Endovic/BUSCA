@@ -36,9 +36,9 @@
                     <div id="intro">
                         <p id="intro-msg">
                             Este é o ponto de partida para a sua operação de busca. 
-                            <span>Utilize a nossa ferramenta de pesquisa para obter os contactos de abrigos, canis 
+                            <span>Utilize a nossa <a class="intro-link" href="\pesquisa-entidades">ferramenta de pesquisa</a> para obter os contactos de abrigos, canis 
                             e gatis municipais, associações de proteção animal e veterinários em todo o país.</span> 
-                            Consulte as orientações para saber o que fazer e aceda a um conjunto de recursos 
+                            Consulte as <a class="intro-link" href="#como-procurar" onclick="revealSection(['como', 'onde'])">orientações</a> para saber o que fazer e aceda a um conjunto de recursos 
                             úteis para procurar o seu animal desaparecido.
                         </p>
                     </div>
@@ -141,7 +141,9 @@
                                         </a>
                                     </li>
                                 </ul>                                
-                                <p>Afixe e distribua folhetos em locais públicos e na sua comunidade.</p>
+                                <p>Assim que colocar os anúncios online, 
+                                    partilhe-os nas redes sociais para aumentar a visibilidade.</p>
+                                <p>Afixe panfletos em locais públicos estratégicos e distribua-os em mão na sua comunidade.</p>
                                 <p>Publique anúncios em jornais e rádios locais.</p>
                             </div>
                         </div>
@@ -162,7 +164,9 @@
                                 </p>
                                 <p>
                                     Deve, pois, contactar e deslocar<span>&#8209;</span>se às entidades de apoio mais próximas 
-                                    do local do desaparecimento e/ou da sua área de residência.                            
+                                    do local do desaparecimento e/ou da sua área de residência e fornecer-lhes os detalhes do 
+                                    seu animal. Com o passar do tempo, contacte entidades progressivamente mais 
+                                    afastadas do local do desaparecimento.                  
                                 </p>
                                 <div class="link-wrapper">
                                     <span class="white-text">Saiba quais são as entidades de apoio mais próximas de si:</span>                           
@@ -176,15 +180,27 @@
         
                         <input id="collaps-4" class="toggle" type="checkbox" onkeyup="reactEnterKey(event, '4')">
                         <label for="collaps-4" class="label-toggle" id="4" onclick="scrollViewCollapsible('4')">
-                            Notificar as autoridades</label>
+                            Reportar o desaparecimento e notificar as autoridades</label>
                         <div class="collapsible-content" id="inner-4">
                             <div class="content-inner">
                                 <p>
-                                    Se houver suspeita de rapto, 
-                                    apresente queixa na esquadra da PSP ou no posto da GNR mais próximos.
+                                    Nos primeiros 15 dias após o desaparecimento, deve informar o SIAC 
+                                    (Sistema de Informação de Animais de Companhia - entidade que gere a 
+                                    base de dados nacional de números de microchip), para abrir um processo 
+                                    de animal perdido.
+                                    <br>Pode fazê-lo através do seu médico veterinário ou diretamente através 
+                                        de um 
+                                        <a class="link-external" href="https://siac.vet/animal-perdido/" target="_blank" rel="noopener noreferrer">
+                                            formulário online<img class="external-link-symbol" src="{{ url_for('static', filename='img/external_link.svg') }}" alt="Abrir ligação num separador novo">
+                                        </a>.
+                                    <br>Não se esqueça de informar o SIAC quando encontrar o seu animal!
                                 </p>
                                 <p>
-                                    Pode também apresentar uma 
+                                    Se houver suspeita de rapto, 
+                                    apresente queixa na esquadra da PSP ou no posto da GNR mais próximos.
+                                    <br>Se o seu animal não aparecer ao fim de alguns dias, apresente queixa-crime 
+                                    por furto contra desconhecidos pois poderá servir como prova no futuro.
+                                    <br>Pode também apresentar uma 
                                     <a class="link-external" href="https://queixaselectronicas.mai.gov.pt/SQE2013/default.aspx#tag=FURTO_ROUBO_FR" target="_blank" rel="noopener noreferrer">
                                         queixa eletrónica<img class="external-link-symbol" src="{{ url_for('static', filename='img/external_link.svg') }}" alt="Abrir ligação num separador novo">
                                     </a>.

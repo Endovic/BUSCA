@@ -494,6 +494,11 @@ h2 {
     }
 }
 
+.intro-link {
+    @include link-reset;
+    text-decoration: underline $red;
+}
+
 ///////////////////////////////
 // -- =Pesquisar section -- ///
 ///////////////////////////////
@@ -935,6 +940,11 @@ h4 {
 // On hover
 
 @media(hover: hover) {
+    .intro-link:hover {
+        text-decoration: none;
+        color: $yellow;
+    }
+        
     // change sibling element on hover: 
     // https://stackoverflow.com/questions/12574668/change-color-of-sibling-elements-on-hover-using-css/12574836
     .infolink-txt:hover, .infolink-img:hover + .infolink-txt {
@@ -1040,6 +1050,11 @@ h4 {
 
 // On focus
 
+.intro-link:focus {
+    text-decoration: none;
+    color: $yellow;
+}
+
 .infolink-txt:focus, .infolink-img:focus + .infolink-txt {
     text-shadow: 0 1px 1px black;
     .fat-text {
@@ -1104,6 +1119,11 @@ h4 {
 }
 
 // Active links
+
+.intro-link:active {
+    text-decoration: none;
+    color: $black;
+}
 
 .infolink-img:active + .infolink-txt, .infolink-txt:active, .jumpy-link:active, .non-jumpy-link:active {
     text-shadow: none;
