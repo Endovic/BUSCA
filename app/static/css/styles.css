@@ -564,6 +564,14 @@ h2 {
   }
 }
 
+.intro-link {
+  text-decoration: none;
+  outline: none;
+  color: inherit;
+  -webkit-text-decoration: underline #CC3332;
+          text-decoration: underline #CC3332;
+}
+
 @media screen and (min-width: 641px) and (max-width: 1023px) and (orientation: portrait) {
   #pesquisar {
     margin-left: 2.5em;
@@ -1094,6 +1102,10 @@ h4 .red {
 }
 
 @media (hover: hover) {
+  .intro-link:hover {
+    text-decoration: none;
+    color: #FFFF33;
+  }
   .infolink-txt:hover, .infolink-img:hover + .infolink-txt {
     -webkit-transition: color .1s linear;
     transition: color .1s linear;
@@ -1217,6 +1229,11 @@ h4 .red {
   }
 }
 
+.intro-link:focus {
+  text-decoration: none;
+  color: #FFFF33;
+}
+
 .infolink-txt:focus, .infolink-img:focus + .infolink-txt {
   text-shadow: 0 1px 1px black;
 }
@@ -1290,6 +1307,11 @@ h4 .red {
 
 .footer-nav-link:focus {
   color: #FFFF33;
+}
+
+.intro-link:active {
+  text-decoration: none;
+  color: #333333;
 }
 
 .infolink-img:active + .infolink-txt, .infolink-txt:active, .jumpy-link:active, .non-jumpy-link:active {
