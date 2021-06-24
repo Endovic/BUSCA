@@ -374,6 +374,66 @@ h2 {
   }
 }
 
+#agir {
+  height: 100%;
+  text-align: center;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr minmax(0, 853px) 1fr;
+      grid-template-columns: 1fr minmax(0, 853px) 1fr;
+  -ms-grid-rows: auto auto 1fr auto;
+      grid-template-rows: auto auto 1fr auto;
+}
+
+#agir h2 {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-area: 1 / 2 / 2 / 3;
+  margin: 10vh 7vw 0 7vw;
+  font-family: "Viga", Arial, sans-serif;
+  color: #FFFF33;
+}
+
+#agir #instructions {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-area: 2 / 2 / 3 / 3;
+  background-color: rgba(255, 255, 51, 0.8);
+  padding: 3em 6em;
+}
+
+#agir p {
+  font: 2em "DidactGothic", Arial, sans-serif;
+  color: #333333;
+  line-height: 1.5em;
+}
+
+#agir .external-link-symbol {
+  width: .4em;
+  margin-left: -0.1em;
+}
+
+#agir .triangle {
+  margin: 1em auto;
+  width: 0;
+  height: 0;
+  border-left: 30px solid transparent;
+  border-right: 30px solid transparent;
+  border-top: 10px solid #CC3332;
+}
+
+#agir .icon-arrow {
+  -ms-grid-row: 4;
+  -ms-grid-row-span: 1;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-area: 4 / 2 / 5 / 3;
+}
+
 #shaded-sections {
   min-height: 100%;
   background-color: rgba(154, 146, 148, 0.85);
@@ -1095,13 +1155,20 @@ h4 .red {
   margin-top: 0;
 }
 
-.infolink-img, .infolink-txt, #pesquisar-link, .jumpy-link, .non-jumpy-link, .icon-x, .footer-nav-link {
+.first-links, .infolink-img, .infolink-txt, #pesquisar-link, .jumpy-link, .non-jumpy-link, .icon-x, .footer-nav-link {
   text-decoration: none;
   outline: none;
   color: inherit;
 }
 
 @media (hover: hover) {
+  .first-links:hover {
+    color: #CC3332;
+  }
+  .first-links:hover .external-link-symbol {
+    -webkit-filter: brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(5488%) hue-rotate(352deg) brightness(93%) contrast(73%);
+            filter: brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(5488%) hue-rotate(352deg) brightness(93%) contrast(73%);
+  }
   .intro-link:hover {
     text-decoration: none;
     color: #FFFF33;
@@ -1227,6 +1294,15 @@ h4 .red {
     -webkit-transform: translateY(-2px);
             transform: translateY(-2px);
   }
+}
+
+.first-links:focus {
+  color: #CC3332;
+}
+
+.first-links:focus .external-link-symbol {
+  -webkit-filter: brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(5488%) hue-rotate(352deg) brightness(93%) contrast(73%);
+          filter: brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(5488%) hue-rotate(352deg) brightness(93%) contrast(73%);
 }
 
 .intro-link:focus {
