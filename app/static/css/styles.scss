@@ -83,7 +83,7 @@ $black: #333333;        // rgb(51, 51, 51)
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    //outline: solid blue;
+    // outline: solid blue;
 }
 
 // Reduce overall font size to facilitate conversion from px to em
@@ -347,6 +347,49 @@ h2 {
 
     // Correction for mobile browsers 100vh issue: https://chanind.github.io/javascript/2019/09/28/avoid-100vh-on-mobile-web.html
     @media screen and (orientation: portrait) { margin: 0 auto 5vh; }
+}
+
+// What to do
+
+#agir {
+    height: 100%;
+    text-align: center;
+    // "What to do - agir" grid setup
+    display: grid;
+    grid-template-columns: 1fr minmax(0, 853px) 1fr;
+    grid-template-rows: auto auto 1fr auto;
+    h2 {
+        grid-area: 1 / 2 / 2 / 3;
+        margin: 10vh 7vw 0 7vw;
+        font-family: "Viga", Arial, sans-serif;
+        color: $yellow;
+    }
+    #instructions {
+        grid-area: 2 / 2 / 3 / 3;
+        background-color:  rgba(255, 255, 51, .8);
+        padding: 3em 6em;
+    }
+    p {
+        font: 2em "DidactGothic", Arial, sans-serif;
+        color: $black;
+        line-height: 1.5em;
+    }
+    .external-link-symbol {
+        width: .4em;
+        margin-left: -0.1em;
+    } 
+    // https://css-tricks.com/snippets/css/css-triangle/   
+    .triangle {
+        margin: 1em auto;
+        width: 0; 
+        height: 0; 
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;        
+        border-top: 10px solid $red;
+      }
+    .icon-arrow {
+        grid-area: 4 / 2 / 5 / 3;
+    }
 }
 
 //////////////////////////////////
@@ -933,13 +976,22 @@ h4 {
 ////////////////////////////////////////////
 
 // Reset default styles
-.infolink-img, .infolink-txt, #pesquisar-link, .jumpy-link, .non-jumpy-link, .icon-x, .footer-nav-link {
+.first-links, .infolink-img, .infolink-txt, #pesquisar-link, .jumpy-link, .non-jumpy-link, .icon-x, .footer-nav-link {
     @include link-reset;
 }
 
 // On hover
 
 @media(hover: hover) {
+    .first-links:hover {
+        color: $red;
+        .external-link-symbol {
+        // https://css-tricks.com/change-color-of-svg-on-hover/
+        // https://codepen.io/sosuke/pen/Pjoqqp
+        filter: brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(5488%) hue-rotate(352deg) brightness(93%) contrast(73%);
+        }
+    }
+
     .intro-link:hover {
         text-decoration: none;
         color: $yellow;
@@ -992,8 +1044,6 @@ h4 {
 
     .icon-x:hover {
         opacity: 1;
-        // https://css-tricks.com/change-color-of-svg-on-hover/
-        // https://codepen.io/sosuke/pen/Pjoqqp
         filter: brightness(0) saturate(100%) invert(92%) sepia(10%) saturate(73%) hue-rotate(317deg) brightness(103%) contrast(95%);
         }
 
@@ -1049,6 +1099,13 @@ h4 {
 }
 
 // On focus
+
+.first-links:focus {
+    color: $red;
+    .external-link-symbol {
+    filter: brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(5488%) hue-rotate(352deg) brightness(93%) contrast(73%);
+    }
+}
 
 .intro-link:focus {
     text-decoration: none;

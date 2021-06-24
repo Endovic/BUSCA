@@ -27,6 +27,34 @@
             <div id="hero">    
                 <h1>Perdeu o seu animal de estimação?</h1>
                 <h2>Reunimos os recursos para ajudar a encontrá<span>&#8209;</span><em>lo</em>.</h2> <!-- &#8209; non-breaking hyphen -->
+                <a class="icon-arrow" href="#agir">
+                    <img class="icon-arrow" src="{{ url_for('static', filename='img/arrow.svg') }}" alt="Ver recursos do site">
+                </a>
+            </div>
+            <div id="agir">    
+                <h2>O QUE DEVE FAZER IMEDIATAMENTE</h2>
+                <div id="instructions">
+                    <P>
+                        Contacte o seu médico veterinário para sinalizar o nº de chip do animal como desaparecido e 
+                        atualizar os seus dados no registo (SIAC)
+                    </P>
+                    <div class="triangle"></div>
+                    <p>
+                        Publique um anúncio na plataforma 
+                        <b><a class="first-links" href="https://www.encontra-me.org/" target="_blank" rel="noopener noreferrer">
+                            Encontra<span>&#8209;</span>me.org
+                            <img class="external-link-symbol" src="{{ url_for('static', filename='img/external_link.svg') }}" alt="Abrir ligação num separador novo">
+                        </a></b> 
+                        e partilhe nas redes sociais e em grupos de animais perdidos & achados. 
+                        Imprima panfletos para distribuir e afixar
+                    </p>
+                    <div class="triangle"></div>
+                    <P>
+                        Pesquise <b><a  class="first-links" href="\pesquisa-entidades">AQUI</a></b> os contactos de entidades de apoio a animais na 
+                        sua área e visite-as pessoalmente ou contacte por telefone e/ou email para 
+                        transmitir os detalhes do seu animal desaparecido
+                    </P>
+                </div>
                 <a class="icon-arrow" href="#recursos">
                     <img class="icon-arrow" src="{{ url_for('static', filename='img/arrow.svg') }}" alt="Ver recursos do site">
                 </a>
