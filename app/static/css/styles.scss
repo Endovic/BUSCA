@@ -1106,13 +1106,16 @@ h4 {
     }
 
     .non-jumpy-link:hover {
-        text-shadow: 0 0 2px $isabelline;
+        text-shadow: 0 0 1px $isabelline;
         .red {
             color: $red;
         }
     }
     
     .jumpy-link:hover {
+        .jumpy-arrow {
+            animation: jump-more .5s;
+        }
         h3 {
             animation: jump .2s;
         }
@@ -1179,6 +1182,21 @@ h4 {
     }
 }
 
+@keyframes jump-more {
+    // https://www.geeksforgeeks.org/how-to-shake-text-on-hover-using-html-and-css/
+    0% {
+    }
+    25% {
+        transform: translateY(6px);
+    }
+    50% {
+        transform: translateY(-4px);
+    } 
+    100% {
+        transform: translateY(2px);
+    }
+}
+
 // On focus
 
 .first-links:focus {
@@ -1217,13 +1235,16 @@ h4 {
 }
 
 .non-jumpy-link:focus {
-    text-shadow: 0 0 2px $isabelline;
+    text-shadow: 0 0 1px $isabelline;
     .red {
         color: $red;
     }
 }
 
 .jumpy-link:focus {
+    .jumpy-arrow {
+        animation: jump-more .5s;
+    }
     h3 {
         animation: jump .2s;
     }

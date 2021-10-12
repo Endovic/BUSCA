@@ -1307,10 +1307,14 @@ h4 .red {
     opacity: 0;
   }
   .non-jumpy-link:hover {
-    text-shadow: 0 0 2px #F7F0F0;
+    text-shadow: 0 0 1px #F7F0F0;
   }
   .non-jumpy-link:hover .red {
     color: #CC3332;
+  }
+  .jumpy-link:hover .jumpy-arrow {
+    -webkit-animation: jump-more .5s;
+            animation: jump-more .5s;
   }
   .jumpy-link:hover h3 {
     -webkit-animation: jump .2s;
@@ -1404,6 +1408,40 @@ h4 .red {
   }
 }
 
+@-webkit-keyframes jump-more {
+  0% {
+  }
+  25% {
+    -webkit-transform: translateY(6px);
+            transform: translateY(6px);
+  }
+  50% {
+    -webkit-transform: translateY(-4px);
+            transform: translateY(-4px);
+  }
+  100% {
+    -webkit-transform: translateY(2px);
+            transform: translateY(2px);
+  }
+}
+
+@keyframes jump-more {
+  0% {
+  }
+  25% {
+    -webkit-transform: translateY(6px);
+            transform: translateY(6px);
+  }
+  50% {
+    -webkit-transform: translateY(-4px);
+            transform: translateY(-4px);
+  }
+  100% {
+    -webkit-transform: translateY(2px);
+            transform: translateY(2px);
+  }
+}
+
 .first-links:focus {
   color: #CC3332;
 }
@@ -1447,11 +1485,16 @@ h4 .red {
 }
 
 .non-jumpy-link:focus {
-  text-shadow: 0 0 2px #F7F0F0;
+  text-shadow: 0 0 1px #F7F0F0;
 }
 
 .non-jumpy-link:focus .red {
   color: #CC3332;
+}
+
+.jumpy-link:focus .jumpy-arrow {
+  -webkit-animation: jump-more .5s;
+          animation: jump-more .5s;
 }
 
 .jumpy-link:focus h3 {
