@@ -27,6 +27,43 @@
             <div id="hero">    
                 <h1>Perdeu o seu animal de estimação?</h1>
                 <h2>Reunimos os recursos para ajudar a encontrá<span>&#8209;</span><em>lo</em>.</h2> <!-- &#8209; non-breaking hyphen -->
+                <a class="icon-arrow" href="#agir">
+                    <img class="icon-arrow" src="{{ url_for('static', filename='img/arrow.svg') }}" alt="Ver recursos do site">
+                </a>
+            </div>
+            <div id="agir">
+                <h2>O QUE FAZER DE IMEDIATO</h2>
+                <section class="interface numbered-boxes">
+                    <div class="instructions" id="instruction-1">
+                        <div class="under-text no1"></div>
+                        <P>
+                            Contacte o seu médico veterinário para sinalizar o nº de chip do animal como desaparecido e 
+                            atualizar os seus dados no registo nacional (SIAC).
+                        </P>
+                    </div>
+                        <!-- <div class="triangle"></div> -->
+                    <div class="instructions" id="instruction-2">
+                        <div class="under-text no2"></div>
+                        <p>
+                            Publique um anúncio no site 
+                            <b><a class="first-links" href="https://www.encontra-me.org/" target="_blank" rel="noopener noreferrer">
+                                Encontra<span>&#8209;</span>me.org
+                                <img class="external-link-symbol" src="{{ url_for('static', filename='img/external_link.svg') }}" alt="Abrir ligação num separador novo">
+                            </a></b>
+                            e partilhe nas redes sociais e grupos de animais perdidos e achados. 
+                            Imprima panfletos para distribuir e afixar.
+                        </p>
+                    </div>
+                        <!-- <div class="triangle"></div> -->
+                    <div class="instructions" id="instruction-3">
+                        <div class="under-text red-emphasis no3"></div>
+                        <P class="white-emphasis">
+                            Pesquise <b><a  class="first-links link-emphasis" href="\pesquisa-entidades">AQUI</a></b>
+                            as entidades de apoio a animais da sua zona e visite-as pessoalmente ou 
+                            entre em contacto para transmitir os detalhes do seu animal desaparecido.
+                        </P>
+                    </div>
+                </section>
                 <a class="icon-arrow" href="#recursos">
                     <img class="icon-arrow" src="{{ url_for('static', filename='img/arrow.svg') }}" alt="Ver recursos do site">
                 </a>

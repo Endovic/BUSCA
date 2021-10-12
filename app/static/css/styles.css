@@ -374,6 +374,169 @@ h2 {
   }
 }
 
+#agir {
+  min-height: 100%;
+  text-align: center;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr minmax(0, 1024px) 1fr;
+      grid-template-columns: 1fr minmax(0, 1024px) 1fr;
+  -ms-grid-rows: auto 1fr auto;
+      grid-template-rows: auto 1fr auto;
+}
+
+#agir h2 {
+  -ms-grid-row: 1;
+  -ms-grid-row-span: 1;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-area: 1 / 2 / 2 / 3;
+  margin: 10vh 7vw 0 7vw;
+  text-shadow: 0 0 6px black;
+  font-family: "Baloo", Arial Black, sans-serif;
+  color: #FFFF33;
+}
+
+#agir h2 .fat-text {
+  color: #CC3332;
+  text-shadow: none;
+  font-size: 1.1em;
+}
+
+@media screen and (max-width: 640px) {
+  #agir h2 {
+    font-size: 1.9em;
+  }
+}
+
+#agir .interface {
+  -ms-grid-row: 2;
+  -ms-grid-row-span: 1;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-area: 2 / 2 / 3 / 3;
+  position: relative;
+}
+
+#agir .interface .under-text {
+  position: absolute;
+  z-index: -1;
+  background-color: rgba(247, 240, 240, 0.9);
+  border-radius: .2em;
+  -webkit-box-shadow: 0 20px 10px -20px black;
+          box-shadow: 0 20px 10px -20px black;
+  width: 24em;
+  height: 27%;
+}
+
+@media screen and (max-width: 1023px) and (orientation: landscape) {
+  #agir .interface .under-text {
+    width: 23.5em;
+    height: 11.5em;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 1023px) and (orientation: portrait) {
+  #agir .interface .under-text {
+    width: 28em;
+    height: 20em;
+  }
+}
+
+@media screen and (min-width: 1024px) and (orientation: portrait) {
+  #agir .interface .under-text {
+    width: 39em;
+    height: 27em;
+  }
+}
+
+@media screen and (min-width: 1024px) and (orientation: landscape) {
+  #agir .interface .under-text {
+    width: 29.6em;
+    height: 24.9em;
+  }
+}
+
+#agir .interface .red-emphasis {
+  background-color: #CC3332;
+}
+
+#agir .interface .white-emphasis {
+  color: #F7F0F0;
+  text-shadow: 0 0 1px black;
+}
+
+#agir .interface .no1 {
+  background: 20% url("/static/img/no1.svg") rgba(247, 240, 240, 0.9) no-repeat;
+}
+
+#agir .interface .no2 {
+  background: 20% url("/static/img/no2.svg") rgba(247, 240, 240, 0.9) no-repeat;
+}
+
+#agir .interface .no3 {
+  background: 20% url("/static/img/no3.svg") #CC3332 no-repeat;
+}
+
+@media screen and (max-width: 1024px) {
+  #agir .interface .no1, #agir .interface .no2, #agir .interface .no3 {
+    background-size: contain;
+    background-position: center;
+  }
+}
+
+#agir .interface p {
+  font-family: "Viga", Arial, sans-serif;
+  line-height: 1.5em;
+  position: relative;
+}
+
+#agir .interface p span {
+  color: inherit;
+}
+
+#agir .interface .external-link-symbol {
+  width: .5em;
+  margin-left: -0.4em;
+  opacity: 1;
+}
+
+@media screen and (max-width: 640px) and (orientation: portrait) {
+  #agir .numbered-boxes {
+    row-gap: 8rem;
+    padding: 4rem 0 4rem;
+  }
+}
+
+@media screen and (min-width: 641px) and (max-width: 1023px) and (orientation: portrait) {
+  #agir .numbered-boxes {
+    row-gap: 6rem;
+    padding: 6rem 4rem 6rem;
+  }
+}
+
+@media screen and (min-width: 1024px) and (orientation: portrait) {
+  #agir .numbered-boxes {
+    row-gap: 4rem;
+    padding: 8rem 4rem 8rem;
+  }
+}
+
+@media screen and (max-width: 1023px) and (orientation: landscape) {
+  #agir .numbered-boxes {
+    row-gap: 5rem;
+    padding: 4rem 3rem 4rem;
+  }
+}
+
+#agir .icon-arrow {
+  -ms-grid-row: 3;
+  -ms-grid-row-span: 1;
+  -ms-grid-column: 2;
+  -ms-grid-column-span: 1;
+  grid-area: 3 / 2 / 4 / 3;
+}
+
 #shaded-sections {
   min-height: 100%;
   background-color: rgba(154, 146, 148, 0.85);
@@ -450,30 +613,30 @@ h2 {
 }
 
 @media screen and (max-width: 1023px) and (orientation: landscape), (min-width: 641px) and (orientation: portrait) {
-  #intro {
+  #intro, #instruction-1 {
     grid-column: col-start 1 / span 3;
   }
-  #pesquisar {
+  #pesquisar, #instruction-2 {
     grid-column: col-start 4 / span 3;
   }
-  #info {
+  #info, #instruction-3 {
     grid-column: col-start 1 / span 6;
   }
 }
 
 @media screen and (min-width: 1024px) and (orientation: landscape) {
-  #intro {
+  #intro, #instruction-1 {
     grid-column: col-start 1 / span 2;
   }
-  #pesquisar {
+  #pesquisar, #instruction-2 {
     grid-column: col-start 3 / span 2;
   }
-  #info {
+  #info, #instruction-3 {
     grid-column: col-start 5 / span 2;
   }
 }
 
-#intro, #pesquisar, #info {
+#intro, #pesquisar, #info, #instruction-1, #instruction-2, #instruction-3 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -490,7 +653,7 @@ h2 {
 }
 
 @media screen and (min-width: 1024px) and (orientation: landscape) {
-  #intro, #pesquisar, #info {
+  #intro, #pesquisar, #info, #instruction-1, #instruction-2, #instruction-3 {
     margin: 4rem 0 12rem;
   }
 }
@@ -522,7 +685,7 @@ h2 {
   }
 }
 
-#intro-msg {
+#intro-msg, .instructions > p {
   max-width: 16.5em;
   text-align: justify;
   text-justify: auto;
@@ -531,34 +694,34 @@ h2 {
   line-height: 1.5em;
 }
 
-#intro-msg span {
+#intro-msg span, .instructions > p span {
   color: #F7F0F0;
   text-shadow: 0 0 1px black;
 }
 
 @media screen and (min-width: 641px) and (max-width: 1023px) and (orientation: portrait) {
-  #intro-msg {
+  #intro-msg, .instructions > p {
     font-size: 1.5em;
     line-height: 1.55em;
   }
 }
 
 @media screen and (min-width: 1024px) and (orientation: portrait) {
-  #intro-msg {
+  #intro-msg, .instructions > p {
     font-size: 2em;
     line-height: 1.55em;
   }
 }
 
 @media screen and (max-width: 1023px) and (orientation: landscape) {
-  #intro-msg {
+  #intro-msg, .instructions > p {
     font-size: 1.3em;
     line-height: 1.4em;
   }
 }
 
 @media screen and (min-width: 1024px) and (orientation: landscape) {
-  #intro-msg {
+  #intro-msg, .instructions > p {
     font-size: 1.6em;
     line-height: 1.4em;
   }
@@ -1095,13 +1258,25 @@ h4 .red {
   margin-top: 0;
 }
 
-.infolink-img, .infolink-txt, #pesquisar-link, .jumpy-link, .non-jumpy-link, .icon-x, .footer-nav-link {
+.first-links, .infolink-img, .infolink-txt, #pesquisar-link, .jumpy-link, .non-jumpy-link, .icon-x, .footer-nav-link {
   text-decoration: none;
   outline: none;
   color: inherit;
 }
 
 @media (hover: hover) {
+  .first-links:hover {
+    color: #CC3332;
+    text-shadow: 0 0 1px white;
+  }
+  .first-links:hover .external-link-symbol {
+    -webkit-filter: brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(5488%) hue-rotate(352deg) brightness(93%) contrast(73%);
+            filter: brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(5488%) hue-rotate(352deg) brightness(93%) contrast(73%);
+  }
+  .link-emphasis:hover {
+    color: #FFFF33;
+    text-shadow: 0 0 1px black;
+  }
   .intro-link:hover {
     text-decoration: none;
     color: #FFFF33;
@@ -1227,6 +1402,20 @@ h4 .red {
     -webkit-transform: translateY(-2px);
             transform: translateY(-2px);
   }
+}
+
+.first-links:focus {
+  color: #CC3332;
+}
+
+.first-links:focus .external-link-symbol {
+  -webkit-filter: brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(5488%) hue-rotate(352deg) brightness(93%) contrast(73%);
+          filter: brightness(0) saturate(100%) invert(17%) sepia(60%) saturate(5488%) hue-rotate(352deg) brightness(93%) contrast(73%);
+}
+
+.link-emphasis:focus {
+  color: #FFFF33;
+  text-shadow: 0 0 2px black;
 }
 
 .intro-link:focus {
