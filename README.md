@@ -1,5 +1,6 @@
 # **_BUSCA!_** Find my lost pet
-#### Video Demo: [watch me!](https://www.youtube.com/watch?v=Mm54BjIIT1U)
+#### URL: http://www.busca.website
+#### Video Demo: [watch me!](https://www.youtube.com/watch?v=Mm54BjIIT1U) (TO BE UPDATED)
 ### Description
 _BUSCA!_ is a web platform for people who have lost their pets. It gathers in one place a range of useful resources for conducting a search operation successfully.
 
@@ -170,11 +171,10 @@ flask run
 * `templates\public\index.html`, `search.html`, `contact.html`, `about.html`, `privacy.html`: child templates for public pages.
 * `templates\admin\login.html`, `dashboard.html`, `new.html`, `update.html`, `list.html`: child templates for admin pages.
 ### Next steps
-1. Publish to the World Wide Web. Domain name: `busca.website`
-2. Implement the automatic sending of emails to admins when visitors submit messages via contact form
-3. Improve error handling and reporting
-4. Keep updating and enlarging the database to ensure its full effectiveness at a national scale 
-5. Translate the website to English for improved accessibility by foreigners currently in Portugal
-6. Add more features to the search tool
+1. Implement automatic email notifications to admins when messages submitted via contact form
+2. Improve error handling and reporting
+3. Expand database to ensure its full effectiveness at a national scale 
+4. Translate the website to English for improved accessibility by foreigners currently in Portugal
+5. Add more features to the search tool (e.g. live search)
 ---
-Submitted as final project to Harvard's CS50x 2021
+Submitted as final project to Harvard University's CS50x 2021
